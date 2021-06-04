@@ -111,7 +111,6 @@ function SignIn() {
           <Copyright />
         </Box>
       </Container>
-      );
     </div>
   );
 }
