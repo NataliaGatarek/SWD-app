@@ -1,16 +1,26 @@
 import SignIn from "./Views/SignIn.js";
 import SignUp from "./Views/SignUp.js";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import Home from "./Views/Home.js";
 import ListOfDogs from "./Views/ListOfDogs.js";
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import NavBar from "./Components/NavBar.js";
 
 function App() {
   return (
-    <div>
-      <Home />
-      <SignIn />
-      <ListOfDogs />
-    </div>
+    <Router>
+      <NavBar />
+      <Switch>
+        <Route exact path="/">
+          <Home />
+        </Route>
+        <Route exact path="/SignIn">
+          <SignIn />
+        </Route>
+        <Route exact path="/ListOfDogs">
+          <ListOfDogs />
+        </Route>
+      </Switch>
+    </Router>
   );
 }
 

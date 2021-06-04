@@ -65,7 +65,6 @@ function Home() {
   return (
     <div>
       <React.Fragment>
-        <NavBar />
         <CssBaseline />
         <AppBar position="relative"></AppBar>
         <main>
