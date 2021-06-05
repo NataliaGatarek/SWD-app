@@ -126,7 +126,7 @@ function NavBar(props) {
   );
   return (
     <div className={classes.grow}>
-      <AppBar position="static">
+      <AppBar position="static" style={{ background: "lightgray" }}>
         <Toolbar>
           <Link to="/">
             <IconButton
