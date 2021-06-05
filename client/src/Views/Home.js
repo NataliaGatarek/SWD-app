@@ -115,7 +115,7 @@ function Home() {
               color="textSecondary"
               paragraph
             >
-              Last added dogs
+              Latest added dogs
             </Typography>
             {/* End hero unit */}
             <Grid container spacing={4}>

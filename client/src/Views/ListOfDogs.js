@@ -4,7 +4,9 @@ import CardToDisplayDogs from "../Components/CardToDisplayDog.js";
 function ListOfDogs() {
   return (
     <div>
-      <CardToDisplayDogs />
+      <div className="flex-cards">
+        <CardToDisplayDogs />
+      </div>
     </div>
   );
 }
