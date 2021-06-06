@@ -15,6 +15,14 @@ import FavoriteIcon from "@material-ui/icons/Favorite";
 import ShareIcon from "@material-ui/icons/Share";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link,
+  useHistory,
+} from "react-router-dom";
+
 const useStyles = makeStyles((theme) => ({
   root: {
     maxWidth: 345,
@@ -77,6 +85,7 @@ function CardToDisplayDog(props) {
       </CardActions>
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent>
+          <Link to="CardToDisplayTheDog">click</Link>
           <Typography paragraph>To view more please log in:</Typography>
         </CardContent>
       </Collapse>

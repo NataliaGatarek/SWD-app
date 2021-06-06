@@ -1,11 +1,13 @@
 import SignIn from "./Views/SignIn.js";
 import SignUp from "./Views/SignUp.js";
 import Home from "./Views/Home.js";
+import CardToDisplayTheDog from "./Components/CardToDisplayTheDog.js";
 import Profile from "./Views/Profile.js";
 import ListOfDogs from "./Views/ListOfDogs.js";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import NavBar from "./Components/NavBar.js";
 import AddDog from "./Views/AddDog.js";
+import { Card } from "@material-ui/core";
 
 function App() {
   return (
@@ -26,6 +28,9 @@ function App() {
         </Route>
         <Route exact path="/ListOfDogs">
           <ListOfDogs />
+        </Route>
+        <Route exect path="/CardToDisplayTheDog">
+          <CardToDisplayTheDog />
         </Route>
         <Route exact path="/AddDog">
           <AddDog />

@@ -5,7 +5,6 @@ import Checkbox from "@material-ui/core/Checkbox";
 import IconButton from "@material-ui/core/IconButton";
 import PhotoCamera from "@material-ui/icons/PhotoCamera";
 import Button from "@material-ui/core/Button";
-import Grid from "@material-ui/core/Grid";
 import "./views.css";
 
 const useStyles = makeStyles((theme) => ({

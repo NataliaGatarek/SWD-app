@@ -5,6 +5,14 @@ import AccordionDetails from "@material-ui/core/AccordionDetails";
 import AccordionSummary from "@material-ui/core/AccordionSummary";
 import Typography from "@material-ui/core/Typography";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+import PetsIcon from "@material-ui/icons/Pets";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link,
+  useHistory,
+} from "react-router-dom";
 const useStyles = makeStyles((theme) => ({
   root: {
     width: "100%",
@@ -28,8 +36,15 @@ function Profile() {
   };
   return (
     <div>
-      <h1 className="header-style">Welcome to your profile.</h1>
-      <div className={classes.root}>
+      <h1 className="header-style">Welcome to your profile</h1>
+      <h2 className="header-style">
+        Add your dog{" "}
+        <Link to="/AddDog">
+          {" "}
+          <PetsIcon />{" "}
+        </Link>
+      </h2>
+      <div className={classes.root} style={{ textAlign: "center" }}>
         <Accordion
           expanded={expanded === "panel1"}
           onChange={handleChange("panel1")}
