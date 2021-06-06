@@ -6,3 +6,14 @@
   gap: 10px;
   margin: 13px;
 }
+.flex-form {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  gap: 10px;
+  margin: 13px;
+}
+.header-style {
+  text-align: center;
+}

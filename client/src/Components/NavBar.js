@@ -11,11 +11,19 @@ import Menu from "@material-ui/core/Menu";
 import MenuIcon from "@material-ui/icons/Menu";
 import SearchIcon from "@material-ui/icons/Search";
 import AccountCircle from "@material-ui/icons/AccountCircle";
-import MailIcon from "@material-ui/icons/Mail";
-import NotificationsIcon from "@material-ui/icons/Notifications";
 import MoreIcon from "@material-ui/icons/MoreVert";
+import KeyboardBackspaceIcon from "@material-ui/icons/KeyboardBackspace";
+import LockOpenIcon from "@material-ui/icons/LockOpen";
+import FavoriteIcon from "@material-ui/icons/Favorite";
+import BackButton from "./BackButton.js";
 import "../Views/views.css";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link,
+  useHistory,
+} from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   grow: {
@@ -96,17 +104,17 @@ function NavBar(props) {
       onClose={handleMobileMenuClose}
     >
       <MenuItem>
-        <IconButton aria-label="show 4 new mails" color="inherit">
+        <IconButton aria-label="signin" color="inherit">
           <Badge color="secondary">
-            <MailIcon />
+            <LockOpenIcon />
           </Badge>
         </IconButton>
         <Link to="/SignIn">Sign In</Link>
       </MenuItem>
       <MenuItem>
-        <IconButton aria-label="show 11 new notifications" color="inherit">
+        <IconButton aria-label="favorites" color="inherit">
           <Badge color="secondary">
-            <NotificationsIcon />
+            <FavoriteIcon />
           </Badge>
         </IconButton>
         <p>Favorites</p>
@@ -120,7 +128,7 @@ function NavBar(props) {
         >
           <AccountCircle />
         </IconButton>
-        <p>Profile</p>
+        <Link to="/Profile">Profile</Link>
       </MenuItem>
     </Menu>
   );
@@ -143,28 +151,35 @@ function NavBar(props) {
               Home
             </Typography>
           </Link>
+          <IconButton aria-label="back" color="inherit">
+            <BackButton />
+          </IconButton>
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
-            <IconButton aria-label="profile" color="inherit">
-              <Badge color="secondary">
-                <MailIcon />
-              </Badge>
-            </IconButton>
+            <Link to="/SignIn">
+              <IconButton aria-label="profile" color="inherit">
+                <Badge color="secondary">
+                  <LockOpenIcon />
+                </Badge>
+              </IconButton>
+            </Link>
             <IconButton aria-label="favorites" color="inherit">
               <Badge color="secondary">
-                <NotificationsIcon />
+                <FavoriteIcon />
               </Badge>
             </IconButton>
-            <IconButton
-              edge="end"
-              aria-label="account of current user"
-              aria-controls={menuId}
-              aria-haspopup="true"
-              onClick={handleProfileMenuOpen}
-              color="inherit"
-            >
-              <AccountCircle />
-            </IconButton>
+            <Link to="Profile">
+              <IconButton
+                edge="end"
+                aria-label="account of current user"
+                aria-controls={menuId}
+                aria-haspopup="true"
+                onClick={handleProfileMenuOpen}
+                color="inherit"
+              >
+                <AccountCircle />
+              </IconButton>
+            </Link>
           </div>
           <div className={classes.sectionMobile}>
             <IconButton

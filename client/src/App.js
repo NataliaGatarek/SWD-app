@@ -1,9 +1,11 @@
 import SignIn from "./Views/SignIn.js";
 import SignUp from "./Views/SignUp.js";
 import Home from "./Views/Home.js";
+import Profile from "./Views/Profile.js";
 import ListOfDogs from "./Views/ListOfDogs.js";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import NavBar from "./Components/NavBar.js";
+import AddDog from "./Views/AddDog.js";
 
 function App() {
   return (
@@ -16,8 +18,17 @@ function App() {
         <Route exact path="/SignIn">
           <SignIn />
         </Route>
+        <Route exect path="/SignUp">
+          <SignUp />
+        </Route>
+        <Route exect path="/Profile">
+          <Profile />
+        </Route>
         <Route exact path="/ListOfDogs">
           <ListOfDogs />
+        </Route>
+        <Route exact path="/AddDog">
+          <AddDog />
         </Route>
       </Switch>
     </Router>
