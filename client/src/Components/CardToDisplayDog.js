@@ -12,7 +12,6 @@ import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
 import { red } from "@material-ui/core/colors";
 import FavoriteIcon from "@material-ui/icons/Favorite";
-import ShareIcon from "@material-ui/icons/Share";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 import {
@@ -55,7 +54,7 @@ function CardToDisplayDog(props) {
   };
   return (
     <Card className={classes.root}>
-      <CardHeader title="Name of Dog" subheader="Breeding kennel" />
+      <CardHeader subheader="Breeding kennel" />
       <CardMedia
         className={classes.media}
         image="/static/images/cards/paella.jpg"
@@ -64,7 +63,7 @@ function CardToDisplayDog(props) {
       <CardContent>
         <Typography variant="body2" color="textSecondary" component="p">
           {/* Here I am displaying description of the dog */}
-          <p>My dog is very nice and he likes to swim</p>
+          <p></p>
         </Typography>
       </CardContent>
       <CardActions disableSpacing>

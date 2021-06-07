@@ -32,7 +32,7 @@ function AddDog() {
       >
         <TextField id="standard-basic" label="Name of the dog" />
         <TextField id="standard-basic" label="Breeding kennel" />
-        <TextField id="standard-basic" label="Where do the dog lives" />
+        <TextField id="standard-basic" label="Where does the dog live" />
         <TextField
           id="outlined-multiline-static"
           label="Information about the dog"
