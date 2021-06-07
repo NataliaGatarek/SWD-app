@@ -22,7 +22,7 @@ function ListOfDogs() {
       <div className="flex-cards">
         <Input />
         {dogs.map((dog) => {
-          return <p>{dog.name}</p>;
+          return <CardToDisplayDogs key={dog.id} dogs={dog} />;
         })}
       </div>
     </div>

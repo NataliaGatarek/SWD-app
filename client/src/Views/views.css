@@ -1,6 +1,6 @@
 .flex-cards {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   flex-wrap: wrap;
   justify-content: space-around;
   gap: 10px;
