@@ -1,10 +1,10 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
-import Checkbox from "@material-ui/core/Checkbox";
-import IconButton from "@material-ui/core/IconButton";
-import PhotoCamera from "@material-ui/icons/PhotoCamera";
 import Button from "@material-ui/core/Button";
+import Radio from "@material-ui/core/Radio";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import RadioGroup from "@material-ui/core/RadioGroup";
 import "./views.css";
 
 const useStyles = makeStyles((theme) => ({
@@ -52,9 +52,26 @@ function AddDog() {
         <TextField id="standard-basic" label="Date of birth" />
         <TextField id="standard-basic" label="Full name of the mother" />
         <TextField id="standard-basic" label="Full name of the father" />
-        <p>Is she/he breeding dog?</p>
-        <Checkbox name="Yes" color="primary" />
-        <Checkbox name="No" color="primary" />
+        <p>Are you a breeder?</p>
+        <RadioGroup
+          aria-label="breeding"
+          name="breeding"
+          //value={value}
+          //onChange={handleChange}
+        >
+          <FormControlLabel value="yes" control={<Radio />} label="Yes" />
+          <FormControlLabel value="no" control={<Radio />} label="No" />
+        </RadioGroup>
+        <p>Is your dog a breeding dog?</p>
+        <RadioGroup
+          aria-label="breeding"
+          name="breeding"
+          // value={value}
+          //onChange={handleChange}
+        >
+          <FormControlLabel value="yes" control={<Radio />} label="Yes" />
+          <FormControlLabel value="no" control={<Radio />} label="No" />
+        </RadioGroup>
         <TextField
           inputProps={{ style: { alignItems: "center" } }}
           id="outlined-multiline-static"
