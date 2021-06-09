@@ -59,5 +59,20 @@ const dogsSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  comments: [
+    {
+      content: {
+        type: String,
+        required: true,
+      },
+      authorId: [
+        { type: mongoose.Schema.Types.ObjectId, ref: "Users", required: true },
+      ],
+      date: {
+        type: Date,
+        default: Date.now,
+      },
+    },
+  ],
 });
 module.exports = mongoose.model("Dog", dogsSchema);

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import CardToDisplayDogs from "../Components/CardToDisplayDog.js";
+import CardToDisplayDog from "../Components/CardToDisplayDog.js";
 import Input from "../Components/Input.js";
 import "./views.css";
 
@@ -22,7 +22,7 @@ function ListOfDogs() {
       <div className="flex-cards">
         <Input />
         {dogs.map((dog) => {
-          return <CardToDisplayDogs key={dog.id} dogs={dog} />;
+          return <CardToDisplayDog key={dog.id} dogs={dog} />;
         })}
       </div>
     </div>
