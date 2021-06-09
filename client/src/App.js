@@ -7,7 +7,6 @@ import ListOfDogs from "./Views/ListOfDogs.js";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import NavBar from "./Components/NavBar.js";
 import AddDog from "./Views/AddDog.js";
-import { Card } from "@material-ui/core";
 
 function App() {
   return (
