@@ -18,6 +18,7 @@ app.use(express.json());
 app.use(cors());
 
 app.use("/dogs", require("./routes/dogs"));
+app.use("/users", require("./routes/users"));
 
 app.listen(port, () => {
   console.log("Server is running on " + port + "port");
