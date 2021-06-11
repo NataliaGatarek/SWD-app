@@ -76,8 +76,4 @@ router.post(
     });
 });  */
 
-// @route    POST api/users
-// @desc     Register user
-// @access   Public
-
 module.exports = router;
