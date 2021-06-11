@@ -1,6 +1,8 @@
 const express = require("express");
 const router = express.Router();
 const User = require("../models/usersModel");
+const jwt = require("jsonwebtoken");
+const config = require("../config").secretOrKey;
 const { body, validationResult } = require("express-validator");
 const bcrypt = require("bcrypt");
 
@@ -24,9 +26,7 @@ router.post(
       let user = await User.findOne({ email });
       //search by something, here search by email because its unique
       if (user) {
-        res.user
-          .status(400)
-          .json({ errors: [{ message: "User already exists" }] });
+        res.user.status(400).json({ errors: [{ msg: "User already exists" }] });
         //this set up of the error makes sure that errors are same on client and server side
       }
       //enctpt the password
@@ -35,20 +35,53 @@ router.post(
       const hashedPw = await bcrypt.hash(req.body.password, salt);
 
       //new user
-      const newUser = new User({
+      user = new User({
         firstName: req.body.firstName,
         lastName: req.body.lastName,
         email: req.body.email,
         password: hashedPw,
       });
-      const usero = await newUser.save();
-      //return json token
+      await user.save();
       res.send("User registered");
+
+      //return json token
+      // const payload = {
+      //   user: {
+      //     id: user.id,
+      //   },
+      // };
+      // const options = { expiresIn: 360000 };
+      // //here to change to 3600 to expire within an hour//
+      // jwt.sign(payload, key.secretOrKey, options, (error, token) => {
+      //   if (error) throw error;
+      //   res.json({ token });
+      // });
     } catch (error) {}
     console.log(error.message);
     res.status(500).send("Server error");
   }
 );
+
+//login
+router.post("/login", async (req, res) => {
+  const { email, password } = req.body;
+  try {
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.status(400).json({ errors: [{ msg: "Invalid credentials" }] });
+    }
+
+    const isMatched = await bcrypt.compare(password, user.password);
+    if (!isMatched) {
+      return res.status(400).json({ errors: [{ msg: "Invalid Credentials" }] });
+    }
+    res.status(200).json({ _id: user._id, username: user.username });
+    //payload and sign the token again here//
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("Server error");
+  }
+});
 
 /* router.get("/test", (req, res) => {
   usersModel.find({}, function (err, users) {
