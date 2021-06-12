@@ -51,8 +51,8 @@ router.post(
       //   },
       // };
       // const options = { expiresIn: 360000 };
-      // //here to change to 3600 to expire within an hour//
-      // jwt.sign(payload, key.secretOrKey, options, (error, token) => {
+      // // // //here to change to 3600 to expire within an hour//
+      // jwt.sign(payload, config.get("secretOrKey"), options, (error, token) => {
       //   if (error) throw error;
       //   res.json({ token });
       // });
