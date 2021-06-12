@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -34,6 +34,20 @@ const useStyles = makeStyles((theme) => ({
 
 function SignIn() {
   const classes = useStyles();
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+  });
+  const { email, password } = formData;
+
+  const onChange = (e) =>
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+
+  const handleOnSubmit = async (event) => {
+    event.preventDefault();
+    console.log("success");
+  };
+
   return (
     <div>
       <Container component="main" maxWidth="xs">
@@ -45,7 +59,7 @@ function SignIn() {
           <Typography component="h1" variant="h5">
             Sign in
           </Typography>
-          <form className={classes.form} noValidate>
+          <form className={classes.form} noValidate onSubmit={handleOnSubmit}>
             <TextField
               variant="outlined"
               margin="normal"
@@ -56,6 +70,8 @@ function SignIn() {
               name="email"
               autoComplete="email"
               autoFocus
+              value={email}
+              onChange={onChange}
             />
             <TextField
               variant="outlined"
@@ -67,10 +83,8 @@ function SignIn() {
               type="password"
               id="password"
               autoComplete="current-password"
-            />
-            <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="Remember me"
+              value={password}
+              onChange={onChange}
             />
             <Button
               type="submit"
