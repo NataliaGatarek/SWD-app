@@ -41,35 +41,31 @@ router.post("/all", async (req, res) => {
     additional,
     contact,
   } = req.body;
-  const dog = new dogsModel({
-    name: req.body.name,
-    kennel: req.body.kennel,
-    live: req.body.live,
-    description: req.body.live,
-    titles: req.body.live,
-    birth: req.body.birth,
-    mname: req.body.mname,
-    fname: req.body.fname,
-    breeder: req.body.breeder,
-    breedingdog: req.body.breedingdog,
-    health: req.body.heatlh,
-    additional: req.body.additional,
-    contact: req.body.contact,
-  });
-  dog
-    .save()
-    .then((result) => {
-      res.status(201).json({
-        message: "Handling POST requests to /all",
-        createdProduct: result,
-      });
-    })
-    .catch((err) => {
-      console.log(err);
-      res.status(400).json({
-        error: err,
-      });
+  try {
+    const dog = new dogsModel({
+      name: req.body.name,
+      kennel: req.body.kennel,
+      live: req.body.live,
+      description: req.body.live,
+      titles: req.body.live,
+      birth: req.body.birth,
+      mname: req.body.mname,
+      fname: req.body.fname,
+      breeder: req.body.breeder,
+      breedingdog: req.body.breedingdog,
+      health: req.body.heatlh,
+      additional: req.body.additional,
+      contact: req.body.contact,
     });
+    await dog.save();
+    res.status(201).json({
+      message: "Handling POST requests to /all",
+      createdProduct: result,
+    });
+  } catch (error) {
+    console.error(err.message);
+    res.status(500).send("Server error");
+  }
 });
 
 module.exports = router;
