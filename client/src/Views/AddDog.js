@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState } from "react";
+import axios from "axios";
 import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
@@ -18,6 +19,76 @@ const useStyles = makeStyles((theme) => ({
 
 function AddDog() {
   const classes = useStyles();
+  const [formDogData, setFormDogData] = useState({
+    name: "",
+    kennel: "",
+    live: "",
+    description: "",
+    titles: "",
+    birth: "",
+    mname: "",
+    fname: "",
+    breeder: "",
+    breedingdog: "",
+    health: "",
+    additional: "",
+    image: "",
+    contact: "",
+  });
+  const {
+    name,
+    kennel,
+    live,
+    description,
+    titles,
+    birth,
+    mname,
+    fname,
+    breeder,
+    breedingdog,
+    health,
+    additional,
+    image,
+    contact,
+  } = formDogData;
+  const onChange = (e) =>
+    setFormDogData({ ...formDogData, [e.target.name]: e.target.value });
+  const handleOnSubmit = async (event) => {
+    event.preventDefault();
+    console.log("success");
+    const newDog = {
+      name,
+      kennel,
+      live,
+      description,
+      titles,
+      birth,
+      mname,
+      fname,
+      breeder,
+      breedingdog,
+      health,
+      additional,
+      image,
+      contact,
+    };
+    try {
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      };
+      const body = JSON.stringify(newDog);
+      var res = await axios.post(
+        "http://localhost:5000/dogs/all",
+        body,
+        config
+      );
+      console.log(res.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <div>
       <h1 className="header-style">
@@ -29,10 +100,46 @@ function AddDog() {
         noValidate
         autoComplete="off"
         className="flex-form"
+        onSubmit={handleOnSubmit}
       >
-        <TextField id="standard-basic" label="Name of the dog" />
-        <TextField id="standard-basic" label="Breeding kennel" />
-        <TextField id="standard-basic" label="Where does the dog live" />
+        <TextField
+          autoComplete="name"
+          name="name"
+          variant="outlined"
+          required
+          fullWidth
+          id="name"
+          label="Name of the Dog"
+          autoFocus
+          value={name}
+          onChange={onChange}
+        />
+        <TextField
+          id="standard-basic"
+          label="Breeding kennel"
+          autoComplete="kennel"
+          name="kennel"
+          variant="outlined"
+          required
+          fullWidth
+          id="kennel"
+          autoFocus
+          value={kennel}
+          onChange={onChange}
+        />
+        <TextField
+          id="standard-basic"
+          label="Where does the dog live"
+          autoComplete="live"
+          name="live"
+          variant="outlined"
+          required
+          fullWidth
+          id="live"
+          autoFocus
+          value={live}
+          onChange={onChange}
+        />
         <TextField
           id="outlined-multiline-static"
           label="Information about the dog"
@@ -40,6 +147,11 @@ function AddDog() {
           rows={4}
           defaultValue="Description of the dog"
           variant="outlined"
+          name="description"
+          id="description"
+          autoFocus
+          value={description}
+          onChange={onChange}
         />
         <TextField
           id="outlined-multiline-static"
@@ -48,26 +160,71 @@ function AddDog() {
           rows={4}
           defaultValue="Titles of the dog"
           variant="outlined"
+          name="titles"
+          id="titles"
+          autoFocus
+          value={titles}
+          onChange={onChange}
         />
-        <TextField id="standard-basic" label="Date of birth" />
-        <TextField id="standard-basic" label="Full name of the mother" />
-        <TextField id="standard-basic" label="Full name of the father" />
+        <TextField
+          id="standard-basic"
+          label="Date of birth"
+          autoComplete="birth"
+          name="birth"
+          variant="outlined"
+          required
+          fullWidth
+          id="birth"
+          autoFocus
+          value={birth}
+          onChange={onChange}
+        />
+        <TextField
+          id="standard-basic"
+          label="Full name of the mother"
+          autoComplete="mname"
+          name="mname"
+          variant="outlined"
+          required
+          fullWidth
+          id="mname"
+          autoFocus
+          value={mname}
+          onChange={onChange}
+        />
+        <TextField
+          id="standard-basic"
+          label="Full name of the father"
+          autoComplete="fname"
+          name="fname"
+          variant="outlined"
+          required
+          fullWidth
+          id="fname"
+          autoFocus
+          value={fname}
+          onChange={onChange}
+        />
         <p>Are you a breeder?</p>
         <RadioGroup
           aria-label="breeding"
           name="breeding"
-          //value={value}
-          //onChange={handleChange}
+          value={breeder}
+          onChange={onChange}
+          id="breeder"
+          name="breeder"
         >
           <FormControlLabel value="yes" control={<Radio />} label="Yes" />
           <FormControlLabel value="no" control={<Radio />} label="No" />
         </RadioGroup>
         <p>Is your dog a breeding dog?</p>
         <RadioGroup
-          aria-label="breeding"
-          name="breeding"
-          // value={value}
-          //onChange={handleChange}
+          aria-label="breedingdog"
+          name="breedingdog"
+          value={breedingdog}
+          onChange={onChange}
+          id="breedingdog"
+          name="breedingdog"
         >
           <FormControlLabel value="yes" control={<Radio />} label="Yes" />
           <FormControlLabel value="no" control={<Radio />} label="No" />
@@ -80,6 +237,11 @@ function AddDog() {
           rows={4}
           defaultValue="Heatlh information"
           variant="outlined"
+          name="health"
+          id="health"
+          autoFocus
+          value={health}
+          onChange={onChange}
         />
         <TextField
           id="outlined-multiline-static"
@@ -88,17 +250,37 @@ function AddDog() {
           rows={4}
           defaultValue="More iformation"
           variant="outlined"
+          name="additional"
+          id="additional"
+          autoFocus
+          value={additional}
+          onChange={onChange}
         />
-        <p>Upload a picture of your dog</p>
+        {/* <p>Upload a picture of your dog</p>
         <input
           accept="image/*"
           className={classes.input}
           id="icon-button-photo"
-          //onChange={this.handleCapture}
           type="file"
+          value={image}
+          onChange={onChange}
+        /> */}
+        <TextField
+          id="standard-basic"
+          label="Your contact information"
+          autoComplete="contact"
+          name="contact"
+          variant="outlined"
+          required
+          fullWidth
+          id="contact"
+          autoFocus
+          value={contact}
+          onChange={onChange}
         />
-        <TextField id="standard-basic" label="Your contact information" />
-        <Button variant="contained">Add your dog</Button>
+        <Button variant="contained" type="submit">
+          Add your dog
+        </Button>
       </form>
     </div>
   );
