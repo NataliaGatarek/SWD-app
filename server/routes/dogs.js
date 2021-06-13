@@ -25,7 +25,7 @@ router.get("/newest", (req, res) => {
     .limit(3);
 });
 
-router.post("/all", async (req, res) => {
+router.post("/add", async (req, res) => {
   const {
     name,
     kennel,

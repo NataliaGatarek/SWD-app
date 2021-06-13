@@ -80,7 +80,7 @@ function AddDog() {
       };
       const body = JSON.stringify(newDog);
       var res = await axios.post(
-        "http://localhost:5000/dogs/all",
+        "http://localhost:5000/dogs/add",
         body,
         config
       );
