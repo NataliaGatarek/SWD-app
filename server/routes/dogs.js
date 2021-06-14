@@ -59,7 +59,7 @@ router.post("/add", async (req, res) => {
     });
     await dog.save();
     res.status(201).json({
-      message: "Handling POST requests to /all",
+      message: "Success",
       createdProduct: result,
     });
   } catch (error) {
