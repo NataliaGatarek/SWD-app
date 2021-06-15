@@ -29,7 +29,7 @@ function CardToDisplayDog(props) {
       <CardActionArea>
         <CardMedia
           className={classes.media}
-          src={picture}
+          image={props.dogs.image}
           title="Contemplative Reptile"
         />
         <CardContent>

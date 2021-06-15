@@ -25,7 +25,7 @@ router.get("/newest", (req, res) => {
     .limit(3);
 });
 
-router.post("/add", async (req, res) => {
+/* router.post("/add", async (req, res) => {
   const {
     name,
     kennel,
@@ -40,22 +40,25 @@ router.post("/add", async (req, res) => {
     health,
     additional,
     contact,
+    image,
   } = req.body;
+  console.log(image);
   try {
     const dog = new dogsModel({
-      name: req.body.name,
-      kennel: req.body.kennel,
-      live: req.body.live,
-      description: req.body.live,
-      titles: req.body.live,
-      birth: req.body.birth,
-      mname: req.body.mname,
-      fname: req.body.fname,
-      breeder: req.body.breeder,
-      breedingdog: req.body.breedingdog,
-      health: req.body.heatlh,
-      additional: req.body.additional,
-      contact: req.body.contact,
+      name: name,
+      kennel: kennel,
+      live: live,
+      description: description,
+      titles: titles,
+      birth: birth,
+      mname: mname,
+      fname: fname,
+      breeder: breeder,
+      breedingdog: breedingdog,
+      health: health,
+      additional: additional,
+      image: image,
+      contact: contact,
     });
     await dog.save();
     res.status(201).json({
@@ -66,6 +69,56 @@ router.post("/add", async (req, res) => {
     console.error(err.message);
     res.status(500).send("Server error");
   }
+}); */
+
+router.post("/add", (req, res) => {
+  const {
+    name,
+    kennel,
+    live,
+    description,
+    titles,
+    birth,
+    mname,
+    fname,
+    breeder,
+    breedingdog,
+    health,
+    additional,
+    contact,
+    image,
+  } = req.body;
+  console.log(image);
+  const dog = new dogsModel({
+    name: name,
+    kennel: kennel,
+    live: live,
+    description: description,
+    titles: titles,
+    birth: birth,
+    mname: mname,
+    fname: fname,
+    breeder: breeder,
+    breedingdog: breedingdog,
+    health: health,
+    additional: additional,
+    image: image,
+    contact: contact,
+  });
+  dog
+    .save()
+    .then((result) => {
+      res.status(201).json({
+        message: "Handling POST requests to /dog",
+        createdProduct: result,
+      });
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(400).json({
+        error: err,
+      });
+    });
 });
 
 module.exports = router;

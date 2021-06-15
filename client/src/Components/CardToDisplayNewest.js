@@ -25,7 +25,7 @@ function CardToDisplayNewest(props) {
       <Card className={classes.card}>
         <CardMedia
           className={classes.cardMedia}
-          image="https://source.unsplash.com/dog"
+          image={props.newest.image}
           title="Image title"
         />
         <CardContent className={classes.cardContent}>

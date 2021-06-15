@@ -51,10 +51,10 @@ const dogsSchema = new mongoose.Schema({
     required: false,
   },
   //what should be here?//
-  /*  image: {
+  image: {
     type: String,
     required: true,
-  }, */
+  },
   contact: {
     type: String,
     required: true,

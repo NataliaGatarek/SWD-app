@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
@@ -19,6 +19,27 @@ const useStyles = makeStyles((theme) => ({
 
 function AddDog() {
   const classes = useStyles();
+  const [imageSeletectd, setImageSelected] = useState("");
+  const [url, setUrl] = useState("");
+
+  const uploadImage = () => {
+    const data = new FormData();
+    data.append("file", imageSeletectd);
+    data.append("upload_preset", "h85uvoz4");
+    data.append("cloud_name", "dtcs8hj99");
+    fetch("	https://api.cloudinary.com/v1_1/dtcs8hj99/image/upload", {
+      method: "post",
+      body: data,
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        setUrl(data.url);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
   const [formDogData, setFormDogData] = useState({
     name: "",
     kennel: "",
@@ -53,41 +74,48 @@ function AddDog() {
   } = formDogData;
   const onChange = (e) =>
     setFormDogData({ ...formDogData, [e.target.name]: e.target.value });
-  const handleOnSubmit = async (event) => {
+
+  async function fetchData() {
+    fetch("http://localhost:5000/dogs/add", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        name,
+        kennel,
+        live,
+        description,
+        titles,
+        birth,
+        mname,
+        fname,
+        breeder,
+        breedingdog,
+        health,
+        additional,
+        image: url,
+        contact,
+      }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log("data", data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+  useEffect(() => {
+    if (url) {
+      fetchData();
+    }
+  }, [url]);
+
+  const handleOnSubmit = (event) => {
     event.preventDefault();
     console.log("success");
-    const newDog = {
-      name,
-      kennel,
-      live,
-      description,
-      titles,
-      birth,
-      mname,
-      fname,
-      breeder,
-      breedingdog,
-      health,
-      additional,
-      image,
-      contact,
-    };
-    try {
-      const config = {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      };
-      const body = JSON.stringify(newDog);
-      var res = await axios.post(
-        "http://localhost:5000/dogs/add",
-        body,
-        config
-      );
-      console.log(res.data);
-    } catch (error) {
-      console.log(error);
-    }
+    fetchData();
   };
   return (
     <div>
@@ -256,15 +284,17 @@ function AddDog() {
           value={additional}
           onChange={onChange}
         />
-        {/* <p>Upload a picture of your dog</p>
-        <input
-          accept="image/*"
-          className={classes.input}
-          id="icon-button-photo"
-          type="file"
-          value={image}
-          onChange={onChange}
-        /> */}
+        <label htmlFor="img">
+          Upload a picture of your dog
+          <input
+            name="img"
+            type="file"
+            accept="image/*"
+            value={image}
+            onChange={(event) => setImageSelected(event.target.files[0])}
+            required
+          />
+        </label>
         <TextField
           id="standard-basic"
           label="Your contact information"
@@ -278,7 +308,7 @@ function AddDog() {
           value={contact}
           onChange={onChange}
         />
-        <Button variant="contained" type="submit">
+        <Button variant="contained" type="submit" onClick={() => uploadImage()}>
           Add your dog
         </Button>
       </form>
