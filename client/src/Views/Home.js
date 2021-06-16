@@ -69,21 +69,18 @@ function Home() {
                 color="textSecondary"
                 paragraph
               >
-                Something short and leading about the collection below—its
-                contents, the creator, etc. Make it short and sweet, but not too
-                short so folks don&apos;t simply skip over it entirely.
+                Welcome to the mobile application dedicated to the Spanish Water
+                Dog.
               </Typography>
               <div className={classes.heroButtons}>
                 <Grid container spacing={2} justify="center">
                   <Grid item>
                     <Link to="/ListOfDogs">
-                      <Button variant="contained" color="primary">
-                        List of all the dogs
-                      </Button>
+                      <Button variant="contained">List of all the dogs</Button>
                     </Link>
                   </Grid>
                   <Grid item>
-                    <Button variant="outlined" color="primary">
+                    <Button variant="outlined">
                       List of FCI Polish Breeders
                     </Button>
                   </Grid>
