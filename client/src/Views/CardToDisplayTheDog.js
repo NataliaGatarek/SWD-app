@@ -5,7 +5,7 @@ import CardActionArea from "@material-ui/core/CardActionArea";
 import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
 import Typography from "@material-ui/core/Typography";
-import Comment from "./Comment.js";
+import Comment from "../Components/Comment.js";
 
 const useStyles = makeStyles({
   paper: {

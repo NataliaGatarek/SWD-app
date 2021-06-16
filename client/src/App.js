@@ -1,7 +1,7 @@
 import SignIn from "./Views/SignIn.js";
 import SignUp from "./Views/SignUp.js";
 import Home from "./Views/Home.js";
-import CardToDisplayTheDog from "./Components/CardToDisplayTheDog.js";
+import CardToDisplayTheDog from "./Views/CardToDisplayTheDog.js";
 import Profile from "./Views/Profile.js";
 import ListOfDogs from "./Views/ListOfDogs.js";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
