@@ -1,10 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import CardToDisplayDog from "../Components/CardToDisplayDog.js";
 import Input from "../Components/Input.js";
+import { DogContext } from "../Context/DogContext.js";
 import "./views.css";
 
 function ListOfDogs() {
   const [dogs, setDogs] = useState([]);
+  const { searchBaner, setSearchBaner } = useContext(DogContext);
 
   const fetchApi = () => {
     fetch("http://localhost:5000/dogs/all")
@@ -21,9 +23,15 @@ function ListOfDogs() {
     <div>
       <div className="flex-cards">
         <Input />
-        {dogs.map((dog) => {
-          return <CardToDisplayDog key={dog.id} dogs={dog} />;
-        })}
+        {dogs
+          .filter(
+            (dog) =>
+              dog.kennel.toLowerCase().includes(searchBaner.toLowerCase()) |
+              dog.name.toLowerCase().includes(searchBaner.toLowerCase())
+          )
+          .map((dog) => {
+            return <CardToDisplayDog key={dog.id} dogs={dog} />;
+          })}
       </div>
     </div>
   );
