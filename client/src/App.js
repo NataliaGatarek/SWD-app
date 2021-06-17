@@ -30,7 +30,7 @@ function App() {
           <Route exact path="/ListOfDogs">
             <ListOfDogs />
           </Route>
-          <Route exect path="/CardToDisplayTheDog">
+          <Route exect path="/CardToDisplayTheDog/:id">
             <CardToDisplayTheDog />
           </Route>
           <Route exact path="/AddDog">

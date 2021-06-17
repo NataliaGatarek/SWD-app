@@ -24,6 +24,7 @@ const useStyles = makeStyles({
 
 function CardToDisplayDog(props) {
   const classes = useStyles();
+  console.log(props);
   return (
     <Card className={classes.root}>
       <CardActionArea>
@@ -48,7 +49,7 @@ function CardToDisplayDog(props) {
         <IconButton aria-label="add to favorites">
           <FavoriteIcon />
         </IconButton>
-        <Link to="CardToDisplayTheDog">
+        <Link to={`CardToDisplayTheDog/${props.dogs._id}`}>
           <Button size="small" color="primary">
             Read More
           </Button>

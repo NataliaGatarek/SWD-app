@@ -121,4 +121,49 @@ router.post("/add", (req, res) => {
     });
 });
 
+/* router.get(":id", (req, res) => {
+  let dogsId = req.params.id;
+  dogsModel
+    .findOne({ dogid: dogsId })
+    .then((dogsModel) => {
+      res.send(dogsModel);
+    })
+    .catch((error) => {
+      console.log(error);
+      res.send(error);
+    });
+}); */
+/* router.get("/:id", (req, res) => {
+  let dogsId = req.params.id;
+  dogsModel.findOne({ dogid: dogsId }, (err, dogsModel) => {
+    if (err) throw err;
+    res.status(200);
+    res.json(dogsModel);
+  });
+}); */
+
+router.get("/:id", (req, res) => {
+  //let dogsId = req.params.id;
+
+  dogsModel.findOne({ _id: req.params.id }, (err, dogsModel) => {
+    if (err) res.status(500).send(err);
+    res.status(200).json(dogsModel);
+  });
+});
+
+/* router.get("/:id", (req, res) => {
+  let dogsId = req.params.id;
+  dogsModel
+    .findById(dogsId)
+    .populate("what to populate???")
+    .exec(function (err, dogs) {
+      if (err) {
+        console.log(err);
+        res.send(err);
+      } else {
+        res.send(dogs);
+      }
+    });
+});  */
+
 module.exports = router;
