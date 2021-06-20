@@ -21,7 +21,7 @@ const dogsSchema = new mongoose.Schema({
     required: true,
   },
   birth: {
-    type: Number,
+    type: String,
     required: true,
   },
   mname: {
@@ -33,12 +33,12 @@ const dogsSchema = new mongoose.Schema({
     required: true,
   },
   breeder: {
-    type: Boolean,
+    type: String,
     default: false,
     required: false,
   },
   breedingdog: {
-    type: Boolean,
+    type: String,
     default: false,
     required: true,
   },

@@ -232,30 +232,32 @@ function AddDog() {
           value={fname}
           onChange={onChange}
         />
-        <p>Are you a breeder?</p>
-        <RadioGroup
-          aria-label="breeding"
-          name="breeding"
+        <TextField
+          id="standard-basic"
+          label="Are you a breader?Yes/No"
+          autoComplete="breeder"
+          name="breeder"
+          variant="outlined"
+          required
+          fullWidth
+          id="breeder"
+          autoFocus
           value={breeder}
           onChange={onChange}
-          id="breeder"
-          name="breeder"
-        >
-          <FormControlLabel value="yes" control={<Radio />} label="Yes" />
-          <FormControlLabel value="no" control={<Radio />} label="No" />
-        </RadioGroup>
-        <p>Is your dog a breeding dog?</p>
-        <RadioGroup
-          aria-label="breedingdog"
+        />
+        <TextField
+          id="standard-basic"
+          label="Is your dog a breeding dog?Yes/No"
+          autoComplete="breedingdog"
           name="breedingdog"
+          variant="outlined"
+          required
+          fullWidth
+          id="breedingdog"
+          autoFocus
           value={breedingdog}
           onChange={onChange}
-          id="breedingdog"
-          name="breedingdog"
-        >
-          <FormControlLabel value="yes" control={<Radio />} label="Yes" />
-          <FormControlLabel value="no" control={<Radio />} label="No" />
-        </RadioGroup>
+        />
         <TextField
           inputProps={{ style: { alignItems: "center" } }}
           id="outlined-multiline-static"

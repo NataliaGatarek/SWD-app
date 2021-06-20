@@ -47,37 +47,39 @@ function CardToDisplayTheDog() {
           />
           <CardContent>
             <Typography gutterBottom variant="h5" component="h2">
-              Name:{details.name}
+              Name: <strong>{details.name}</strong>
             </Typography>
             <Typography gutterBottom variant="h6" component="h2">
-              Breeding Kennel:{details.kennel}
+              Breeding Kennel: <strong>{details.kennel}</strong>
             </Typography>
+            <hr></hr>
             <Typography variant="body2" color="textSecondary" component="p">
-              Description: {details.description}
+              {details.description}
+            </Typography>
+            <hr></hr>
+            <Typography gutterBottom component="p">
+              Location: {details.live}
             </Typography>
             <Typography gutterBottom component="p">
-              Where do dog live:{details.live}
+              Titles: {details.titles}
             </Typography>
             <Typography gutterBottom component="p">
-              Titles:{details.titles}
+              Date of Birth: {details.birth}
             </Typography>
             <Typography gutterBottom component="p">
-              Date of Birth:{details.birth}
-            </Typography>
-            <Typography gutterBottom component="p">
-              Mother and Father:{details.mname}, {details.fname}
+              Mother and Father: {details.mname}, {details.fname}
             </Typography>
             <Typography gutterBottom component="p">
               Breeding dog: {details.breedingdog}
             </Typography>
             <Typography gutterBottom component="p">
-              Heatlh info:{details.heatlh}
+              Heatlh info: {details.heatlh}
             </Typography>
             <Typography gutterBottom component="p">
               More info: {details.additional}
             </Typography>
             <Typography gutterBottom component="p">
-              Contact:{details.contact}
+              Contact: {details.contact}
             </Typography>
           </CardContent>
         </CardActionArea>
