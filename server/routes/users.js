@@ -2,10 +2,11 @@ const express = require("express");
 const router = express.Router();
 const User = require("../models/usersModel");
 const jwt = require("jsonwebtoken");
-const config = require("../config").secretOrKey;
+const secretOrKey = require("../config.js").secretOrKey;
 const { body, validationResult } = require("express-validator");
 const bcrypt = require("bcrypt");
 
+//register
 router.post(
   "/",
   body("firstName", "Name is required").notEmpty(),
@@ -43,19 +44,6 @@ router.post(
       });
       await user.save();
       res.send("User registered");
-
-      //return json token
-      // const payload = {
-      //   user: {
-      //     id: user.id,
-      //   },
-      // };
-      // const options = { expiresIn: 360000 };
-      // // // //here to change to 3600 to expire within an hour//
-      // jwt.sign(payload, config.get("secretOrKey"), options, (error, token) => {
-      //   if (error) throw error;
-      //   res.json({ token });
-      // });
     } catch (error) {}
     console.log(error.message);
     res.status(500).send("Server error");
@@ -66,23 +54,70 @@ router.post(
 router.post("/login", async (req, res) => {
   const { email, password } = req.body;
   try {
-    const user = await User.findOne({ email });
-    if (!user) {
-      return res.status(400).json({ errors: [{ msg: "Invalid credentials" }] });
-    }
-
-    const isMatched = await bcrypt.compare(password, user.password);
-    if (!isMatched) {
-      return res.status(400).json({ errors: [{ msg: "Invalid Credentials" }] });
-    }
-    res.status(200).json({ _id: user._id, username: user.username });
-    //payload and sign the token again here//
+    User.findOne({ email: email }, (err, user) => {
+      if (err) {
+        res.send("Email does not exist");
+      } else {
+        bcrypt.compare(password, user.password, function (err, result) {
+          console.log(result);
+          if (err) {
+            res.send(err);
+          }
+          if (result) {
+            const options = {
+              id: user._id,
+            };
+            const token = jwt.sign(options, secretOrKey, { expiresIn: "8h" });
+            console.log(token);
+            res.json({
+              success: true,
+              token: token,
+            });
+          } else {
+            res.send("password does not match");
+          }
+        });
+      }
+    });
   } catch (err) {
     console.error(err.message);
     res.status(500).send("Server error");
   }
 });
 
+module.exports = router;
+
+/* try {
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.status(400).json({ errors: [{ msg: "Invalid credentials" }] });
+    }
+    const isMatched = await bcrypt.compare(password, user.password);
+    if (!isMatched) {
+      return res.status(400).json({ errors: [{ msg: "Invalid Credentials" }] });
+    }
+    res.status(200).json({ _id: user._id, username: user.username });
+    //payload and sign the token again here//
+    const payload = {
+      user: {
+        id: user.id,
+      },
+    };
+    jwt.sign(
+      payload,
+      config.get("jwtSecret"),
+      { expiresIn: 360000 },
+      (err, token) => {
+        if (err) throw err;
+        res.json({ token });
+      }
+    );
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("Server error");
+  }
+});
+ */
 /* router.get("/test", (req, res) => {
   usersModel.find({}, function (err, users) {
     if (err) {
@@ -108,5 +143,3 @@ router.post("/login", async (req, res) => {
       }
     });
 });  */
-
-module.exports = router;
