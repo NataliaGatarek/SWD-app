@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const dogsModel = require("../models/dogsModel");
+//const passport = require("passport"); //this is will use once the private routes are set//
 
 router.get("/all", (req, res) => {
   dogsModel.find({}, function (err, dogs) {
@@ -70,7 +71,7 @@ router.get("/newest", (req, res) => {
     res.status(500).send("Server error");
   }
 }); */
-
+//this should be a private!//
 router.post("/add", (req, res) => {
   const {
     name,
@@ -120,7 +121,7 @@ router.post("/add", (req, res) => {
       });
     });
 });
-
+//this should be a private!///
 router.get("/:id", (req, res) => {
   dogsModel.findOne({ _id: req.params.id }, (err, dogsModel) => {
     if (err) res.status(500).send(err);

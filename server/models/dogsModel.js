@@ -50,7 +50,6 @@ const dogsSchema = new mongoose.Schema({
     type: String,
     required: false,
   },
-  //what should be here?//
   image: {
     type: String,
     required: true,

@@ -1,6 +1,8 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const mongoURI = require("./config.js").mongoURI;
+const passport = require("passport");
+const { jwtStrategy } = require("./passport");
 
 const app = express();
 const port = process.env.PORT || 5000;
@@ -16,6 +18,8 @@ mongoose
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cors());
+app.use(passport.initialize());
+passport.use("jwt", jwtStrategy);
 
 app.use("/dogs", require("./routes/dogs"));
 app.use("/users", require("./routes/users"));

@@ -5,6 +5,7 @@ const jwt = require("jsonwebtoken");
 const secretOrKey = require("../config.js").secretOrKey;
 const { body, validationResult } = require("express-validator");
 const bcrypt = require("bcrypt");
+//const passport = require("passport"); //this is will use once the private routes are set//
 
 //register
 router.post(
