@@ -99,7 +99,7 @@ router.post(
     }
     try {
       //const user = await User.findById(req.user.id).select("-password");
-      const dogsComment = await dogsModel.findById(req.params.id); //here not sure if should be dog or dogsModel or what///
+      const dogsComment = await dogsModel.findById(req.params.id);
       const newComment = {
         text: req.body.text,
         /*  name: user.name,
@@ -114,6 +114,32 @@ router.post(
     }
   }
 );
+//deliting comment and this should be private//
+router.delete("/comments/:id/:comment_id", async (req, res) => {
+  try {
+    const dogsComment = await dogsModel.findById(req.params.id);
+    //pull out the comment
+    const comment = dogsComment.comments.find(
+      (comment) => comment.id === req.params.comment_id
+    );
+    //check if the comment exists
+    if (!comment) {
+      return res.status(404).json({ msg: "Comment does not exist" });
+    }
+    //check user
+    /* if (comment.user.toString() !== req.user.id) {
+         return res.status(401).json({ msg: "User not authorized" });
+       } */
+    dogsComment.comments = dogsComment.comments.filter(
+      ({ id }) => id !== req.params.comment_id
+    );
+    await dogsComment.save();
+    return res.json(dogsComment.comments);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("Server Error");
+  }
+});
 module.exports = router;
 
 /* router.post("/add", async (req, res) => {
