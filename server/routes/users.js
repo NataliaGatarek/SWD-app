@@ -53,6 +53,10 @@ router.post(
 
 //login
 router.post("/login", async (req, res) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() });
+  }
   const { email, password } = req.body;
   try {
     User.findOne({ email: email }, (err, user) => {

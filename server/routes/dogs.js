@@ -1,8 +1,11 @@
 const express = require("express");
 const router = express.Router();
 const dogsModel = require("../models/dogsModel");
+const User = require("../models/usersModel");
+const { check, validationResult } = require("express-validator");
 //const passport = require("passport"); //this is will use once the private routes are set//
 
+//getting all the dogs for the display page
 router.get("/all", (req, res) => {
   dogsModel.find({}, function (err, dogs) {
     if (err) {
@@ -13,6 +16,7 @@ router.get("/all", (req, res) => {
   });
 });
 
+//getting 3 newest dogs for the home page
 router.get("/newest", (req, res) => {
   dogsModel
     .find({}, function (err, dogs) {
@@ -26,52 +30,7 @@ router.get("/newest", (req, res) => {
     .limit(3);
 });
 
-/* router.post("/add", async (req, res) => {
-  const {
-    name,
-    kennel,
-    live,
-    description,
-    titles,
-    birth,
-    mname,
-    fname,
-    breeder,
-    breedingdog,
-    health,
-    additional,
-    contact,
-    image,
-  } = req.body;
-  console.log(image);
-  try {
-    const dog = new dogsModel({
-      name: name,
-      kennel: kennel,
-      live: live,
-      description: description,
-      titles: titles,
-      birth: birth,
-      mname: mname,
-      fname: fname,
-      breeder: breeder,
-      breedingdog: breedingdog,
-      health: health,
-      additional: additional,
-      image: image,
-      contact: contact,
-    });
-    await dog.save();
-    res.status(201).json({
-      message: "Success",
-      createdProduct: result,
-    });
-  } catch (error) {
-    console.error(err.message);
-    res.status(500).send("Server error");
-  }
-}); */
-//this should be a private!//
+//posting new dog via form and this should be a private!//
 router.post("/add", (req, res) => {
   const {
     name,
@@ -121,7 +80,7 @@ router.post("/add", (req, res) => {
       });
     });
 });
-//this should be a private!///
+//getting more info for the more info page and this should be a private!///
 router.get("/:id", (req, res) => {
   dogsModel.findOne({ _id: req.params.id }, (err, dogsModel) => {
     if (err) res.status(500).send(err);
@@ -129,4 +88,76 @@ router.get("/:id", (req, res) => {
   });
 });
 
+//adding comment to the dog and this should be private//
+router.post(
+  "/comments/:id",
+  check("text", "Text is required").notEmpty(),
+  async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+    try {
+      //const user = await User.findById(req.user.id).select("-password");
+      const dogsComment = await dogsModel.findById(req.params.id); //here not sure if should be dog or dogsModel or what///
+      const newComment = {
+        text: req.body.text,
+        /*  name: user.name,
+        user: req.user.id, */
+      };
+      dogsComment.comments.unshift(newComment);
+      await dogsComment.save();
+      res.json(dogsComment.comments);
+    } catch (err) {
+      console.error(err.message);
+      res.status(500).send("Server Error");
+    }
+  }
+);
 module.exports = router;
+
+/* router.post("/add", async (req, res) => {
+  const {
+    name,
+    kennel,
+    live,
+    description,
+    titles,
+    birth,
+    mname,
+    fname,
+    breeder,
+    breedingdog,
+    health,
+    additional,
+    contact,
+    image,
+  } = req.body;
+  console.log(image);
+  try {
+    const dog = new dogsModel({
+      name: name,
+      kennel: kennel,
+      live: live,
+      description: description,
+      titles: titles,
+      birth: birth,
+      mname: mname,
+      fname: fname,
+      breeder: breeder,
+      breedingdog: breedingdog,
+      health: health,
+      additional: additional,
+      image: image,
+      contact: contact,
+    });
+    await dog.save();
+    res.status(201).json({
+      message: "Success",
+      createdProduct: result,
+    });
+  } catch (error) {
+    console.error(err.message);
+    res.status(500).send("Server error");
+  }
+}); */
