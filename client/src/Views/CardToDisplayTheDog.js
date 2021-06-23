@@ -6,6 +6,7 @@ import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
 import Typography from "@material-ui/core/Typography";
 import Comment from "../Components/Comment.js";
+import DoneComment from "../Components/DoneComment.js";
 import {
   BrowserRouter as Router,
   Switch,
@@ -26,6 +27,7 @@ const useStyles = makeStyles({
 
 function CardToDisplayTheDog() {
   const classes = useStyles();
+  const [comments, setComments] = useState([]);
   const [details, setDetails] = useState("");
   let { id } = useParams();
   useEffect(() => {
@@ -34,6 +36,7 @@ function CardToDisplayTheDog() {
       .then((data) => {
         console.log(data);
         setDetails(data);
+        setComments(data.comments);
       });
   }, []);
   return (
@@ -43,7 +46,7 @@ function CardToDisplayTheDog() {
           <CardMedia
             className={classes.media}
             image={details.image}
-            title="Contemplative Reptile"
+            title="Dog"
           />
           <CardContent>
             <Typography gutterBottom variant="h5" component="h2">
@@ -84,6 +87,12 @@ function CardToDisplayTheDog() {
           </CardContent>
         </CardActionArea>
       </Card>
+     {comments.map(comment => {
+       return <div key={comment._id} comment={comment}> <p>
+         {comment.text}
+   </p>
+       </div>
+   })} 
       <Comment />
     </div>
   );

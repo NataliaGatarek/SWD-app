@@ -47,6 +47,7 @@ router.post("/add", (req, res) => {
     additional,
     contact,
     image,
+    comments,
   } = req.body;
   console.log(image);
   const dog = new dogsModel({
@@ -64,6 +65,7 @@ router.post("/add", (req, res) => {
     additional: additional,
     image: image,
     contact: contact,
+    comments:comments,
   });
   dog
     .save()
