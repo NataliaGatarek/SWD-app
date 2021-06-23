@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
+import "./views.css";
 import Card from "@material-ui/core/Card";
 import CardActionArea from "@material-ui/core/CardActionArea";
 import CardContent from "@material-ui/core/CardContent";
@@ -87,12 +88,12 @@ function CardToDisplayTheDog() {
           </CardContent>
         </CardActionArea>
       </Card>
+      <hr></hr>
+      <div className="flex-cards">
      {comments.map(comment => {
-       return <div key={comment._id} comment={comment}> <p>
-         {comment.text}
-   </p>
-       </div>
-   })} 
+       return <DoneComment key={comment._id} comment={comment}/>
+     })}
+      </div>
       <Comment />
     </div>
   );

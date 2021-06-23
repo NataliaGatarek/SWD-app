@@ -11,7 +11,7 @@ const cors = require("cors");
 //connect to the db//
 //mongoose//
 mongoose
-  .connect(mongoURI, { useNewurlPraser: true, useCreateIndex: true })
+  .connect(mongoURI, { useNewUrlParser: true, useCreateIndex: true })
   .then(() => console.log("Connection to Mongo DB established"))
   .catch((err) => console.log(err));
 

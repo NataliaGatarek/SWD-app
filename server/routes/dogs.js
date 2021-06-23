@@ -100,12 +100,12 @@ router.post(
       return res.status(400).json({ errors: errors.array() });
     }
     try {
-      //const user = await User.findById(req.user.id).select("-password");
+      //const user = await User.findById(req.params.id);
       const dogsComment = await dogsModel.findById(req.params.id);
       const newComment = {
-        text: req.body.text,
-        /*  name: user.name,
-        user: req.user.id, */
+      text: req.body.text,
+      //name: user.firstName,
+      //user: req.user.id,
       };
       dogsComment.comments.unshift(newComment);
       await dogsComment.save();

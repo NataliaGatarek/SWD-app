@@ -8,8 +8,8 @@ import { Typography } from "@material-ui/core";
 function Comment(props) {
     return (
         <div>
-            <Paper elevation={3}>
-                <Typography>{props.comment.text}</Typography>
+            <Paper elevation={3} style={{"height": "100px", "width":"300px"}}>
+                <Typography align="center">{props.comment.text}</Typography>
                </Paper>
 
                
