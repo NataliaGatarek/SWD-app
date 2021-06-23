@@ -91,7 +91,7 @@ function CardToDisplayTheDog() {
       <hr></hr>
       <div className="flex-cards">
      {comments.map(comment => {
-       return <DoneComment key={comment._id} comment={comment}/>
+       return <DoneComment key={comment._id} comment={comment} commentId={comment._id}/>
      })}
       </div>
       <Comment />

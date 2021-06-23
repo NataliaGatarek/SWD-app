@@ -25,21 +25,6 @@ function Comment(props) {
   const [value, setValue] = React.useState("Controlled");
   let { id } = useParams();
   const [text, setText] = useState('');
-
-  //posting new comment//
- /*  const [formComment, setFormComment] = useState({
-    text: ""
-  });
-  const {
-    comment,
-  } = formComment; */
- /*  const onChange = (e) =>
-    setFormComment({ ...formComment, [e.target.name]: e.target.value });
-  const handleOnSubmit = (event) => {
-    event.preventDefault();
-    fetchDataComment();
-    console.log("success"); 
-  };*/
   const fetchDataComment=()=> {
     fetch(`http://localhost:5000/dogs/comments/${id}`, {
       method: "POST",
@@ -47,7 +32,9 @@ function Comment(props) {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        text
+        "text": text,
+        //"userId": user.id,
+
       }),
     })
       .then((res) => res.json())
@@ -68,7 +55,7 @@ function Comment(props) {
           setText('');
         }}>
       <div className="flex-form">
-         <TextField
+         <TextField style={{"height": "100px", "width":"300px"}}
           id="outlined-multiline-static"
           label="Add your comment"
           multiline

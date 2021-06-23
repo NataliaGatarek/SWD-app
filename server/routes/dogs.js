@@ -100,6 +100,7 @@ router.post(
       return res.status(400).json({ errors: errors.array() });
     }
     try {
+      //access the id of the user from the body
       //const user = await User.findById(req.params.id);
       const dogsComment = await dogsModel.findById(req.params.id);
       const newComment = {
