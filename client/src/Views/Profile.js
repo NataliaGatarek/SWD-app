@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useContext } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import PetsIcon from "@material-ui/icons/Pets";
 import Paper from "@material-ui/core/Paper";
+import { AuthContext } from "../Context/AuthContext";
 import {
   BrowserRouter as Router,
   Switch,
@@ -24,6 +25,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 function Profile() {
   const classes = useStyles();
+  const { newUser } = useContext(AuthContext);
 
   return (
     <div>
@@ -43,7 +45,12 @@ function Profile() {
             color="textSecondary"
             paragraph
           >
-            Your information
+            <p>
+              <strong>Your information:</strong>
+            </p>
+            <p>{newUser.firstName}</p>
+            <p>{newUser.lastName}</p>
+            <p> {newUser.email}</p>
           </Typography>
         </Paper>
         <Paper elevation={3}>

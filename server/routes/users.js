@@ -5,7 +5,7 @@ const jwt = require("jsonwebtoken");
 const secretOrKey = require("../config.js").secretOrKey;
 const { body, validationResult } = require("express-validator");
 const bcrypt = require("bcrypt");
-//const passport = require("passport"); //this is will use once the private routes are set//
+const passport = require("passport"); //this is will use once the private routes are set//
 
 //register
 router.post(
@@ -53,45 +53,75 @@ router.post(
 
 //login
 router.post("/login", async (req, res) => {
-  const errors = validationResult(req);
-  if (!errors.isEmpty()) {
-    return res.status(400).json({ errors: errors.array() });
-  }
   const { email, password } = req.body;
-  try {
-    User.findOne({ email: email }, (err, user) => {
-      if (err) {
-        res.send("Email does not exist");
-      } else {
-        bcrypt.compare(password, user.password, function (err, result) {
-          console.log(result);
-          if (err) {
-            res.send(err);
-          }
-          if (result) {
-            const options = {
-              id: user._id,
-            };
-            const token = jwt.sign(options, secretOrKey, { expiresIn: "8h" });
-            console.log(token);
-            res.json({
-              success: true,
-              token: token,
-            });
-          } else {
-            res.send("password does not match");
-          }
-        });
-      }
-    });
-  } catch (err) {
-    console.error(err.message);
-    res.status(500).send("Server error");
-  }
+  User.findOne({ email: email }, (err, user) => {
+    if (err) {
+      res.send("Email does not exist");
+    } else {
+      bcrypt.compare(password, user.password, function (err, result) {
+        console.log(result);
+        if (err) {
+          res.send(err);
+        }
+        if (result) {
+          const options = {
+            id: user._id,
+          };
+          const token = jwt.sign(options, secretOrKey, { expiresIn: "20d" });
+          console.log(token);
+          res.json({
+            success: true,
+            token: token,
+          });
+        } else {
+          res.send("password does not match");
+        }
+      });
+    }
+  });
 });
 
+//get the profile to display the user//
+router.get(
+  "/profile",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    const newUser = {
+      _id: req.user._id,
+      firstName: req.user.firstName,
+      lastName: req.user.lastName,
+      email: req.user.email,
+      favorites: req.user.favorites,
+      dogs: req.user.dogs,
+    };
+    console.log(newUser);
+    res.send(newUser);
+  }
+);
 module.exports = router;
 
+/* router.get(
+  "/profile",
+  passport.authenticate("jwt", { session: false }),
+  async (req, res) => {
+    try {
+      const newUser = await User.findOne({
+        user: req.user.id,
+        firstName: req.user.firstName,
+      }).populate("dog");
+
+      if (!newUser) {
+        return res
+          .status(400)
+          .json({ msg: "There is no profile for this user" });
+      }
+      res.json(newUser);
+    } catch (err) {
+      console.error(err.message);
+      res.status(500).send("Server Error");
+    }
+  }
+); */
 /* try {
     const user = await User.findOne({ email });
     if (!user) {

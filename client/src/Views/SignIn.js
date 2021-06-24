@@ -1,10 +1,9 @@
 import React, { useState } from "react";
+import axios from "axios";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Checkbox from "@material-ui/core/Checkbox";
 import Grid from "@material-ui/core/Grid";
 import Box from "@material-ui/core/Box";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
@@ -34,6 +33,8 @@ const useStyles = makeStyles((theme) => ({
 
 function SignIn() {
   const classes = useStyles();
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -45,6 +46,24 @@ function SignIn() {
 
   const handleOnSubmit = async (event) => {
     event.preventDefault();
+    try {
+      const res = await axios.post(
+        "http://localhost:5000/users/login",
+        formData
+      );
+      const storageLocal = await window.localStorage.setItem(
+        "token",
+        res.data.token
+      );
+      setError(``);
+      setLoading(true);
+      console.log("login successfull");
+    } catch (error) {
+      console.log(error);
+      console.log(formData);
+      setError(`Email address or password is wrong`);
+    }
+    setLoading(false);
     console.log("success");
   };
 

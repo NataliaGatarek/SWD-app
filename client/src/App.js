@@ -8,37 +8,40 @@ import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import NavBar from "./Components/NavBar.js";
 import AddDog from "./Views/AddDog.js";
 import { DogContextProvider } from "./Context/DogContext.js";
+import { AuthContextProvider } from "./Context/AuthContext.js";
 
 function App() {
   return (
-    <DogContextProvider>
-      <Router>
-        <NavBar />
-        <Switch>
-          <Route exact path="/">
-            <Home />
-          </Route>
-          <Route exact path="/SignIn">
-            <SignIn />
-          </Route>
-          <Route exect path="/SignUp">
-            <SignUp />
-          </Route>
-          <Route exect path="/Profile">
-            <Profile />
-          </Route>
-          <Route exact path="/ListOfDogs">
-            <ListOfDogs />
-          </Route>
-          <Route exect path="/CardToDisplayTheDog/:id">
-            <CardToDisplayTheDog />
-          </Route>
-          <Route exact path="/AddDog">
-            <AddDog />
-          </Route>
-        </Switch>
-      </Router>
-    </DogContextProvider>
+    <AuthContextProvider>
+      <DogContextProvider>
+        <Router>
+          <NavBar />
+          <Switch>
+            <Route exact path="/">
+              <Home />
+            </Route>
+            <Route exact path="/SignIn">
+              <SignIn />
+            </Route>
+            <Route exect path="/SignUp">
+              <SignUp />
+            </Route>
+            <Route exect path="/Profile">
+              <Profile />
+            </Route>
+            <Route exact path="/ListOfDogs">
+              <ListOfDogs />
+            </Route>
+            <Route exect path="/CardToDisplayTheDog/:id">
+              <CardToDisplayTheDog />
+            </Route>
+            <Route exact path="/AddDog">
+              <AddDog />
+            </Route>
+          </Switch>
+        </Router>
+      </DogContextProvider>
+    </AuthContextProvider>
   );
 }
 
