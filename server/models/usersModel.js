@@ -25,6 +25,5 @@ const usersSchema = new mongoose.Schema({
     type: [],
   },
   dogs: { type: [{ type: mongoose.Schema.Types.ObjectId, ref: "Dog" }] },
-  //comments: { type: [{ type: mongoose.Schema.Types.ObjectId, ref: "Comments" }] },
 });
 module.exports = mongoose.model("User", usersSchema);

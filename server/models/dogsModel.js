@@ -58,7 +58,7 @@ const dogsSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  owner: { type: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }] },
+  owner: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
   comments: [
     {
       text: {

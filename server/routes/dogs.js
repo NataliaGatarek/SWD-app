@@ -31,58 +31,88 @@ router.get("/newest", (req, res) => {
 });
 
 //posting new dog via form and this should be a private!//
-router.post("/add", (req, res) => {
-  const {
-    name,
-    kennel,
-    live,
-    description,
-    titles,
-    birth,
-    mname,
-    fname,
-    breeder,
-    breedingdog,
-    health,
-    additional,
-    contact,
-    image,
-    comments,
-  } = req.body;
-  console.log(image);
-  const dog = new dogsModel({
-    name: name,
-    kennel: kennel,
-    live: live,
-    description: description,
-    titles: titles,
-    birth: birth,
-    mname: mname,
-    fname: fname,
-    breeder: breeder,
-    breedingdog: breedingdog,
-    health: health,
-    additional: additional,
-    image: image,
-    contact: contact,
-    comments: comments,
-  });
-  dog
-    .save()
-    .then((result) => {
-      res.status(201).json({
-        message: "Handling POST requests to /dog",
-        createdProduct: result,
-        //access users collection from the Id, find the correct user and add the dog under the dogs array//
-      });
-    })
-    .catch((err) => {
-      console.log(err);
-      res.status(400).json({
-        error: err,
-      });
+router.post(
+  "/add",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    const {
+      name,
+      kennel,
+      live,
+      description,
+      titles,
+      birth,
+      mname,
+      fname,
+      breeder,
+      breedingdog,
+      health,
+      additional,
+      contact,
+      image,
+      comments,
+    } = req.body;
+    console.log(image);
+    const dog = new dogsModel({
+      name: name,
+      kennel: kennel,
+      live: live,
+      description: description,
+      titles: titles,
+      birth: birth,
+      mname: mname,
+      fname: fname,
+      breeder: breeder,
+      breedingdog: breedingdog,
+      health: health,
+      additional: additional,
+      image: image,
+      contact: contact,
+      comments: comments,
+      owner: req.user._id,
     });
-});
+    dog
+      .save()
+      .then((result) => {
+        res.status(201).json({
+          message: "Handling POST requests to /dog",
+          createdProduct: result,
+          //access users collection from the Id, find the correct user and add the dog under the dogs array//
+        });
+        User.findByIdAndUpdate(
+          req.user._id,
+          {
+            $push: { dogs: result._id },
+          },
+          (error, success) => {
+            console.log(error, success);
+            if (error) {
+              res.send(error);
+            } else {
+              res.send("Success");
+            }
+          }
+        );
+        /* .then((user) => {
+          console.log(user);
+          res.send("Success!"); */
+        //});
+        /* Model.findByIdAndUpdate(
+        id,
+        { $set: { name: "jason bourne" } },
+        options,
+        callback
+      ); */
+        console.log(result);
+      })
+      .catch((err) => {
+        console.log(err);
+        res.status(400).json({
+          error: err,
+        });
+      });
+  }
+);
 //getting more info for the more info page and this should be a private!///
 router.get("/:id", (req, res) => {
   dogsModel.findOne({ _id: req.params.id }, (err, dogsModel) => {

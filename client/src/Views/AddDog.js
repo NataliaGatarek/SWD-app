@@ -35,7 +35,6 @@ function AddDog() {
         console.log(error);
       });
   };
-
   const [formDogData, setFormDogData] = useState({
     name: "",
     kennel: "",
@@ -51,6 +50,7 @@ function AddDog() {
     additional: "",
     image: "",
     contact: "",
+    //owner: localStorage.getItem("token"),
   });
   const {
     name,
@@ -67,6 +67,7 @@ function AddDog() {
     additional,
     image,
     contact,
+    // owner,
   } = formDogData;
   const onChange = (e) =>
     setFormDogData({ ...formDogData, [e.target.name]: e.target.value });
@@ -76,6 +77,7 @@ function AddDog() {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        Authorization: "Bearer " + localStorage.getItem("token"),
       },
       body: JSON.stringify({
         name,
