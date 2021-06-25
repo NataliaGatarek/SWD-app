@@ -77,6 +77,9 @@ function CardToDisplayTheDog() {
               Breeding dog: {details.breedingdog}
             </Typography>
             <Typography gutterBottom component="p">
+              Are you a breeder?: {details.breeder}
+            </Typography>
+            <Typography gutterBottom component="p">
               Heatlh info: {details.heatlh}
             </Typography>
             <Typography gutterBottom component="p">
@@ -90,11 +93,17 @@ function CardToDisplayTheDog() {
       </Card>
       <hr></hr>
       <div className="flex-cards">
-     {comments.map(comment => {
-       return <DoneComment key={comment._id} comment={comment} commentId={comment._id}/>
-     })}
+        <Comment />
+        {comments.map((comment) => {
+          return (
+            <DoneComment
+              key={comment._id}
+              comment={comment}
+              commentId={comment._id}
+            />
+          );
+        })}
       </div>
-      <Comment />
     </div>
   );
 }

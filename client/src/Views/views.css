@@ -17,3 +17,23 @@
 .header-style {
   text-align: center;
 }
+.comment {
+  display: flex;
+  flex: row;
+  justify-content: space-around;
+}
+.round-img {
+  margin: 5px;
+  width: 70px;
+  height: 70px;
+}
+.tag {
+  margin: 0;
+  text-align: center;
+}
+.comment-main {
+  padding: 2px;
+}
+.typ {
+  padding-top: 50%;
+}

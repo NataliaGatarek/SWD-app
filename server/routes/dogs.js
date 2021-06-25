@@ -3,7 +3,7 @@ const router = express.Router();
 const dogsModel = require("../models/dogsModel");
 const User = require("../models/usersModel");
 const { check, validationResult } = require("express-validator");
-//const passport = require("passport"); //this is will use once the private routes are set//
+const passport = require("passport"); //this is will use once the private routes are set//
 
 //getting all the dogs for the display page
 router.get("/all", (req, res) => {
@@ -65,7 +65,7 @@ router.post("/add", (req, res) => {
     additional: additional,
     image: image,
     contact: contact,
-    comments:comments,
+    comments: comments,
   });
   dog
     .save()
@@ -73,6 +73,7 @@ router.post("/add", (req, res) => {
       res.status(201).json({
         message: "Handling POST requests to /dog",
         createdProduct: result,
+        //access users collection from the Id, find the correct user and add the dog under the dogs array//
       });
     })
     .catch((err) => {
@@ -93,6 +94,7 @@ router.get("/:id", (req, res) => {
 //adding comment to the dog and this should be private//
 router.post(
   "/comments/:id",
+  //passport.authenticate("jwt", { session: false }),
   check("text", "Text is required").notEmpty(),
   async (req, res) => {
     const errors = validationResult(req);
@@ -101,12 +103,14 @@ router.post(
     }
     try {
       //access the id of the user from the body
-      //const user = await User.findById(req.params.id);
+      const user = await User.findById(req.body.userId);
       const dogsComment = await dogsModel.findById(req.params.id);
+      console.log(req.body);
+      console.log(user);
       const newComment = {
-      text: req.body.text,
-      //name: user.firstName,
-      //user: req.user.id,
+        text: req.body.text,
+        userName: user.firstName,
+        userId: user.id,
       };
       dogsComment.comments.unshift(newComment);
       await dogsComment.save();
