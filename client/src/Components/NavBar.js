@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { fade, makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
@@ -9,13 +9,14 @@ import Badge from "@material-ui/core/Badge";
 import MenuItem from "@material-ui/core/MenuItem";
 import Menu from "@material-ui/core/Menu";
 import MenuIcon from "@material-ui/icons/Menu";
-import SearchIcon from "@material-ui/icons/Search";
 import AccountCircle from "@material-ui/icons/AccountCircle";
 import MoreIcon from "@material-ui/icons/MoreVert";
-import KeyboardBackspaceIcon from "@material-ui/icons/KeyboardBackspace";
 import LockOpenIcon from "@material-ui/icons/LockOpen";
+import LockIcon from "@material-ui/icons/Lock";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import BackButton from "./BackButton.js";
+import { AuthContext } from "../Context/AuthContext";
+import axios from "axios";
 import "../Views/views.css";
 import {
   BrowserRouter as Router,
@@ -69,30 +70,31 @@ function NavBar(props) {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
-
-  const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
-
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
   };
-
   const handleMobileMenuClose = () => {
     setMobileMoreAnchorEl(null);
-  };
-
-  const handleMenuClose = () => {
-    setAnchorEl(null);
-    handleMobileMenuClose();
   };
 
   const handleMobileMenuOpen = (event) => {
     setMobileMoreAnchorEl(event.currentTarget);
   };
-
   const menuId = "primary-search-account-menu";
-
   const mobileMenuId = "primary-search-account-menu-mobile";
+
+  const history = useHistory();
+  const { newUser, setNewUser, loading, setLoading } = useContext(AuthContext);
+  const handleLogout = async () => {
+    const user = { _id: newUser._id };
+    setNewUser([]);
+    setLoading(true);
+    window.localStorage.removeItem("token");
+    history.push("/");
+    await axios.post("/users/logout", user);
+  };
+
   const renderMobileMenu = (
     <Menu
       anchorEl={mobileMoreAnchorEl}
@@ -129,6 +131,14 @@ function NavBar(props) {
           <AccountCircle />
         </IconButton>
         <Link to="/Profile">Profile</Link>
+      </MenuItem>
+      <MenuItem onClick={handleLogout}>
+        <IconButton aria-label="signin" color="inherit">
+          <Badge color="secondary">
+            <LockIcon />
+          </Badge>
+        </IconButton>
+        <p>Sign out</p>
       </MenuItem>
     </Menu>
   );

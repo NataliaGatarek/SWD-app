@@ -98,6 +98,16 @@ router.get(
     res.send(newUser);
   }
 );
+
+router.get(
+  "/logout",
+  //passport.authenticate("jwt", { session: false }),
+  function (req, res) {
+    req.logout();
+    res.redirect("/");
+  }
+);
+
 module.exports = router;
 
 /* router.get(
