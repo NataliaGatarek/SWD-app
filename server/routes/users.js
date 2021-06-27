@@ -94,6 +94,7 @@ router.get(
       favorites: req.user.favorites,
       dogs: req.user.dogs,
     };
+    //newUser.populate("dogs", ["name", "image", "kennel", "description"]);
     console.log(newUser);
     res.send(newUser);
   }

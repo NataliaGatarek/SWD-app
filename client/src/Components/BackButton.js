@@ -12,7 +12,7 @@ import {
 function BackButton(props) {
   const history = useHistory();
   const BackHistory = () => {
-    history.push("");
+    history.goBack();
   };
   return (
     <div>
