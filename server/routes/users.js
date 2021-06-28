@@ -94,7 +94,6 @@ router.get(
       favorites: req.user.favorites,
       dogs: req.user.dogs,
     };
-    //newUser.populate("dogs", ["name", "image", "kennel", "description"]);
     console.log(newUser);
     res.send(newUser);
   }
@@ -111,67 +110,10 @@ router.get(
 
 module.exports = router;
 
-/* router.get(
-  "/profile",
-  passport.authenticate("jwt", { session: false }),
-  async (req, res) => {
-    try {
-      const newUser = await User.findOne({
-        user: req.user.id,
-        firstName: req.user.firstName,
-      }).populate("dog");
-
-      if (!newUser) {
-        return res
-          .status(400)
-          .json({ msg: "There is no profile for this user" });
-      }
-      res.json(newUser);
-    } catch (err) {
-      console.error(err.message);
-      res.status(500).send("Server Error");
-    }
-  }
-); */
-/* try {
-    const user = await User.findOne({ email });
-    if (!user) {
-      return res.status(400).json({ errors: [{ msg: "Invalid credentials" }] });
-    }
-    const isMatched = await bcrypt.compare(password, user.password);
-    if (!isMatched) {
-      return res.status(400).json({ errors: [{ msg: "Invalid Credentials" }] });
-    }
-    res.status(200).json({ _id: user._id, username: user.username });
-    //payload and sign the token again here//
-    const payload = {
-      user: {
-        id: user.id,
-      },
-    };
-    jwt.sign(
-      payload,
-      config.get("jwtSecret"),
-      { expiresIn: 360000 },
-      (err, token) => {
-        if (err) throw err;
-        res.json({ token });
-      }
-    );
-  } catch (err) {
-    console.error(err.message);
-    res.status(500).send("Server error");
-  }
+router.post("/logout", async (req, res) => {
+  const id = req.body._id;
+  await User.findOneAndUpdate({ _id: id }, { $set: { login: false } });
 });
- */
-/* router.get("/test", (req, res) => {
-  usersModel.find({}, function (err, users) {
-    if (err) {
-      res.send(err);
-    } else {
-      res.send(users);
-    }
-  });
 }); */
 
 /* router.get("/:id", (req, res) => {
@@ -187,5 +129,5 @@ module.exports = router;
         console.log(users.dogs);
         res.send(users);
       }
-    });
+});
 });  */
