@@ -18,14 +18,14 @@ const useStyles = makeStyles((theme) => ({
     flexWrap: "wrap",
     "& > *": {
       margin: theme.spacing(1),
-      width: theme.spacing(45),
-      height: theme.spacing(32),
+      minWidth: theme.spacing(45),
+      minHeight: theme.spacing(32),
     },
   },
 }));
 function Profile() {
   const classes = useStyles();
-  const { newUser } = useContext(AuthContext);
+  const { userObject, displayDogs } = useContext(AuthContext);
 
   return (
     <div>
@@ -38,7 +38,7 @@ function Profile() {
         </Link>
       </h2>
       <div className={classes.root}>
-        <Paper elevation={3}>
+        <Paper elevation={12}>
           <Typography
             variant="h5"
             align="center"
@@ -48,29 +48,40 @@ function Profile() {
             <p>
               <strong>Your information:</strong>
             </p>
-            <p>{newUser.firstName}</p>
-            <p>{newUser.lastName}</p>
-            <p> {newUser.email}</p>
+            <p>{userObject.firstName}</p>
+            <p>{userObject.lastName}</p>
+            <p> {userObject.email}</p>
           </Typography>
         </Paper>
-        <Paper elevation={3}>
+        <Paper elevation={12}>
           <Typography
             variant="h5"
             align="center"
             color="textSecondary"
             paragraph
           >
-            Your favorites
+            <strong>Your favorites:</strong>
           </Typography>
         </Paper>
-        <Paper elevation={3}>
+        <Paper elevation={12}>
           <Typography
             variant="h5"
             align="center"
             color="textSecondary"
             paragraph
           >
-            Your dogs
+            <strong>Your dogs:</strong>
+            <div>
+              {displayDogs.map((displayDog) => {
+                return (
+                  <div key={displayDog.id} displayDogs={displayDog}>
+                    <p>{displayDog.name} </p>
+                    <p>{displayDog.description}</p>
+                    <hr></hr>
+                  </div>
+                );
+              })}
+            </div>
           </Typography>
         </Paper>
       </div>

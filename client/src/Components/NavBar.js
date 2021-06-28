@@ -4,7 +4,6 @@ import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
-import InputBase from "@material-ui/core/InputBase";
 import Badge from "@material-ui/core/Badge";
 import MenuItem from "@material-ui/core/MenuItem";
 import Menu from "@material-ui/core/Menu";
@@ -85,14 +84,15 @@ function NavBar(props) {
   const mobileMenuId = "primary-search-account-menu-mobile";
 
   const history = useHistory();
-  const { newUser, setNewUser, loading, setLoading } = useContext(AuthContext);
+  const { userObject, setUserObject, loading, setLoading } =
+    useContext(AuthContext);
   const handleLogout = async () => {
-    const user = { _id: newUser._id };
-    setNewUser([]);
+    const user = { _id: userObject._id };
+    setUserObject([]);
     setLoading(true);
     window.localStorage.removeItem("token");
     history.push("/");
-    await axios.post("/users/logout", user);
+    await axios.post("http://localhost:5000/users/logout", user);
   };
 
   const renderMobileMenu = (

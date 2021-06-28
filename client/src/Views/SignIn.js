@@ -11,7 +11,13 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import { AuthContext } from "../Context/AuthContext";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link,
+  useHistory,
+} from "react-router-dom";
 const useStyles = makeStyles((theme) => ({
   paper: {
     marginTop: theme.spacing(8),
@@ -33,6 +39,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function SignIn() {
+  const history = useHistory();
   const classes = useStyles();
   const { loading, setLoading } = useContext(AuthContext);
   const [error, setError] = useState("");
@@ -65,6 +72,7 @@ function SignIn() {
       setError(`Email address or password is wrong`);
     }
     setLoading(false);
+    history.push("/");
     console.log("success");
   };
 

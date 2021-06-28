@@ -13,6 +13,7 @@ import {
   Route,
   Link,
   useParams,
+  useHistory,
 } from "react-router-dom";
 const useStyles = makeStyles((theme) => ({
   margin: {
@@ -24,6 +25,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function Comment(props) {
+  const history = useHistory();
   const classes = useStyles();
   let { id } = useParams();
   const { text, userName } = props.comment;
@@ -42,11 +44,13 @@ function Comment(props) {
       .then((res) => res.json())
       .then((data) => {
         console.log("data", data);
+        history.goBack();
       })
       .catch((err) => {
         console.log(err);
       });
   };
+
   return (
     <div className="comment-main">
       <Paper elevation={10} style={{ height: "140px", width: "300px" }}>
@@ -75,22 +79,3 @@ function Comment(props) {
   );
 }
 export default Comment;
-
-{
-  /* <div className="comment-main">
-  <Paper elevation={3} style={{ height: "100px", width: "300px" }}>
-    <div className="comment">
-      <p className="tag">name</p>
-      <img src={avatar} alt="avatar" className="round-img" />
-    </div>
-    <Typography align="center">{text}</Typography>
-    <IconButton
-      aria-label="delete"
-      className={classes.margin}
-      onClick={() => fetchDeleteComment()}
-    >
-      <DeleteIcon fontSize="small" />
-    </IconButton>
-  </Paper>
-</div>; */
-}

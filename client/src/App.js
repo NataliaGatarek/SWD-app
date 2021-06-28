@@ -9,6 +9,7 @@ import NavBar from "./Components/NavBar.js";
 import AddDog from "./Views/AddDog.js";
 import { DogContextProvider } from "./Context/DogContext.js";
 import { AuthContextProvider } from "./Context/AuthContext.js";
+import ProfilePrivateRoute from "./PrivateRoutes/ProfilePrivateRoute.js";
 
 function App() {
   return (
@@ -26,15 +27,22 @@ function App() {
             <Route exect path="/SignUp">
               <SignUp />
             </Route>
-            <Route exect path="/Profile">
-              <Profile />
-            </Route>
+            <ProfilePrivateRoute
+              children={<Profile />}
+              exact
+              path="/Profile"
+            ></ProfilePrivateRoute>
             <Route exact path="/ListOfDogs">
               <ListOfDogs />
             </Route>
-            <Route exect path="/CardToDisplayTheDog/:id">
+            <ProfilePrivateRoute
+              children={<CardToDisplayTheDog />}
+              exact
+              path="/CardToDisplayTheDog/:id"
+            ></ProfilePrivateRoute>
+            {/* <Route exect path="/CardToDisplayTheDog/:id">
               <CardToDisplayTheDog />
-            </Route>
+            </Route> */}
             <Route exact path="/AddDog">
               <AddDog />
             </Route>

@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const usersSchema = new mongoose.Schema({
+  login: Boolean,
   firstName: {
     type: String,
     required: true,

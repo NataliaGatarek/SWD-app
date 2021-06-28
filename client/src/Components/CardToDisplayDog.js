@@ -31,7 +31,7 @@ function CardToDisplayDog(props) {
         <CardMedia
           className={classes.media}
           image={props.dogs.image}
-          title="Contemplative Reptile"
+          title="dog"
         />
         <CardContent>
           <Typography gutterBottom variant="h5" component="h2">

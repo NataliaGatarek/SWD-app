@@ -12,7 +12,8 @@ const jwtVerify = async (payload, next) => {
   try {
     const user = await usersModel.findById(payload.id);
     console.log("user :>> ", user);
-    if (!user) {
+    if (!user || !user.login) {
+      console.log('not showing profile because of unauthroized');
       return next(null, false);
     }
     next(null, user);

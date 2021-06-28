@@ -42,6 +42,7 @@ router.post(
         lastName: req.body.lastName,
         email: req.body.email,
         password: hashedPw,
+        login: false,
       });
       await user.save();
       res.send("User registered");
@@ -54,7 +55,7 @@ router.post(
 //login
 router.post("/login", async (req, res) => {
   const { email, password } = req.body;
-  User.findOne({ email: email }, (err, user) => {
+  const user = await User.findOne({ email: email }, (err, user) => {
     if (err) {
       res.send("Email does not exist");
     } else {
@@ -79,6 +80,10 @@ router.post("/login", async (req, res) => {
       });
     }
   });
+  if (user) {
+    user.login = true;
+    await user.save();
+  }
 });
 
 //get the profile to display the user//
@@ -86,41 +91,51 @@ router.get(
   "/profile",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
-    const newUser = {
-      _id: req.user._id,
-      firstName: req.user.firstName,
-      lastName: req.user.lastName,
-      email: req.user.email,
-      favorites: req.user.favorites,
-      dogs: req.user.dogs,
-    };
-    console.log(newUser);
-    res.send(newUser);
+    User.findById(req.user._id)
+      .populate("dogs", ["name", "kennel", "image", "description"])
+      .exec(function (err, user) {
+        if (err) {
+          console.log(err);
+          res.send(err);
+        } else {
+          const userObject = {
+            _id: user._id,
+            firstName: user.firstName,
+            lastName: user.lastName,
+            email: user.email,
+            favorites: user.favorites,
+            dogs: user.dogs,
+          };
+          console.log(userObject);
+          res.send(userObject);
+        }
+      });
   }
 );
-
-router.get(
-  "/logout",
-  //passport.authenticate("jwt", { session: false }),
-  function (req, res) {
-    req.logout();
-    res.redirect("/");
+/*  newUser
+      .find({})
+      .populate({path:"dogs", select: ["name", "kennel","image", "description"]})
+      .then((NewUser) => {
+        res.send(NewUser);
+        console.log(newUser);
+      })
+      .catch((err) => res.send(err));
   }
-);
+); */
 
-module.exports = router;
+//newUser.find({ _id: req.user._id }).populate("dogs");
+//populate("dogs", ["name", "kennel","image", "description");
 
 router.post("/logout", async (req, res) => {
   const id = req.body._id;
   await User.findOneAndUpdate({ _id: id }, { $set: { login: false } });
 });
-}); */
 
 /* router.get("/:id", (req, res) => {
   let usersId = req.params.id;
-  usersModel
+  User
     .findById(usersId)
-    .populate("dogs")
+    .populate("dogs", ["name", "kennel","image", "description"])
     .exec(function (err, users) {
       if (err) {
         console.log(err);
@@ -129,5 +144,7 @@ router.post("/logout", async (req, res) => {
         console.log(users.dogs);
         res.send(users);
       }
-});
-});  */
+    });
+}); */
+
+module.exports = router;

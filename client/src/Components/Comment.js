@@ -12,6 +12,7 @@ import {
   Route,
   Link,
   useParams,
+  useHistory,
 } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
@@ -24,12 +25,12 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function Comment(props) {
+  const history = useHistory();
   const classes = useStyles();
   const [value, setValue] = React.useState("Controlled");
   let { id } = useParams();
-  const { newUser } = useContext(AuthContext);
+  const { userObject } = useContext(AuthContext);
   const [text, setText] = useState("");
-  console.log(newUser);
   const fetchDataComment = () => {
     fetch(`http://localhost:5000/dogs/comments/${id}`, {
       method: "POST",
@@ -38,20 +39,19 @@ function Comment(props) {
       },
       body: JSON.stringify({
         text: text,
-        userId: newUser._id,
+        userId: userObject._id,
       }),
     })
       .then((res) => res.json())
       .then((data) => {
         console.log("data", data);
+        history.goBack();
       })
       .catch((err) => {
         console.log(err);
       });
   };
-  useEffect(() => {
-    fetchDataComment();
-  }, []);
+
   return (
     <div className="comment-main">
       <form
@@ -66,7 +66,7 @@ function Comment(props) {
         <Paper elevation={10} style={{ height: "140px", width: "300px" }}>
           <div className="comment">
             <div>
-              <p className="tag">{newUser.firstName}</p>
+              <p className="tag">{userObject.firstName}</p>
               <img src={avatar} alt="avatar" className="round-img" />
             </div>
             <div>

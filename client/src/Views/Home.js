@@ -8,6 +8,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import CardToDisplayNewest from "../Components/CardToDisplayNewest.js";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import "../Views/views.css";
 
 const useStyles = makeStyles((theme) => ({
   icon: {
@@ -101,7 +102,9 @@ function Home() {
               <Grid item xs={12} sm={6} md={4}>
                 {newest.map((newest) => {
                   return (
-                    <CardToDisplayNewest key={newest.id} newest={newest} />
+                    <div className="home">
+                      <CardToDisplayNewest key={newest.id} newest={newest} />
+                    </div>
                   );
                 })}
               </Grid>

@@ -77,7 +77,6 @@ router.post(
         res.status(201).json({
           message: "Handling POST requests to /dog",
           createdProduct: result,
-          //access users collection from the Id, find the correct user and add the dog under the dogs array//
         });
         User.findByIdAndUpdate(
           req.user._id,
@@ -93,16 +92,6 @@ router.post(
             }
           }
         );
-        /* .then((user) => {
-          console.log(user);
-          res.send("Success!"); */
-        //});
-        /* Model.findByIdAndUpdate(
-        id,
-        { $set: { name: "jason bourne" } },
-        options,
-        callback
-      ); */
         console.log(result);
       })
       .catch((err) => {

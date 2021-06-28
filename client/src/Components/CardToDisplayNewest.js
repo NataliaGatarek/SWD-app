@@ -35,7 +35,6 @@ function CardToDisplayNewest(props) {
           <Typography>{props.newest.description}</Typography>
         </CardContent>
       </Card>
-      ;
     </div>
   );
 }
