@@ -166,50 +166,5 @@ router.delete("/comments/:id/:comment_id", async (req, res) => {
     res.status(500).send("Server Error");
   }
 });
-module.exports = router;
 
-/* router.post("/add", async (req, res) => {
-  const {
-    name,
-    kennel,
-    live,
-    description,
-    titles,
-    birth,
-    mname,
-    fname,
-    breeder,
-    breedingdog,
-    health,
-    additional,
-    contact,
-    image,
-  } = req.body;
-  console.log(image);
-  try {
-    const dog = new dogsModel({
-      name: name,
-      kennel: kennel,
-      live: live,
-      description: description,
-      titles: titles,
-      birth: birth,
-      mname: mname,
-      fname: fname,
-      breeder: breeder,
-      breedingdog: breedingdog,
-      health: health,
-      additional: additional,
-      image: image,
-      contact: contact,
-    });
-    await dog.save();
-    res.status(201).json({
-      message: "Success",
-      createdProduct: result,
-    });
-  } catch (error) {
-    console.error(err.message);
-    res.status(500).send("Server error");
-  }
-}); */
+module.exports = router;

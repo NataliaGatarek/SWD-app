@@ -45,7 +45,7 @@ function Comment(props) {
       .then((res) => res.json())
       .then((data) => {
         console.log("data", data);
-        history.goBack();
+        //history.goBack();
       })
       .catch((err) => {
         console.log(err);
@@ -98,36 +98,3 @@ function Comment(props) {
   );
 }
 export default Comment;
-
-{
-  /* <form
-      className={classes.root}
-      noValidate
-      autoComplete="off"
-      onSubmit={(e) => {
-        e.preventDefault();
-        fetchDataComment({ text });
-        setText("");
-      }}
-    >
-      <div className="flex-form">
-        <TextField
-          style={{ height: "100px", width: "300px" }}
-          id="outlined-multiline-static"
-          label="Add your comment"
-          multiline
-          rows={4}
-          defaultValue="Add your comment"
-          variant="outlined"
-          name="comment"
-          id="comment"
-          autoFocus
-          value={text}
-          onChange={(e) => setText(e.target.value)}
-        />
-        <Button variant="contained" type="submit">
-          Add your comment
-        </Button>
-      </div>
-    </form> */
-}

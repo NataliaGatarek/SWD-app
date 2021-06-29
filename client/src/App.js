@@ -40,9 +40,6 @@ function App() {
               exact
               path="/CardToDisplayTheDog/:id"
             ></ProfilePrivateRoute>
-            {/* <Route exect path="/CardToDisplayTheDog/:id">
-              <CardToDisplayTheDog />
-            </Route> */}
             <Route exact path="/AddDog">
               <AddDog />
             </Route>

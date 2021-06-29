@@ -77,11 +77,13 @@ function Home() {
                 <Grid container spacing={2} justify="center">
                   <Grid item>
                     <Link to="/ListOfDogs">
-                      <Button variant="contained">List of all the dogs</Button>
+                      <Button variant="contained" size="large">
+                        List of all the dogs
+                      </Button>
                     </Link>
                   </Grid>
                   <Grid item>
-                    <Button variant="outlined">
+                    <Button variant="outlined" size="small">
                       List of FCI Polish Breeders
                     </Button>
                   </Grid>

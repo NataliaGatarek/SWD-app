@@ -8,6 +8,9 @@ import CardMedia from "@material-ui/core/CardMedia";
 import Typography from "@material-ui/core/Typography";
 import Comment from "../Components/Comment.js";
 import DoneComment from "../Components/DoneComment.js";
+import CardActions from "@material-ui/core/CardActions";
+import IconButton from "@material-ui/core/IconButton";
+import FavoriteIcon from "@material-ui/icons/Favorite";
 import {
   BrowserRouter as Router,
   Switch,
@@ -49,6 +52,11 @@ function CardToDisplayTheDog() {
             image={details.image}
             title="Dog"
           />
+          <CardActions>
+            <IconButton aria-label="add to favorites">
+              <FavoriteIcon />
+            </IconButton>
+          </CardActions>
           <CardContent>
             <Typography gutterBottom variant="h5" component="h2">
               Name: <strong>{details.name}</strong>

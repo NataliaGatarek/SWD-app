@@ -3,6 +3,8 @@ import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import PetsIcon from "@material-ui/icons/Pets";
 import Paper from "@material-ui/core/Paper";
+import IconButton from "@material-ui/core/IconButton";
+import DeleteIcon from "@material-ui/icons/Delete";
 import { AuthContext } from "../Context/AuthContext";
 import {
   BrowserRouter as Router,
@@ -77,6 +79,13 @@ function Profile() {
                   <div key={displayDog.id} displayDogs={displayDog}>
                     <p>{displayDog.name} </p>
                     <p>{displayDog.description}</p>
+                    <IconButton
+                      aria-label="delete"
+                      className={classes.margin}
+                      //onClick={() => fetchDeleteComment()}
+                    >
+                      <DeleteIcon fontSize="small" />
+                    </IconButton>
                     <hr></hr>
                   </div>
                 );

@@ -46,9 +46,6 @@ function CardToDisplayDog(props) {
         </CardContent>
       </CardActionArea>
       <CardActions>
-        <IconButton aria-label="add to favorites">
-          <FavoriteIcon />
-        </IconButton>
         <Link to={`CardToDisplayTheDog/${props.dogs._id}`}>
           <Button size="small" color="primary">
             Read More

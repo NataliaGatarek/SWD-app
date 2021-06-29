@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const User = require("../models/usersModel");
+const dogsModel = require("../models/dogsModel");
 const jwt = require("jsonwebtoken");
 const secretOrKey = require("../config.js").secretOrKey;
 const { body, validationResult } = require("express-validator");
@@ -112,39 +113,32 @@ router.get(
       });
   }
 );
-/*  newUser
-      .find({})
-      .populate({path:"dogs", select: ["name", "kennel","image", "description"]})
-      .then((NewUser) => {
-        res.send(NewUser);
-        console.log(newUser);
-      })
-      .catch((err) => res.send(err));
-  }
-); */
-
-//newUser.find({ _id: req.user._id }).populate("dogs");
-//populate("dogs", ["name", "kennel","image", "description");
-
+//logout
 router.post("/logout", async (req, res) => {
   const id = req.body._id;
   await User.findOneAndUpdate({ _id: id }, { $set: { login: false } });
 });
-
-/* router.get("/:id", (req, res) => {
-  let usersId = req.params.id;
-  User
-    .findById(usersId)
-    .populate("dogs", ["name", "kennel","image", "description"])
-    .exec(function (err, users) {
-      if (err) {
-        console.log(err);
-        res.send(err);
-      } else {
-        console.log(users.dogs);
-        res.send(users);
+//like
+/* router.put("/favorites/", async (req, res) => {
+  const { dogId } = req.body;
+  try {
+    User.findByIdAndUpdate(
+      req.params.id,
+      {
+        $push: { favorites: dogId },
+      },
+      (error, success) => {
+        console.log(error, success);
+        if (error) {
+          res.send(error);
+        } else {
+          res.send("Success");
+        }
       }
-    });
+    );
+  } catch (err) {
+    res.status(500).json(err);
+  }
 }); */
 
 module.exports = router;
