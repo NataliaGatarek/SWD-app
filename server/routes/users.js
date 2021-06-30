@@ -125,12 +125,10 @@ router.put(
   passport.authenticate("jwt", { session: false }),
   async (req, res) => {
     const { dogId, userId } = req.body;
-    // const { userId } = req.body;
-
     try {
       const favDog = await dogsModel.updateOne(
         { _id: dogId },
-        { $inc: { likes: 1 } },
+        { $push: { liked: userId }, $inc: { likes: 1 } },
         { new: true, upsert: true }
       );
       const favUser = await User.updateOne(
@@ -146,56 +144,28 @@ router.put(
     console.log(req.body);
   }
 );
-
-module.exports = router;
-//like
-/* router.put(
-  "/favorites/",
-  passport.authenticate("jwt", { session: false }),
-  (req, res) => {
-    const { dogId } = req.body;
-    User.findByIdAndUpdate(
-      req.params.id,
-      {
-        $push: { favorites: dogId },
-      },
-      {
-        new: true,
-      }
-    ).exec((err, result) => {
-      if (err) {
-        return res.status(422).json({ error: err });
-      } else {
-        res.json(result); //is result updated array?
-      }
-    });
-  }
-); */
-/* router.put(
-  "/favorites/",
+//unfav
+router.put(
+  "/unfavorite",
   passport.authenticate("jwt", { session: false }),
   async (req, res) => {
-    const { dogId } = req.body;
+    const { dogId, userId } = req.body;
     try {
-      User.findByIdAndUpdate(
-        req.params.id,
-        {
-          $push: { favorites: dogId },
-        },
-        (error, success) => {
-          console.log(error, success);
-          if (error) {
-            res.send(error);
-          } else {
-            res.send("Success");
-          }
-        }
+      const unfavDog = await dogsModel.updateOne(
+        { _id: dogId },
+        { $pull: { liked: userId }, $inc: { likes: -1 } },
+        { new: true, upsert: true }
       );
+      const unfavUser = await User.updateOne(
+        { _id: userId },
+        { $pull: { favorites: dogId } }
+      );
+      res.status(200).json({ unfavUser: unfavUser, unfavDog: unfavDog });
     } catch (err) {
-      res.status(500).json(err);
+      console.error(err.message);
+      res.status(500).send("Server Error");
     }
   }
-); */
-//req.user._id,
-//req.params.id,
-//req.body.user.id,
+);
+
+module.exports = router;

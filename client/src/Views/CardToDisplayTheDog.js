@@ -35,9 +35,10 @@ function CardToDisplayTheDog() {
   const classes = useStyles();
   const [comments, setComments] = useState([]);
   const [details, setDetails] = useState("");
-
+  const [data, setData] = useState([]);
   let { id } = useParams();
-  const { userObject, favoritedDog, setFavoritedDog } = useContext(AuthContext);
+  const { userObject, favoritedDogs, setFavoritedDogs } =
+    useContext(AuthContext);
   useEffect(() => {
     fetchDog();
   }, []);
@@ -66,6 +67,15 @@ function CardToDisplayTheDog() {
       .then((data) => {
         console.log("data", data);
         console.log("added fav");
+
+        /* const newData = favoritedDogs.map((favoritedDog) => {
+          if (favoritedDog._id == data._id) {
+            return data;
+          } else {
+            return favoritedDog;
+          }
+        });
+        setFavoritedDogs(newData); */
       })
       .catch((err) => {
         console.log(err);
