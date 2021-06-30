@@ -22,9 +22,7 @@ const usersSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
-  favorites: {
-    type: [],
-  },
+  favorites: { type: [{ type: mongoose.Schema.Types.ObjectId, ref: "Dog" }] },
   dogs: { type: [{ type: mongoose.Schema.Types.ObjectId, ref: "Dog" }] },
 });
 module.exports = mongoose.model("User", usersSchema);

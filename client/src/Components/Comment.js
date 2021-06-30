@@ -45,7 +45,7 @@ function Comment(props) {
       .then((res) => res.json())
       .then((data) => {
         console.log("data", data);
-        //history.goBack();
+        history.goBack();
       })
       .catch((err) => {
         console.log(err);

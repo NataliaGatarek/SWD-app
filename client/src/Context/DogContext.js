@@ -4,13 +4,15 @@ const initDogContext = {
   searchBaner: "",
   dogs: [],
   loadingPage: true,
+  favoritedDog: [],
 };
 export const DogContext = createContext(initDogContext);
 
 export const DogContextProvider = ({ children }) => {
   const [searchBaner, setSearchBaner] = useState(initDogContext.searchBaner);
   const [dogs, setDogs] = useState(initDogContext.dogs);
-  const [loadingPage, setLoadingPage] = useState(initDogContext.loading);
+  const [loadingPage, setLoadingPage] = useState(initDogContext.loadingPage);
+  const [favoritedDog, setFavoritedDog] = useState(initDogContext.favoritedDog);
 
   return (
     <DogContext.Provider
@@ -21,6 +23,8 @@ export const DogContextProvider = ({ children }) => {
         setDogs,
         loadingPage,
         setLoadingPage,
+        favoritedDog,
+        setFavoritedDog,
       }}
     >
       {children}

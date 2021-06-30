@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import "./views.css";
 import Card from "@material-ui/core/Card";
@@ -11,6 +11,8 @@ import DoneComment from "../Components/DoneComment.js";
 import CardActions from "@material-ui/core/CardActions";
 import IconButton from "@material-ui/core/IconButton";
 import FavoriteIcon from "@material-ui/icons/Favorite";
+import { AuthContext } from "../Context/AuthContext";
+import axios from "axios";
 import {
   BrowserRouter as Router,
   Switch,
@@ -33,8 +35,13 @@ function CardToDisplayTheDog() {
   const classes = useStyles();
   const [comments, setComments] = useState([]);
   const [details, setDetails] = useState("");
+
   let { id } = useParams();
+  const { userObject, favoritedDog, setFavoritedDog } = useContext(AuthContext);
   useEffect(() => {
+    fetchDog();
+  }, []);
+  const fetchDog = () => {
     fetch(`http://localhost:5000/dogs/${id}`)
       .then((res) => res.json())
       .then((data) => {
@@ -42,7 +49,31 @@ function CardToDisplayTheDog() {
         setDetails(data);
         setComments(data.comments);
       });
-  }, []);
+  };
+  const favoriteAdd = (id) => {
+    fetch("http://localhost:5000/users/favorite", {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + localStorage.getItem("token"),
+      },
+      body: JSON.stringify({
+        dogId: id,
+        userId: userObject._id,
+      }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log("data", data);
+        console.log("added fav");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  console.log(userObject);
+  console.log(id);
   return (
     <div>
       <Card className={classes.root}>
@@ -54,7 +85,11 @@ function CardToDisplayTheDog() {
           />
           <CardActions>
             <IconButton aria-label="add to favorites">
-              <FavoriteIcon />
+              <FavoriteIcon
+                onClick={() => {
+                  favoriteAdd(id);
+                }}
+              />
             </IconButton>
           </CardActions>
           <CardContent>

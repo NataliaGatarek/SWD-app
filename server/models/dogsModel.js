@@ -58,7 +58,9 @@ const dogsSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  //liked: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
   owner: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
+  likes: Number,
   comments: [
     {
       text: {

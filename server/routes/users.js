@@ -118,27 +118,92 @@ router.post("/logout", async (req, res) => {
   const id = req.body._id;
   await User.findOneAndUpdate({ _id: id }, { $set: { login: false } });
 });
+
+//add favorites
+router.put(
+  "/favorite/",
+  passport.authenticate("jwt", { session: false }),
+  async (req, res) => {
+    const { dogId, userId } = req.body;
+    // const { userId } = req.body;
+
+    try {
+      const favDog = await dogsModel.updateOne(
+        { _id: dogId },
+        { $inc: { likes: 1 } },
+        { new: true, upsert: true }
+      );
+      const favUser = await User.updateOne(
+        { _id: userId },
+        { $push: { favorites: dogId } },
+        { new: true, upsert: true },
+        (error, success) => {
+          console.log(error, success);
+          if (error) {
+            res.send(error);
+          } else {
+            res.send("Success");
+          }
+        }
+      ).exec;
+      res.status(200).json({ favUser: favUser, favDog: favDog });
+    } catch (err) {
+      console.error(err.message);
+      res.status(500).send("Server Error");
+    }
+    console.log(req.body);
+  }
+);
+
+module.exports = router;
 //like
-/* router.put("/favorites/", async (req, res) => {
-  const { dogId } = req.body;
-  try {
+/* router.put(
+  "/favorites/",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    const { dogId } = req.body;
     User.findByIdAndUpdate(
       req.params.id,
       {
         $push: { favorites: dogId },
       },
-      (error, success) => {
-        console.log(error, success);
-        if (error) {
-          res.send(error);
-        } else {
-          res.send("Success");
-        }
+      {
+        new: true,
       }
-    );
-  } catch (err) {
-    res.status(500).json(err);
+    ).exec((err, result) => {
+      if (err) {
+        return res.status(422).json({ error: err });
+      } else {
+        res.json(result); //is result updated array?
+      }
+    });
   }
-}); */
-
-module.exports = router;
+); */
+/* router.put(
+  "/favorites/",
+  passport.authenticate("jwt", { session: false }),
+  async (req, res) => {
+    const { dogId } = req.body;
+    try {
+      User.findByIdAndUpdate(
+        req.params.id,
+        {
+          $push: { favorites: dogId },
+        },
+        (error, success) => {
+          console.log(error, success);
+          if (error) {
+            res.send(error);
+          } else {
+            res.send("Success");
+          }
+        }
+      );
+    } catch (err) {
+      res.status(500).json(err);
+    }
+  }
+); */
+//req.user._id,
+//req.params.id,
+//req.body.user.id,
