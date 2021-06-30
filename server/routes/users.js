@@ -136,16 +136,8 @@ router.put(
       const favUser = await User.updateOne(
         { _id: userId },
         { $push: { favorites: dogId } },
-        { new: true, upsert: true },
-        (error, success) => {
-          console.log(error, success);
-          if (error) {
-            res.send(error);
-          } else {
-            res.send("Success");
-          }
-        }
-      ).exec;
+        { new: true, upsert: true }
+      );
       res.status(200).json({ favUser: favUser, favDog: favDog });
     } catch (err) {
       console.error(err.message);
