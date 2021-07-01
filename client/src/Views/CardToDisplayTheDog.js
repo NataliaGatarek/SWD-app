@@ -37,8 +37,7 @@ function CardToDisplayTheDog() {
   const [details, setDetails] = useState("");
   const [data, setData] = useState([]);
   let { id } = useParams();
-  const { userObject, favoritedDogs, setFavoritedDogs } =
-    useContext(AuthContext);
+  const { userObject } = useContext(AuthContext);
   useEffect(() => {
     fetchDog();
   }, []);

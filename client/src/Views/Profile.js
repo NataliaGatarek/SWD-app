@@ -27,7 +27,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 function Profile() {
   const classes = useStyles();
-  const { userObject, displayDogs } = useContext(AuthContext);
+  const { userObject, displayDogs, favoritedDogs, setFavoritedDogs } =
+    useContext(AuthContext);
 
   return (
     <div>
@@ -63,6 +64,24 @@ function Profile() {
             paragraph
           >
             <strong>Your favorites:</strong>
+            <div>
+              {favoritedDogs.map((favoritedDog) => {
+                return (
+                  <div key={favoritedDog.id} favoritedDogs={favoritedDog}>
+                    <p>{favoritedDog.name} </p>
+                    <p>{favoritedDog.description}</p>
+                    <IconButton
+                      aria-label="delete"
+                      className={classes.margin}
+                      //onClick={() => fetchDeleteComment()}
+                    >
+                      <DeleteIcon fontSize="small" />
+                    </IconButton>
+                    <hr></hr>
+                  </div>
+                );
+              })}
+            </div>
           </Typography>
         </Paper>
         <Paper elevation={12}>

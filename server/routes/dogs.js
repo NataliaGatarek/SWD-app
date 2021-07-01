@@ -141,30 +141,34 @@ router.post(
   }
 );
 //deliting comment and this should be private//
-router.delete("/comments/:id/:comment_id", async (req, res) => {
-  try {
-    const dogsComment = await dogsModel.findById(req.params.id);
-    //pull out the comment
-    const comment = dogsComment.comments.find(
-      (comment) => comment.id === req.params.comment_id
-    );
-    //check if the comment exists
-    if (!comment) {
-      return res.status(404).json({ msg: "Comment does not exist" });
+router.delete(
+  "/comments/:id/:comment_id",
+  passport.authenticate("jwt", { session: false }),
+  async (req, res) => {
+    try {
+      const dogsComment = await dogsModel.findById(req.params.id);
+      //pull out the comment
+      const comment = dogsComment.comments.find(
+        (comment) => comment.id === req.params.comment_id
+      );
+      //check if the comment exists
+      if (!comment) {
+        return res.status(404).json({ msg: "Comment does not exist" });
+      }
+      //check user
+      if (comment.userId.toString() !== req.user.id) {
+        return res.status(401).json({ msg: "User not authorized" });
+      }
+      dogsComment.comments = dogsComment.comments.filter(
+        ({ id }) => id !== req.params.comment_id
+      );
+      await dogsComment.save();
+      return res.json(dogsComment.comments);
+    } catch (err) {
+      console.error(err.message);
+      res.status(500).send("Server Error");
     }
-    //check user
-    /* if (comment.user.toString() !== req.user.id) {
-         return res.status(401).json({ msg: "User not authorized" });
-       } */
-    dogsComment.comments = dogsComment.comments.filter(
-      ({ id }) => id !== req.params.comment_id
-    );
-    await dogsComment.save();
-    return res.json(dogsComment.comments);
-  } catch (err) {
-    console.error(err.message);
-    res.status(500).send("Server Error");
   }
-});
+);
 
 module.exports = router;

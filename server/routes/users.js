@@ -19,37 +19,41 @@ router.post(
     "Please enter a password with 6 or more characters"
   ).isLength({ min: 6 }),
   async (req, res) => {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      return res.status(400).json({ errors: errors.array() });
-    }
     const { firstName, lastName, email, password } = req.body;
     try {
-      //see if user exists
-      let user = await User.findOne({ email });
-      //search by something, here search by email because its unique
-      if (user) {
-        res.user.status(400).json({ errors: [{ msg: "User already exists" }] });
-        //this set up of the error makes sure that errors are same on client and server side
-      }
-      //enctpt the password
-      //1.creating salt to hash the password
-      const salt = await bcrypt.genSalt(10);
-      const hashedPw = await bcrypt.hash(req.body.password, salt);
+      User.findOne({ email }, async (err, user) => {
+        if (err) {
+          res.json({ error: err });
+        }
+        if (user) {
+          res.send("Email is already used");
+        } else {
+          // express validator
+          const errors = validationResult(req);
+          if (!errors.isEmpty()) {
+            return res.status(400).json({ errors: errors.array() });
+          }
+          //enctpt the password
+          //1.creating salt to hash the password
+          const salt = await bcrypt.genSalt(10);
+          const hashedPw = await bcrypt.hash(req.body.password, salt);
 
-      //new user
-      user = new User({
-        firstName: req.body.firstName,
-        lastName: req.body.lastName,
-        email: req.body.email,
-        password: hashedPw,
-        login: false,
+          //new user
+          const user = new User({
+            firstName: req.body.firstName,
+            lastName: req.body.lastName,
+            email: req.body.email,
+            password: hashedPw,
+            login: false,
+          });
+          await user.save();
+          res.send("User registered");
+        }
       });
-      await user.save();
-      res.send("User registered");
-    } catch (error) {}
-    console.log(error.message);
-    res.status(500).send("Server error");
+    } catch (error) {
+      console.log(error.message);
+      res.status(500).send("Server error");
+    }
   }
 );
 
@@ -94,6 +98,7 @@ router.get(
   (req, res) => {
     User.findById(req.user._id)
       .populate("dogs", ["name", "kennel", "image", "description"])
+      .populate("favorites", ["name", "kennel", "image", "description"])
       .exec(function (err, user) {
         if (err) {
           console.log(err);
@@ -128,12 +133,12 @@ router.put(
     try {
       const favDog = await dogsModel.updateOne(
         { _id: dogId },
-        { $push: { liked: userId }, $inc: { likes: 1 } },
+        { $addToSet: { liked: userId }, $inc: { likes: 1 } },
         { new: true, upsert: true }
       );
       const favUser = await User.updateOne(
         { _id: userId },
-        { $push: { favorites: dogId } },
+        { $addToSet: { favorites: dogId } },
         { new: true, upsert: true }
       );
       res.status(200).json({ favUser: favUser, favDog: favDog });
@@ -169,3 +174,30 @@ router.put(
 );
 
 module.exports = router;
+
+/* //add favorites
+router.put(
+  "/favorite/",
+  passport.authenticate("jwt", { session: false }),
+  async (req, res) => {
+    const { dogId, userId } = req.body;
+    try {
+      const favDog = await dogsModel.updateOne(
+        { _id: dogId },
+        { $push: { liked: userId }, $inc: { likes: 1 } },
+        { new: true, upsert: true }
+      );
+      const favUser = await User.updateOne(
+        { _id: userId },
+        { $push: { favorites: dogId } },
+        { new: true, upsert: true }
+      );
+      res.status(200).json({ favUser: favUser, favDog: favDog });
+    } catch (err) {
+      console.error(err.message);
+      res.status(500).send("Server Error");
+    }
+    console.log(req.body);
+  }
+);
+ */
