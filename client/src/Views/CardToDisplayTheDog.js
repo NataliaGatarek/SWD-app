@@ -66,15 +66,6 @@ function CardToDisplayTheDog() {
       .then((data) => {
         console.log("data", data);
         console.log("added fav");
-
-        /* const newData = favoritedDogs.map((favoritedDog) => {
-          if (favoritedDog._id == data._id) {
-            return data;
-          } else {
-            return favoritedDog;
-          }
-        });
-        setFavoritedDogs(newData); */
       })
       .catch((err) => {
         console.log(err);
