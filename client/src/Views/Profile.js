@@ -64,6 +64,9 @@ function Profile() {
             paragraph
           >
             <strong>Your favorites:</strong>
+            <strong>
+              You have currently{userObject.favorites.length} favorites
+            </strong>
             <div>
               {favoritedDogs.map((favoritedDog) => {
                 return (
@@ -73,7 +76,7 @@ function Profile() {
                     <IconButton
                       aria-label="delete"
                       className={classes.margin}
-                      //onClick={() => fetchDeleteComment()}
+                      //onClick={() => favoriteRemove()}
                     >
                       <DeleteIcon fontSize="small" />
                     </IconButton>
@@ -92,6 +95,7 @@ function Profile() {
             paragraph
           >
             <strong>Your dogs:</strong>
+            <strong>You added {userObject.dogs.length} dogs </strong>
             <div>
               {displayDogs.map((displayDog) => {
                 return (

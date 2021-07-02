@@ -9,8 +9,7 @@ import Typography from "@material-ui/core/Typography";
 import Comment from "../Components/Comment.js";
 import DoneComment from "../Components/DoneComment.js";
 import CardActions from "@material-ui/core/CardActions";
-import IconButton from "@material-ui/core/IconButton";
-import FavoriteIcon from "@material-ui/icons/Favorite";
+import Button from "@material-ui/core/Button";
 import { AuthContext } from "../Context/AuthContext";
 import axios from "axios";
 import {
@@ -35,7 +34,7 @@ function CardToDisplayTheDog() {
   const classes = useStyles();
   const [comments, setComments] = useState([]);
   const [details, setDetails] = useState("");
-  const [data, setData] = useState([]);
+  const [error, setError] = useState(null);
   let { id } = useParams();
   const { userObject } = useContext(AuthContext);
   useEffect(() => {
@@ -66,14 +65,37 @@ function CardToDisplayTheDog() {
       .then((data) => {
         console.log("data", data);
         console.log("added fav");
+        setError(``);
       })
-      .catch((err) => {
-        console.log(err);
+      .catch((error) => {
+        console.error("Something went wrong", error);
       });
   };
 
-  console.log(userObject);
-  console.log(id);
+  const favoriteRemove = (id) => {
+    fetch("http://localhost:5000/users/unfavorite", {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + localStorage.getItem("token"),
+      },
+      body: JSON.stringify({
+        dogId: id,
+        userId: userObject._id,
+      }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log("data", data);
+        console.log("removed fav");
+        setError(``);
+      })
+      .catch((error) => {
+        console.error("Something went wrong", error);
+      });
+  };
+  console.log(details.liked);
+  console.log(userObject._id);
   return (
     <div>
       <Card className={classes.root}>
@@ -84,13 +106,29 @@ function CardToDisplayTheDog() {
             title="Dog"
           />
           <CardActions>
-            <IconButton aria-label="add to favorites">
-              <FavoriteIcon
-                onClick={() => {
-                  favoriteAdd(id);
-                }}
-              />
-            </IconButton>
+            <Button
+              variant="outlined"
+              size="small"
+              onClick={() => {
+                favoriteAdd(id);
+              }}
+            >
+              add to favorites
+            </Button>
+            {/*  <span>
+                {details.liked.length > 0 && (
+                  <span>{details.liked.length}</span>
+                )}
+              </span> */}
+            <Button
+              variant="outlined"
+              size="small"
+              onClick={() => {
+                favoriteRemove(id);
+              }}
+            >
+              remove from favorites
+            </Button>
           </CardActions>
           <CardContent>
             <Typography gutterBottom variant="h5" component="h2">

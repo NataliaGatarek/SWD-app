@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import "../Views/views.css";
@@ -6,6 +6,7 @@ import { Typography } from "@material-ui/core";
 import IconButton from "@material-ui/core/IconButton";
 import DeleteIcon from "@material-ui/icons/Delete";
 import avatar from "../pictures/picture1.png";
+import { AuthContext } from "../Context/AuthContext";
 import "../Views/views.css";
 import {
   BrowserRouter as Router,
@@ -26,9 +27,10 @@ const useStyles = makeStyles((theme) => ({
 
 function Comment(props) {
   const history = useHistory();
+  const { userObject } = useContext(AuthContext);
   const classes = useStyles();
   let { id } = useParams();
-  const { text, userName } = props.comment;
+  const { text, userName, userId } = props.comment;
   const { commentId } = props;
   console.log(props);
   const fetchDeleteComment = () => {
@@ -66,13 +68,15 @@ function Comment(props) {
             </Typography>
           </div>
           <div>
-            <IconButton
-              aria-label="delete"
-              className={classes.margin}
-              onClick={() => fetchDeleteComment()}
-            >
-              <DeleteIcon fontSize="small" />
-            </IconButton>
+            {userObject._id === userId && (
+              <IconButton
+                aria-label="delete"
+                className={classes.margin}
+                onClick={() => fetchDeleteComment()}
+              >
+                <DeleteIcon fontSize="small" />
+              </IconButton>
+            )}
           </div>
         </div>
       </Paper>
