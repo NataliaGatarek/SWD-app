@@ -1,11 +1,13 @@
 import React, { useContext } from "react";
-import { makeStyles } from "@material-ui/core/styles";
+import { makeStyles, useTheme } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import PetsIcon from "@material-ui/icons/Pets";
 import Paper from "@material-ui/core/Paper";
 import IconButton from "@material-ui/core/IconButton";
 import DeleteIcon from "@material-ui/icons/Delete";
 import { AuthContext } from "../Context/AuthContext";
+import DsiplayFav from "../Components/DisplayFav.js";
+import DisplayProfileYourDogs from "../Components/DisplayProfileYourDogs";
 import {
   BrowserRouter as Router,
   Switch,
@@ -21,12 +23,14 @@ const useStyles = makeStyles((theme) => ({
     "& > *": {
       margin: theme.spacing(1),
       minWidth: theme.spacing(45),
-      minHeight: theme.spacing(32),
+      minHeight: theme.spacing(25),
     },
   },
 }));
+
 function Profile() {
   const classes = useStyles();
+
   const { userObject, displayDogs, favoritedDogs, setFavoritedDogs } =
     useContext(AuthContext);
 
@@ -51,8 +55,9 @@ function Profile() {
             <p>
               <strong>Your information:</strong>
             </p>
-            <p>{userObject.firstName}</p>
-            <p>{userObject.lastName}</p>
+            <p>
+              {userObject.firstName} {userObject.lastName}
+            </p>
             <p> {userObject.email}</p>
           </Typography>
         </Paper>
@@ -64,24 +69,14 @@ function Profile() {
             paragraph
           >
             <strong>Your favorites:</strong>
-            <strong>
-              You have currently{userObject.favorites.length} favorites
-            </strong>
+            <p>you have currently {userObject.favorites.length} favorites</p>
             <div>
               {favoritedDogs.map((favoritedDog) => {
                 return (
-                  <div key={favoritedDog.id} favoritedDogs={favoritedDog}>
-                    <p>{favoritedDog.name} </p>
-                    <p>{favoritedDog.description}</p>
-                    <IconButton
-                      aria-label="delete"
-                      className={classes.margin}
-                      //onClick={() => favoriteRemove()}
-                    >
-                      <DeleteIcon fontSize="small" />
-                    </IconButton>
-                    <hr></hr>
-                  </div>
+                  <DsiplayFav
+                    key={favoritedDog.id}
+                    favoritedDogs={favoritedDog}
+                  />
                 );
               })}
             </div>
@@ -95,22 +90,14 @@ function Profile() {
             paragraph
           >
             <strong>Your dogs:</strong>
-            <strong>You added {userObject.dogs.length} dogs </strong>
+            <p>you added {userObject.dogs.length} dogs</p>
             <div>
               {displayDogs.map((displayDog) => {
                 return (
-                  <div key={displayDog.id} displayDogs={displayDog}>
-                    <p>{displayDog.name} </p>
-                    <p>{displayDog.description}</p>
-                    <IconButton
-                      aria-label="delete"
-                      className={classes.margin}
-                      //onClick={() => fetchDeleteComment()}
-                    >
-                      <DeleteIcon fontSize="small" />
-                    </IconButton>
-                    <hr></hr>
-                  </div>
+                  <DisplayProfileYourDogs
+                    key={displayDog.id}
+                    displayDogs={displayDog}
+                  />
                 );
               })}
             </div>

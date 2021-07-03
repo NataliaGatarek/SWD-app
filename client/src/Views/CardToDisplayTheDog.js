@@ -32,6 +32,7 @@ const useStyles = makeStyles({
 
 function CardToDisplayTheDog() {
   const classes = useStyles();
+  const [showButton, setShowButton] = useState(true);
   const [comments, setComments] = useState([]);
   const [details, setDetails] = useState("");
   const [error, setError] = useState(null);
@@ -66,6 +67,7 @@ function CardToDisplayTheDog() {
         console.log("data", data);
         console.log("added fav");
         setError(``);
+        setShowButton();
       })
       .catch((error) => {
         console.error("Something went wrong", error);
@@ -94,8 +96,8 @@ function CardToDisplayTheDog() {
         console.error("Something went wrong", error);
       });
   };
-  console.log(details.liked);
-  console.log(userObject._id);
+  console.log(details);
+  console.log(userObject);
   return (
     <div>
       <Card className={classes.root}>
@@ -115,11 +117,7 @@ function CardToDisplayTheDog() {
             >
               add to favorites
             </Button>
-            {/*  <span>
-                {details.liked.length > 0 && (
-                  <span>{details.liked.length}</span>
-                )}
-              </span> */}
+
             <Button
               variant="outlined"
               size="small"
