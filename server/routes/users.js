@@ -172,47 +172,5 @@ router.put(
     }
   }
 );
-/* router.delete("/unfavorite/:exp_id", auth, async (req, res) => {
-  try {
-    const foundProfile = await Profile.findOne({ user: req.user.id });
-
-    foundProfile.experience = foundProfile.experience.filter(
-      (exp) => exp._id.toString() !== req.params.exp_id
-    );
-
-    await foundProfile.save();
-    return res.status(200).json(foundProfile);
-  } catch (error) {
-    console.error(error);
-    return res.status(500).json({ msg: "Server error" });
-  }
-}); */
 
 module.exports = router;
-
-/* //add favorites
-router.put(
-  "/favorite/",
-  passport.authenticate("jwt", { session: false }),
-  async (req, res) => {
-    const { dogId, userId } = req.body;
-    try {
-      const favDog = await dogsModel.updateOne(
-        { _id: dogId },
-        { $push: { liked: userId }, $inc: { likes: 1 } },
-        { new: true, upsert: true }
-      );
-      const favUser = await User.updateOne(
-        { _id: userId },
-        { $push: { favorites: dogId } },
-        { new: true, upsert: true }
-      );
-      res.status(200).json({ favUser: favUser, favDog: favDog });
-    } catch (err) {
-      console.error(err.message);
-      res.status(500).send("Server Error");
-    }
-    console.log(req.body);
-  }
-);
- */

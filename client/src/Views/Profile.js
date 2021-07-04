@@ -3,8 +3,6 @@ import { makeStyles, useTheme } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import PetsIcon from "@material-ui/icons/Pets";
 import Paper from "@material-ui/core/Paper";
-import IconButton from "@material-ui/core/IconButton";
-import DeleteIcon from "@material-ui/icons/Delete";
 import { AuthContext } from "../Context/AuthContext";
 import DsiplayFav from "../Components/DisplayFav.js";
 import DisplayProfileYourDogs from "../Components/DisplayProfileYourDogs";

@@ -104,10 +104,12 @@ router.post(
 );
 //getting more info for the more info page and this should be a private!///
 router.get("/:id", (req, res) => {
-  dogsModel.findOne({ _id: req.params.id }, (err, dogsModel) => {
-    if (err) res.status(500).send(err);
-    res.status(200).json(dogsModel);
-  });
+  dogsModel
+    .findOne({ _id: req.params.id }, (err, dogsModel) => {
+      if (err) res.status(500).send(err);
+      res.status(200).json(dogsModel);
+    })
+    .populate("liked", ["firstName", "lastName"]);
 });
 
 //adding comment to the dog and this should be private//
@@ -170,5 +172,20 @@ router.delete(
     }
   }
 );
-
+//delete dog
+router.delete(
+  "/all",
+  passport.authenticate("jwt", { session: false }),
+  async (req, res) => {
+    const { owner } = req.body;
+    console.log(owner);
+    try {
+      await dogsModel.findOneAndDelete({ _id: owner });
+      res.json({ msg: "Dog removed" });
+    } catch (error) {
+      console.error(error);
+      return res.status(500).json({ msg: "Server error" });
+    }
+  }
+);
 module.exports = router;

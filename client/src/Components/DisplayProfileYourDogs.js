@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
 import Typography from "@material-ui/core/Typography";
+import { AuthContext } from "../Context/AuthContext";
+import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -32,7 +34,27 @@ const useStyles = makeStyles((theme) => ({
 function DisplayProfileYourDogs(props) {
   const classes = useStyles();
   const theme = useTheme();
+  const { userObject } = useContext(AuthContext);
 
+  const deleteDog = () => {
+    fetch("http://localhost:5000/dogs/all", {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + localStorage.getItem("token"),
+      },
+      body: JSON.stringify({
+        owner: userObject._id,
+      }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log("data", data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
   return (
     <Card className={classes.root}>
       <div className={classes.details}>
@@ -47,6 +69,8 @@ function DisplayProfileYourDogs(props) {
           </Typography>
           <Typography variant="subtitle1" color="textSecondary">
             {props.displayDogs.description}
+            <hr></hr>
+            <button onClick={() => deleteDog()}>delete</button>
           </Typography>
         </CardContent>
       </div>
