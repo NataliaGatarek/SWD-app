@@ -2,7 +2,7 @@ import React, { createContext, useState, useEffect } from "react";
 import axios from "axios";
 
 const initAuthContext = {
-  userObject: [],
+  userObject: "",
   loading: true, //true// when get the user
   displayDogs: [],
   favoritedDogs: [],
@@ -38,7 +38,7 @@ export const AuthContextProvider = ({ children }) => {
       }
     };
     fetchAuth();
-  }, []);
+  }, [loading]);
 
   return (
     <AuthContext.Provider
