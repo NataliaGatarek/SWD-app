@@ -67,7 +67,6 @@ function CardToDisplayTheDog() {
         console.log("data", data);
         console.log("added fav");
         setError(``);
-        setShowButton();
       })
       .catch((error) => {
         console.error("Something went wrong", error);
@@ -96,7 +95,6 @@ function CardToDisplayTheDog() {
         console.error("Something went wrong", error);
       });
   };
-  console.log(details);
   console.log(userObject);
   return (
     <div>
