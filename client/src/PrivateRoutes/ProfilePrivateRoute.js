@@ -9,7 +9,7 @@ function ProfilePrivateRoute({ children, ...rest }) {
     <Route
       {...rest}
       render={({ location }) =>
-        !loading ? (
+        window.localStorage.getItem("token") !== null ? (
           children
         ) : (
           <Redirect

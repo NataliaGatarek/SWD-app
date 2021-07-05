@@ -11,6 +11,7 @@ import DoneComment from "../Components/DoneComment.js";
 import CardActions from "@material-ui/core/CardActions";
 import Button from "@material-ui/core/Button";
 import { AuthContext } from "../Context/AuthContext";
+import { DogContext } from "../Context/DogContext";
 import axios from "axios";
 import {
   BrowserRouter as Router,
@@ -32,12 +33,13 @@ const useStyles = makeStyles({
 
 function CardToDisplayTheDog() {
   const classes = useStyles();
-  const [showButton, setShowButton] = useState(true);
-  const [comments, setComments] = useState([]);
-  const [details, setDetails] = useState("");
+  const [details, setDetails] = useState(null);
   const [error, setError] = useState(null);
   let { id } = useParams();
-  const { userObject } = useContext(AuthContext);
+  const { userObject, favoritedDogs, setFavoritedDogs } =
+    useContext(AuthContext);
+  const { comments, setComments, likedDogs, setLikedDogs } =
+    useContext(DogContext);
   useEffect(() => {
     fetchDog();
   }, []);
@@ -48,6 +50,8 @@ function CardToDisplayTheDog() {
         console.log(data);
         setDetails(data);
         setComments(data.comments);
+        //setLikedDogs(data.liked); //created this one in the dogs contexts, did not help//
+        //setFavoritedDogs(data.favorites); //should be data. what? favorites are part of the users model, why if I change it to liked is giving null?//
       });
   };
   const favoriteAdd = (id) => {
@@ -66,6 +70,8 @@ function CardToDisplayTheDog() {
       .then((data) => {
         console.log("data", data);
         console.log("added fav");
+        //setDetails(details.liked.push(userObject._id));
+        //setLikedDogs(data.liked);
         setError(``);
       })
       .catch((error) => {
@@ -95,92 +101,116 @@ function CardToDisplayTheDog() {
         console.error("Something went wrong", error);
       });
   };
-  console.log(userObject);
+  console.log(id);
+  console.log(userObject._id);
+  console.log(details);
+
+  const checkIfFav = () => {
+    let button;
+    details.liked.forEach((like) => {
+      console.log(like.id);
+      if (like._id === userObject._id) {
+        button = (
+          <Button
+            variant="outlined"
+            size="small"
+            onClick={() => {
+              favoriteRemove(id);
+            }}
+          >
+            remove from favorites
+          </Button>
+        );
+      } else {
+        button = (
+          <Button
+            variant="outlined"
+            size="small"
+            onClick={() => {
+              favoriteAdd(id);
+            }}
+          >
+            add to favorites
+          </Button>
+        );
+      }
+    });
+    return button;
+  };
   return (
     <div>
-      <Card className={classes.root}>
-        <CardActionArea>
-          <CardMedia
-            className={classes.media}
-            image={details.image}
-            title="Dog"
-          />
-          <CardActions>
-            <Button
-              variant="outlined"
-              size="small"
-              onClick={() => {
-                favoriteAdd(id);
-              }}
-            >
-              add to favorites
-            </Button>
-
-            <Button
-              variant="outlined"
-              size="small"
-              onClick={() => {
-                favoriteRemove(id);
-              }}
-            >
-              remove from favorites
-            </Button>
-          </CardActions>
-          <CardContent>
-            <Typography gutterBottom variant="h5" component="h2">
-              Name: <strong>{details.name}</strong>
-            </Typography>
-            <Typography gutterBottom variant="h6" component="h2">
-              Breeding Kennel: <strong>{details.kennel}</strong>
-            </Typography>
-            <hr></hr>
-            <Typography variant="body2" color="textSecondary" component="p">
-              {details.description}
-            </Typography>
-            <hr></hr>
-            <Typography gutterBottom component="p">
-              Location: {details.live}
-            </Typography>
-            <Typography gutterBottom component="p">
-              Titles: {details.titles}
-            </Typography>
-            <Typography gutterBottom component="p">
-              Date of Birth: {details.birth}
-            </Typography>
-            <Typography gutterBottom component="p">
-              Mother and Father: {details.mname}, {details.fname}
-            </Typography>
-            <Typography gutterBottom component="p">
-              Breeding dog: {details.breedingdog}
-            </Typography>
-            <Typography gutterBottom component="p">
-              Are you a breeder?: {details.breeder}
-            </Typography>
-            <Typography gutterBottom component="p">
-              Heatlh info: {details.heatlh}
-            </Typography>
-            <Typography gutterBottom component="p">
-              More info: {details.additional}
-            </Typography>
-            <Typography gutterBottom component="p">
-              Contact: {details.contact}
-            </Typography>
-          </CardContent>
-        </CardActionArea>
-      </Card>
-      <hr></hr>
-      <div className="flex-cards">
-        <Comment />
-        {comments.map((comment) => {
-          return (
-            <DoneComment
-              key={comment._id}
-              comment={comment}
-              commentId={comment._id}
-            />
-          );
-        })}
-      </div>
+      {details !== null ? (
+        <div>
+          <Card className={classes.root}>
+            <CardActionArea>
+              <CardMedia
+                className={classes.media}
+                image={details.image}
+                title="Dog"
+              />
+              <CardActions>{checkIfFav()}</CardActions>
+              <CardContent>
+                <p style={{ marginTop: "1px" }}>
+                  Favorited: <strong>{details.liked.length}</strong>
+                </p>
+                <Typography gutterBottom variant="h5" component="h2">
+                  Name: <strong>{details.name}</strong>
+                </Typography>
+                <Typography gutterBottom variant="h6" component="h2">
+                  Breeding Kennel: <strong>{details.kennel}</strong>
+                </Typography>
+                <hr></hr>
+                <Typography variant="body2" color="textSecondary" component="p">
+                  {details.description}
+                </Typography>
+                <hr></hr>
+                <Typography gutterBottom component="p">
+                  Location: {details.live}
+                </Typography>
+                <Typography gutterBottom component="p">
+                  Titles: {details.titles}
+                </Typography>
+                <Typography gutterBottom component="p">
+                  Date of Birth: {details.birth}
+                </Typography>
+                <Typography gutterBottom component="p">
+                  Mother and Father: {details.mname}, {details.fname}
+                </Typography>
+                <Typography gutterBottom component="p">
+                  Breeding dog: {details.breedingdog}
+                </Typography>
+                <Typography gutterBottom component="p">
+                  Are you a breeder?: {details.breeder}
+                </Typography>
+                <Typography gutterBottom component="p">
+                  Heatlh info: {details.heatlh}
+                </Typography>
+                <Typography gutterBottom component="p">
+                  More info: {details.additional}
+                </Typography>
+                <Typography gutterBottom component="p">
+                  Contact: {details.contact}
+                </Typography>
+              </CardContent>
+            </CardActionArea>
+          </Card>
+          <hr></hr>
+          <div className="flex-cards">
+            <Comment />
+            {comments.map((comment) => {
+              return (
+                <DoneComment
+                  key={comment._id}
+                  comment={comment}
+                  commentId={comment._id}
+                />
+              );
+            })}
+          </div>
+        </div>
+      ) : (
+        <p>Loading...</p>
+      )}
     </div>
   );
 }

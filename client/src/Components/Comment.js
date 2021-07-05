@@ -4,6 +4,7 @@ import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import Paper from "@material-ui/core/Paper";
 import { AuthContext } from "../Context/AuthContext";
+import { DogContext } from "../Context/DogContext";
 import "../Views/views.css";
 import avatar from "../pictures/picture1.png";
 import {
@@ -30,6 +31,7 @@ function Comment(props) {
   const [value, setValue] = React.useState("Controlled");
   let { id } = useParams();
   const { userObject } = useContext(AuthContext);
+  const { comments, setComments } = useContext(DogContext);
   const [text, setText] = useState("");
   const fetchDataComment = () => {
     fetch(`http://localhost:5000/dogs/comments/${id}`, {
@@ -45,13 +47,12 @@ function Comment(props) {
       .then((res) => res.json())
       .then((data) => {
         console.log("data", data);
-        //history.goBack();
+        setComments(data);
       })
       .catch((err) => {
         console.log(err);
       });
   };
-
   return (
     <div className="comment-main">
       <form
