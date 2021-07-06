@@ -40,9 +40,10 @@ function CardToDisplayTheDog() {
     useContext(AuthContext);
   const { comments, setComments, likedDogs, setLikedDogs } =
     useContext(DogContext);
+  const [toggle, setToggle] = useState(true);
   useEffect(() => {
     fetchDog();
-  }, []);
+  }, [toggle]);
   const fetchDog = () => {
     fetch(`http://localhost:5000/dogs/${id}`)
       .then((res) => res.json())
@@ -70,7 +71,8 @@ function CardToDisplayTheDog() {
       .then((data) => {
         console.log("data", data);
         console.log("added fav");
-        //setDetails(details.liked.push(userObject._id));
+        setToggle(!toggle);
+        //setDetails(details.liked.push(userObject));
         //setLikedDogs(data.liked);
         setError(``);
       })
@@ -95,6 +97,7 @@ function CardToDisplayTheDog() {
       .then((data) => {
         console.log("data", data);
         console.log("removed fav");
+        setToggle(!toggle);
         setError(``);
       })
       .catch((error) => {

@@ -173,19 +173,19 @@ router.delete(
   }
 );
 //delete dog
-router.delete(
+/* router.delete(
   "/all",
   passport.authenticate("jwt", { session: false }),
   async (req, res) => {
     const { owner } = req.body;
     console.log(owner);
     try {
-      await dogsModel.findOneAndDelete({ _id: owner });
+      await dogsModel.findOneAndDelete({ here dog id});
       res.json({ msg: "Dog removed" });
     } catch (error) {
       console.error(error);
       return res.status(500).json({ msg: "Server error" });
     }
   }
-);
+); */
 module.exports = router;
