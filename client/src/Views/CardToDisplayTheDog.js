@@ -106,7 +106,6 @@ function CardToDisplayTheDog() {
   };
   console.log(id);
   console.log(userObject._id);
-  console.log(details);
 
   const checkIfFav = () => {
     let button;
