@@ -97,7 +97,7 @@ router.get(
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
     User.findById(req.user._id)
-      .populate("dogs", ["name", "kennel", "image", "description"])
+      .populate("dogs", ["name", "kennel", "image", "description", "liked"])
       .populate("favorites", ["name", "kennel", "image", "description"])
       .exec(function (err, user) {
         if (err) {

@@ -80,8 +80,8 @@ function AddDog() {
   const onChange = (e) =>
     setFormDogData({ ...formDogData, [e.target.name]: e.target.value });
 
-  async function fetchData() {
-    fetch("http://localhost:5000/dogs/add", {
+  const fetchData = () => {
+    fetch("http://localhost:5000/dogs/all", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -112,7 +112,7 @@ function AddDog() {
       .catch((err) => {
         console.log(err);
       });
-  }
+  };
   useEffect(() => {
     if (url) {
       fetchData();
@@ -121,8 +121,7 @@ function AddDog() {
 
   const handleOnSubmit = (event) => {
     event.preventDefault();
-    console.log("success");
-    fetchData();
+    //fetchData();
   };
   return (
     <div>
@@ -207,6 +206,7 @@ function AddDog() {
           autoComplete="birth"
           name="birth"
           variant="outlined"
+          type="date"
           required
           fullWidth
           id="birth"

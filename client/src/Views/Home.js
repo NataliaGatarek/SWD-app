@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import AppBar from "@material-ui/core/AppBar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -8,6 +8,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import CardToDisplayNewest from "../Components/CardToDisplayNewest.js";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { DogContext } from "../Context/DogContext.js";
 import "../Views/views.css";
 
 const useStyles = makeStyles((theme) => ({
@@ -35,85 +36,94 @@ const useStyles = makeStyles((theme) => ({
 function Home() {
   const classes = useStyles();
   const [newest, setNewest] = useState([]);
+  const { loadingPage, setLoadingPage } = useContext(DogContext);
 
   const fetchApiTwo = () => {
     fetch("http://localhost:5000/dogs/newest")
       .then((response) => response.json())
       .then((data) => {
         setNewest(data);
+        setLoadingPage(false);
+      })
+      .catch((error) => {
+        console.error("Something went wrong", error);
       });
   };
   useEffect(() => {
     fetchApiTwo();
-  }, []);
+  }, [setNewest, setLoadingPage]);
   return (
     <div>
-      <React.Fragment>
-        <CssBaseline />
-        <AppBar position="relative"></AppBar>
-        <main>
-          {/* Hero unit */}
-          <div className={classes.heroContent}>
-            <Container maxWidth="sm">
-              <Typography
-                component="h1"
-                variant="h2"
-                align="center"
-                color="textPrimary"
-                gutterBottom
-              >
-                Spanish Water Dogs in Poland
-              </Typography>
+      {!loadingPage ? (
+        <React.Fragment>
+          <CssBaseline />
+          <AppBar position="relative"></AppBar>
+          <main>
+            {/* Hero unit */}
+            <div className={classes.heroContent}>
+              <Container maxWidth="sm">
+                <Typography
+                  component="h1"
+                  variant="h2"
+                  align="center"
+                  color="textPrimary"
+                  gutterBottom
+                >
+                  Spanish Water Dogs in Poland
+                </Typography>
+                <Typography
+                  variant="h5"
+                  align="center"
+                  color="textSecondary"
+                  paragraph
+                >
+                  Welcome to the mobile application dedicated to the Spanish
+                  Water Dog.
+                </Typography>
+                <div className={classes.heroButtons}>
+                  <Grid container spacing={2} justify="center">
+                    <Grid item>
+                      <Link to="/ListOfDogs">
+                        <Button variant="contained" size="large">
+                          List of all the dogs
+                        </Button>
+                      </Link>
+                    </Grid>
+                    <Grid item>
+                      <Button variant="outlined" size="small">
+                        List of FCI Polish Breeders
+                      </Button>
+                    </Grid>
+                  </Grid>
+                </div>
+              </Container>
+            </div>
+            <Container className={classes.cardGrid} maxWidth="md">
               <Typography
                 variant="h5"
                 align="center"
                 color="textSecondary"
                 paragraph
               >
-                Welcome to the mobile application dedicated to the Spanish Water
-                Dog.
+                Latest added dogs
               </Typography>
-              <div className={classes.heroButtons}>
-                <Grid container spacing={2} justify="center">
-                  <Grid item>
-                    <Link to="/ListOfDogs">
-                      <Button variant="contained" size="large">
-                        List of all the dogs
-                      </Button>
-                    </Link>
-                  </Grid>
-                  <Grid item>
-                    <Button variant="outlined" size="small">
-                      List of FCI Polish Breeders
-                    </Button>
-                  </Grid>
+              <Grid container spacing={4}>
+                <Grid item xs={12} sm={6} md={4}>
+                  {newest.map((newest) => {
+                    return (
+                      <div className="home">
+                        <CardToDisplayNewest key={newest.id} newest={newest} />
+                      </div>
+                    );
+                  })}
                 </Grid>
-              </div>
-            </Container>
-          </div>
-          <Container className={classes.cardGrid} maxWidth="md">
-            <Typography
-              variant="h5"
-              align="center"
-              color="textSecondary"
-              paragraph
-            >
-              Latest added dogs
-            </Typography>
-            <Grid container spacing={4}>
-              <Grid item xs={12} sm={6} md={4}>
-                {newest.map((newest) => {
-                  return (
-                    <div className="home">
-                      <CardToDisplayNewest key={newest.id} newest={newest} />
-                    </div>
-                  );
-                })}
               </Grid>
-            </Grid>
-          </Container>
-        </main>
-      </React.Fragment>
+            </Container>
+          </main>
+        </React.Fragment>
+      ) : (
+        <p>...Loading</p>
+      )}
     </div>
   );
 }

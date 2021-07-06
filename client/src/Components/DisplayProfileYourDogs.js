@@ -5,8 +5,15 @@ import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
 import Typography from "@material-ui/core/Typography";
 import { AuthContext } from "../Context/AuthContext";
-import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
-
+import Button from "@material-ui/core/Button";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link,
+  useParams,
+  useHistory,
+} from "react-router-dom";
 const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
@@ -35,9 +42,11 @@ function DisplayProfileYourDogs(props) {
   const classes = useStyles();
   const theme = useTheme();
   const { userObject } = useContext(AuthContext);
+  let { id } = useParams();
+  console.log(`props`, props);
 
-  const deleteDog = () => {
-    fetch("http://localhost:5000/dogs/all", {
+  /* const deleteDog = () => {
+    fetch(`http://localhost:5000/dogs/${id}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
@@ -54,7 +63,7 @@ function DisplayProfileYourDogs(props) {
       .catch((err) => {
         console.log(err);
       });
-  };
+  }; */
   return (
     <Card className={classes.root}>
       <div className={classes.details}>
@@ -70,7 +79,12 @@ function DisplayProfileYourDogs(props) {
           <Typography variant="subtitle1" color="textSecondary">
             {props.displayDogs.description}
             <hr></hr>
-            <button onClick={() => deleteDog()}>delete</button>
+            <Button
+              size="small"
+              color="primary" /* onClick={() => deleteDog()} */
+            >
+              Remove the Dog
+            </Button>
           </Typography>
         </CardContent>
       </div>

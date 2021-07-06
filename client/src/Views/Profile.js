@@ -38,13 +38,13 @@ function Profile() {
     setLoading,
   } = useContext(AuthContext);
   //const { loadingPage, setLoadingPage } = useContext(DogContext);
+  //console.log(displayDogs._id);
 
   useEffect(() => {
     if (userObject) {
       setLoading(true);
     }
   }, []);
-
   return (
     <div>
       {!loading ? (
@@ -105,7 +105,7 @@ function Profile() {
                 paragraph
               >
                 <strong>Your dogs:</strong>
-                <p>you added dogs</p>
+                <p>you added {userObject.dogs.length} dogs</p>
                 <div>
                   {displayDogs.map((displayDog) => {
                     return (

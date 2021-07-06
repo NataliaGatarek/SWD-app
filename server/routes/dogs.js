@@ -30,9 +30,8 @@ router.get("/newest", (req, res) => {
     .limit(3);
 });
 
-//posting new dog via form and this should be a private!//
 router.post(
-  "/add",
+  "/all",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
     const {
@@ -52,7 +51,6 @@ router.post(
       image,
       comments,
     } = req.body;
-    console.log(image);
     const dog = new dogsModel({
       name: name,
       kennel: kennel,
@@ -74,21 +72,23 @@ router.post(
     dog
       .save()
       .then((result) => {
-        res.status(201).json({
-          message: "Handling POST requests to /dog",
-          createdProduct: result,
-        });
         User.findByIdAndUpdate(
           req.user._id,
           {
             $push: { dogs: result._id },
+          },
+          {
+            new: true,
           },
           (error, success) => {
             console.log(error, success);
             if (error) {
               res.send(error);
             } else {
-              res.send("Success");
+              res.status(201).json({
+                message: "Handling POST requests to /dog",
+                createdProduct: result,
+              });
             }
           }
         );
@@ -174,18 +174,24 @@ router.delete(
 );
 //delete dog
 /* router.delete(
-  "/all",
-  passport.authenticate("jwt", { session: false }),
+  "/:id",
+  //passport.authenticate("jwt", { session: false }),
   async (req, res) => {
-    const { owner } = req.body;
-    console.log(owner);
+    const { dogId } = req.params.id;
+    //dog: req.dog.id;
     try {
-      await dogsModel.findOneAndDelete({ here dog id});
+      await dogsModel.findOneAndDelete({ dogId });
       res.json({ msg: "Dog removed" });
+
+      await User.findByIdAndUpdate(req.user._id, {
+        $pull: { dogs: dogId },
+      });
     } catch (error) {
       console.error(error);
-      return res.status(500).json({ msg: "Server error" });
+      res.status(500).json({ msg: "Server error" });
     }
+    console.log(req.params.id);
+    console.log(dogId);
   }
 ); */
 module.exports = router;

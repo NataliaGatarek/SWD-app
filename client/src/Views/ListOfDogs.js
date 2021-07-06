@@ -21,6 +21,9 @@ function ListOfDogs() {
         .then((data) => {
           setDogs(data);
           setLoadingPage(false);
+        })
+        .catch((error) => {
+          console.error("Something went wrong", error);
         });
     };
     fetchApi();

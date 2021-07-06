@@ -109,34 +109,48 @@ function CardToDisplayTheDog() {
 
   const checkIfFav = () => {
     let button;
-    details.liked.forEach((like) => {
-      console.log(like.id);
-      if (like._id === userObject._id) {
-        button = (
-          <Button
-            variant="outlined"
-            size="small"
-            onClick={() => {
-              favoriteRemove(id);
-            }}
-          >
-            remove from favorites
-          </Button>
-        );
-      } else {
-        button = (
-          <Button
-            variant="outlined"
-            size="small"
-            onClick={() => {
-              favoriteAdd(id);
-            }}
-          >
-            add to favorites
-          </Button>
-        );
-      }
-    });
+    if (details.liked.length === 0) {
+      button = (
+        <Button
+          variant="outlined"
+          size="small"
+          onClick={() => {
+            favoriteAdd(id);
+          }}
+        >
+          add to favorites
+        </Button>
+      );
+    } else {
+      details.liked.forEach((like) => {
+        console.log(like.id);
+        if (like._id === userObject._id) {
+          button = (
+            <Button
+              variant="outlined"
+              size="small"
+              onClick={() => {
+                favoriteRemove(id);
+              }}
+            >
+              remove from favorites
+            </Button>
+          );
+        } else {
+          button = (
+            <Button
+              variant="outlined"
+              size="small"
+              onClick={() => {
+                favoriteAdd(id);
+              }}
+            >
+              add to favorites
+            </Button>
+          );
+        }
+      });
+    }
     return button;
   };
   return (
