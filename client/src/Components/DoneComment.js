@@ -7,6 +7,7 @@ import IconButton from "@material-ui/core/IconButton";
 import DeleteIcon from "@material-ui/icons/Delete";
 import avatar from "../pictures/picture1.png";
 import { AuthContext } from "../Context/AuthContext";
+import { DogContext } from "../Context/DogContext";
 import "../Views/views.css";
 import {
   BrowserRouter as Router,
@@ -28,6 +29,7 @@ const useStyles = makeStyles((theme) => ({
 function Comment(props) {
   const history = useHistory();
   const { userObject } = useContext(AuthContext);
+  const { comments, setComments } = useContext(DogContext);
   const classes = useStyles();
   let { id } = useParams();
   const { text, userName, userId } = props.comment;
@@ -47,7 +49,7 @@ function Comment(props) {
       .then((res) => res.json())
       .then((data) => {
         console.log("data", data);
-        history.goBack();
+        setComments(data);
       })
       .catch((err) => {
         console.log(err);

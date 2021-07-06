@@ -44,16 +44,17 @@ function DisplayProfileYourDogs(props) {
   const { userObject } = useContext(AuthContext);
   let { id } = useParams();
   console.log(`props`, props);
-
-  /* const deleteDog = () => {
-    fetch(`http://localhost:5000/dogs/${id}`, {
+  console.log(props.displayDogs._id); //this is the id of the dog//
+  let dogId = props.displayDogs._id;
+  const deleteDog = () => {
+    fetch(`http://localhost:5000/dogs/${dogId}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
         Authorization: "Bearer " + localStorage.getItem("token"),
       },
       body: JSON.stringify({
-        owner: userObject._id,
+        dogId,
       }),
     })
       .then((res) => res.json())
@@ -63,7 +64,7 @@ function DisplayProfileYourDogs(props) {
       .catch((err) => {
         console.log(err);
       });
-  }; */
+  };
   return (
     <Card className={classes.root}>
       <div className={classes.details}>
@@ -79,10 +80,7 @@ function DisplayProfileYourDogs(props) {
           <Typography variant="subtitle1" color="textSecondary">
             {props.displayDogs.description}
             <hr></hr>
-            <Button
-              size="small"
-              color="primary" /* onClick={() => deleteDog()} */
-            >
+            <Button size="small" color="primary" onClick={() => deleteDog()}>
               Remove the Dog
             </Button>
           </Typography>
