@@ -40,7 +40,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 function DisplayProfileYourDogs(props) {
   const classes = useStyles();
-  const theme = useTheme();
   const { userObject } = useContext(AuthContext);
   let { id } = useParams();
   console.log(`props`, props);
