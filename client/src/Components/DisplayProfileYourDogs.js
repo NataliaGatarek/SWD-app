@@ -1,11 +1,12 @@
-import React, { useState, useEffect, useContext } from "react";
-import { makeStyles, useTheme } from "@material-ui/core/styles";
+import React, { useContext } from "react";
+import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
 import Typography from "@material-ui/core/Typography";
 import { AuthContext } from "../Context/AuthContext";
 import Button from "@material-ui/core/Button";
+import axios from "axios";
 import {
   BrowserRouter as Router,
   Switch,
@@ -45,7 +46,17 @@ function DisplayProfileYourDogs(props) {
   console.log(`props`, props);
   console.log(props.displayDogs._id); //this is the id of the dog//
   let dogId = props.displayDogs._id;
-  const deleteDog = () => {
+  console.log(dogId);
+
+  /*  const deleteDog = async () => {
+    const body = {
+      userId: userObject._id,
+      dogId: props.displayDogs._id,
+    };
+    const res = await axios.post("http://localhost:5000/dogs/deletedog", body);
+    console.log(res);
+  }; */
+  /* const deleteDog = () => {
     fetch(`http://localhost:5000/dogs/${dogId}`, {
       method: "DELETE",
       headers: {
@@ -63,7 +74,7 @@ function DisplayProfileYourDogs(props) {
       .catch((err) => {
         console.log(err);
       });
-  };
+  }; */
   return (
     <Card className={classes.root}>
       <div className={classes.details}>
@@ -73,15 +84,28 @@ function DisplayProfileYourDogs(props) {
           title="dog"
         />
         <CardContent className={classes.content}>
-          <Typography component="h5" variant="h5">
+          <Typography component="h1" variant="h6">
             {props.displayDogs.name}
           </Typography>
           <Typography variant="subtitle1" color="textSecondary">
-            {props.displayDogs.description}
+            {props.displayDogs.description} <hr></hr>
+            Likes: {props.displayDogs.liked.length}
             <hr></hr>
-            <Button size="small" color="primary" onClick={() => deleteDog()}>
+            <Button
+              size="small"
+              color="primary" /* onClick={() => deleteDog()} */
+            >
               Remove the Dog
             </Button>
+            {/* <Link>
+              <Button
+                to={`CardToDisplayTheDog/${props.displayDogs._id}`}
+                size="small"
+                color="primary"
+              >
+                Read More
+              </Button>
+            </Link> */}
           </Typography>
         </CardContent>
       </div>

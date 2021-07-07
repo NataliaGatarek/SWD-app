@@ -26,12 +26,9 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function Comment(props) {
-  const history = useHistory();
-  const classes = useStyles();
-  const [value, setValue] = React.useState("Controlled");
   let { id } = useParams();
   const { userObject } = useContext(AuthContext);
-  const { comments, setComments } = useContext(DogContext);
+  const { setComments } = useContext(DogContext);
   const [text, setText] = useState("");
   const fetchDataComment = () => {
     fetch(`http://localhost:5000/dogs/comments/${id}`, {

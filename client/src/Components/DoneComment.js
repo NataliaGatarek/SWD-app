@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useContext } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import "../Views/views.css";
@@ -27,9 +27,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function Comment(props) {
-  const history = useHistory();
   const { userObject } = useContext(AuthContext);
-  const { comments, setComments } = useContext(DogContext);
+  const { setComments } = useContext(DogContext);
   const classes = useStyles();
   let { id } = useParams();
   const { text, userName, userId } = props.comment;

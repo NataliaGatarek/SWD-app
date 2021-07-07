@@ -107,7 +107,7 @@ function AddDog() {
       .then((res) => res.json())
       .then((data) => {
         console.log("data", data);
-        //history.push("/Profile");
+        history.push("/Profile");
       })
       .catch((err) => {
         console.log(err);

@@ -174,24 +174,24 @@ router.delete(
 );
 //delete dog
 /* router.delete(
-  "/:id",
+  "/deletedog",
   //passport.authenticate("jwt", { session: false }),
   async (req, res) => {
-    const { dogId } = req.params.id;
+    //const { dogId } = req.params.id;
+    const { dogId, userId } = req.body;
     //dog: req.dog.id;
     try {
-      await dogsModel.findOneAndDelete({ dogId });
+      await dogsModel.deleteOne({ _id: dogId });
       res.json({ msg: "Dog removed" });
 
-      await User.findByIdAndUpdate(req.user._id, {
-        $pull: { dogs: dogId },
-      });
+      await User.updateOne({ _id: userId }, { $pull: { favorites: dogId } });
     } catch (error) {
       console.error(error);
       res.status(500).json({ msg: "Server error" });
     }
-    console.log(req.params.id);
+    console.log(req.body);
     console.log(dogId);
+    console.log(userId);
   }
 ); */
 module.exports = router;
