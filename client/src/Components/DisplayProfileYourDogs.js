@@ -76,7 +76,7 @@ function DisplayProfileYourDogs(props) {
       });
   }; */
   return (
-    <Card className={classes.root}>
+    <Card className={classes.root} elevation={12}>
       <div className={classes.details}>
         <CardMedia
           className={classes.cover}
@@ -97,15 +97,6 @@ function DisplayProfileYourDogs(props) {
             >
               Remove the Dog
             </Button>
-            {/* <Link>
-              <Button
-                to={`CardToDisplayTheDog/${props.displayDogs._id}`}
-                size="small"
-                color="primary"
-              >
-                Read More
-              </Button>
-            </Link> */}
           </Typography>
         </CardContent>
       </div>

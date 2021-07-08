@@ -34,7 +34,7 @@ function DisplayFav(props) {
   const theme = useTheme();
 
   return (
-    <Card className={classes.root}>
+    <Card className={classes.root} elevation={12}>
       <div className={classes.details}>
         <CardMedia
           className={classes.cover}

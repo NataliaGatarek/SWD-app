@@ -35,6 +35,8 @@ export const AuthContextProvider = ({ children }) => {
         setFavoritedDogs(res.data.favorites);
         setLoading(false);
         console.log(res.data);
+      } else {
+        setLoading(true);
       }
     };
     fetchAuth();

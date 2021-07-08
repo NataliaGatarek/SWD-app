@@ -4,29 +4,32 @@ const User = require("../models/usersModel");
 const dogsModel = require("../models/dogsModel");
 const jwt = require("jsonwebtoken");
 const secretOrKey = require("../config.js").secretOrKey;
-const { body, validationResult } = require("express-validator");
+const { check, validationResult } = require("express-validator");
 const bcrypt = require("bcrypt");
 const passport = require("passport"); //this is will use once the private routes are set//
 
 //register
 router.post(
   "/",
-  body("firstName", "Name is required").notEmpty(),
-  body("lastName", "Last name is required").notEmpty(),
-  body("email", "Please include a valid email").isEmail(),
-  body(
-    "password",
-    "Please enter a password with 6 or more characters"
-  ).isLength({ min: 6 }),
+  check("firstName").notEmpty().withMessage("Name is required"),
+  check("lastName").notEmpty().withMessage("Last Name is required"),
+  check("email").notEmpty().isEmail().withMessage("Email is required"),
+  check("password")
+    .notEmpty()
+    .isLength({ min: 6 })
+    .withMessage("Password must be at least 6 characters long"),
   async (req, res) => {
     const { firstName, lastName, email, password } = req.body;
     try {
-      User.findOne({ email }, async (err, user) => {
+      User.findOne({ email: email }, async (err, user) => {
         if (err) {
           res.json({ error: err });
         }
         if (user) {
           res.send("Email is already used");
+        }
+        if (!firstName || !lastName || !email || !password) {
+          return res.send("All fields are required");
         } else {
           // express validator
           const errors = validationResult(req);
@@ -47,7 +50,7 @@ router.post(
             login: false,
           });
           await user.save();
-          res.send("User registered");
+          res.send("User registered, please Sign In");
         }
       });
     } catch (error) {
@@ -59,8 +62,41 @@ router.post(
 
 //login
 router.post("/login", async (req, res) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() });
+  }
   const { email, password } = req.body;
-  const user = await User.findOne({ email: email }, (err, user) => {
+  try {
+    let user = await User.findOne({ email });
+
+    if (!user) {
+      return res.status(400).json({ errors: [{ msg: "Invalid Credentials" }] });
+    }
+    const isMatch = await bcrypt.compare(password, user.password);
+    if (!isMatch) {
+      return res.status(400).json({ errors: [{ msg: "Invalid Credentials" }] });
+    }
+    const options = {
+      id: user._id,
+    };
+    const token = jwt.sign(options, secretOrKey, { expiresIn: "20d" });
+    console.log(token);
+    res.json({
+      success: true,
+      token: token,
+    });
+    if (user) {
+      user.login = true;
+      await user.save();
+    }
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("Server error");
+  }
+});
+
+/* const user = await User.findOne({ email: email }, (err, user) => {
     if (err) {
       res.send("Email does not exist");
     } else {
@@ -80,7 +116,7 @@ router.post("/login", async (req, res) => {
             token: token,
           });
         } else {
-          res.send("password does not match");
+          res.send("Password does not match");
         }
       });
     }
@@ -89,7 +125,7 @@ router.post("/login", async (req, res) => {
     user.login = true;
     await user.save();
   }
-});
+}); */
 
 //get the profile to display the user//
 router.get(

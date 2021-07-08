@@ -202,7 +202,7 @@ function AddDog() {
         />
         <TextField
           id="standard-basic"
-          label="Date of birth"
+          //label="Date of birth"
           autoComplete="birth"
           name="birth"
           variant="outlined"

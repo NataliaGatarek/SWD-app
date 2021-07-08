@@ -12,7 +12,7 @@ import AccountCircle from "@material-ui/icons/AccountCircle";
 import MoreIcon from "@material-ui/icons/MoreVert";
 import LockOpenIcon from "@material-ui/icons/LockOpen";
 import LockIcon from "@material-ui/icons/Lock";
-import FavoriteIcon from "@material-ui/icons/Favorite";
+import PetsIcon from "@material-ui/icons/Pets";
 import BackButton from "./BackButton.js";
 import { AuthContext } from "../Context/AuthContext";
 import axios from "axios";
@@ -67,6 +67,7 @@ const useStyles = makeStyles((theme) => ({
 
 function NavBar(props) {
   const classes = useStyles();
+  const token = window.localStorage.getItem("token");
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
@@ -125,12 +126,12 @@ function NavBar(props) {
         </MenuItem>
       )}
       <MenuItem>
-        <IconButton aria-label="favorites" color="inherit">
+        <IconButton aria-label="alldogs" color="inherit">
           <Badge color="secondary">
-            <FavoriteIcon />
+            <PetsIcon />
           </Badge>
         </IconButton>
-        <p>Favorites</p>
+        <Link to="/ListOfDogs">All dogs</Link>
       </MenuItem>
       <MenuItem onClick={handleProfileMenuOpen}>
         <IconButton
@@ -159,12 +160,11 @@ function NavBar(props) {
               <MenuIcon />
             </IconButton>
           </Link>
-          <Link to="/">
-            <Typography className={classes.title} variant="h6" noWrap>
-              Home
-            </Typography>
-          </Link>
-          <IconButton aria-label="back" color="inherit">
+          <IconButton
+            aria-label="back"
+            color="inherit"
+            style={{ marginLeft: "30%" }}
+          >
             <BackButton />
           </IconButton>
           <div className={classes.grow} />
@@ -174,23 +174,6 @@ function NavBar(props) {
                 <Badge color="secondary">
                   <LockOpenIcon />
                 </Badge>
-              </IconButton>
-            </Link>
-            <IconButton aria-label="favorites" color="inherit">
-              <Badge color="secondary">
-                <FavoriteIcon />
-              </Badge>
-            </IconButton>
-            <Link to="Profile">
-              <IconButton
-                edge="end"
-                aria-label="account of current user"
-                aria-controls={menuId}
-                aria-haspopup="true"
-                onClick={handleProfileMenuOpen}
-                color="inherit"
-              >
-                <AccountCircle />
               </IconButton>
             </Link>
             <Link to="Sign out">
@@ -203,6 +186,25 @@ function NavBar(props) {
                 color="inherit"
               >
                 <LockIcon />
+              </IconButton>
+            </Link>
+            <Link to="/ListOfDogs">
+              <IconButton aria-label="dogs" color="inherit">
+                <Badge color="secondary">
+                  <PetsIcon />
+                </Badge>
+              </IconButton>
+            </Link>
+            <Link to="Profile">
+              <IconButton
+                edge="end"
+                aria-label="account of current user"
+                aria-controls={menuId}
+                aria-haspopup="true"
+                onClick={handleProfileMenuOpen}
+                color="inherit"
+              >
+                <AccountCircle />
               </IconButton>
             </Link>
           </div>

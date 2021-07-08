@@ -41,7 +41,7 @@ const useStyles = makeStyles((theme) => ({
 function SignIn() {
   const history = useHistory();
   const classes = useStyles();
-  const { loading, setLoading } = useContext(AuthContext);
+  const { setLoading } = useContext(AuthContext);
   const [error, setError] = useState("");
   const [formData, setFormData] = useState({
     email: "",
@@ -59,10 +59,7 @@ function SignIn() {
         "http://localhost:5000/users/login",
         formData
       );
-      const storageLocal = await window.localStorage.setItem(
-        "token",
-        res.data.token
-      );
+      window.localStorage.setItem("token", res.data.token);
       setError(``);
       setLoading(true);
       console.log("login successfull");
@@ -73,7 +70,6 @@ function SignIn() {
     }
     setLoading(false);
     history.push("/");
-    console.log("success");
   };
 
   return (
@@ -87,6 +83,7 @@ function SignIn() {
           <Typography component="h1" variant="h5">
             Sign in
           </Typography>
+          {error && <h3 style={{ color: "red" }}>{error}</h3>}
           <form className={classes.form} noValidate onSubmit={handleOnSubmit}>
             <TextField
               variant="outlined"

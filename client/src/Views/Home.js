@@ -9,6 +9,7 @@ import Container from "@material-ui/core/Container";
 import CardToDisplayNewest from "../Components/CardToDisplayNewest.js";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import { DogContext } from "../Context/DogContext.js";
+import swd from "../pictures/swd.jpg";
 import "../Views/views.css";
 
 const useStyles = makeStyles((theme) => ({
@@ -17,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
   },
   heroContent: {
     backgroundColor: theme.palette.background.paper,
-    padding: theme.spacing(8, 0, 6),
+    padding: theme.spacing(4, 0, 6),
   },
   heroButtons: {
     marginTop: theme.spacing(4),
@@ -59,8 +60,10 @@ function Home() {
           <CssBaseline />
           <AppBar position="relative"></AppBar>
           <main>
-            {/* Hero unit */}
             <div className={classes.heroContent}>
+              <Container>
+                <img src={swd} alt="swd" />
+              </Container>
               <Container maxWidth="sm">
                 <Typography
                   component="h1"
@@ -69,7 +72,7 @@ function Home() {
                   color="textPrimary"
                   gutterBottom
                 >
-                  Spanish Water Dogs in Poland
+                  Spanish Water Dog
                 </Typography>
                 <Typography
                   variant="h5"
@@ -77,8 +80,7 @@ function Home() {
                   color="textSecondary"
                   paragraph
                 >
-                  Welcome to the mobile application dedicated to the Spanish
-                  Water Dog.
+                  the social network of spanish waterdogs in Poland
                 </Typography>
                 <div className={classes.heroButtons}>
                   <Grid container spacing={2} justify="center">
@@ -90,9 +92,11 @@ function Home() {
                       </Link>
                     </Grid>
                     <Grid item>
-                      <Button variant="outlined" size="small">
-                        List of FCI Polish Breeders
-                      </Button>
+                      <Link to="/Breeders">
+                        <Button variant="outlined" size="small">
+                          List of FCI Polish Breeders
+                        </Button>
+                      </Link>
                     </Grid>
                   </Grid>
                 </div>

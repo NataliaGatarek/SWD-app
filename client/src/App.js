@@ -10,6 +10,7 @@ import AddDog from "./Views/AddDog.js";
 import { DogContextProvider } from "./Context/DogContext.js";
 import { AuthContextProvider } from "./Context/AuthContext.js";
 import ProfilePrivateRoute from "./PrivateRoutes/ProfilePrivateRoute.js";
+import Breeders from "./Views/Breeders.js";
 
 function App() {
   return (
@@ -34,6 +35,9 @@ function App() {
             ></ProfilePrivateRoute>
             <Route exact path="/ListOfDogs">
               <ListOfDogs />
+            </Route>
+            <Route exact path="/Breeders">
+              <Breeders />
             </Route>
             <ProfilePrivateRoute
               children={<CardToDisplayTheDog />}
