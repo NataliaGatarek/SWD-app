@@ -7,6 +7,7 @@ import { AuthContext } from "../Context/AuthContext";
 import { DogContext } from "../Context/DogContext";
 import "../Views/views.css";
 import avatar from "../pictures/picture1.png";
+import { serverURL } from "../config.js";
 import {
   BrowserRouter as Router,
   Switch,
@@ -31,7 +32,7 @@ function Comment(props) {
   const { setComments } = useContext(DogContext);
   const [text, setText] = useState("");
   const fetchDataComment = () => {
-    fetch(`http://localhost:5000/dogs/comments/${id}`, {
+    fetch(`${serverURL}/dogs/comments/${id}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

@@ -10,6 +10,7 @@ import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
+import { serverURL } from "../config.js";
 import {
   BrowserRouter as Router,
   Switch,
@@ -67,7 +68,7 @@ function SignUp() {
         },
       };
       const body = JSON.stringify(newUser);
-      var res = await axios.post("http://localhost:5000/users", body, config);
+      var res = await axios.post(`${serverURL}/users/`, body, config);
       console.log(res.data);
       setMessage(res.data);
     } catch (err) {

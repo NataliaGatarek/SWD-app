@@ -2,6 +2,7 @@ import React, { useEffect, useContext } from "react";
 import CardToDisplayDog from "../Components/CardToDisplayDog.js";
 import Input from "../Components/Input.js";
 import { DogContext } from "../Context/DogContext.js";
+import { serverURL } from "../config.js";
 import "./views.css";
 
 function ListOfDogs() {
@@ -16,7 +17,7 @@ function ListOfDogs() {
 
   useEffect(() => {
     const fetchApi = () => {
-      fetch("http://localhost:5000/dogs/all")
+      fetch(`${serverURL}/dogs/all`)
         .then((response) => response.json())
         .then((data) => {
           setDogs(data);

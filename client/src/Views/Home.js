@@ -11,6 +11,7 @@ import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import { DogContext } from "../Context/DogContext.js";
 import swd from "../pictures/swd.jpg";
 import "../Views/views.css";
+import { serverURL } from "../config.js";
 
 const useStyles = makeStyles((theme) => ({
   icon: {
@@ -40,7 +41,7 @@ function Home() {
   const { loadingPage, setLoadingPage } = useContext(DogContext);
 
   const fetchApiTwo = () => {
-    fetch("http://localhost:5000/dogs/newest")
+    fetch(`${serverURL}/dogs/newest`)
       .then((response) => response.json())
       .then((data) => {
         setNewest(data);

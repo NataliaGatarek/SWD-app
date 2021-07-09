@@ -12,6 +12,7 @@ import CardActions from "@material-ui/core/CardActions";
 import Button from "@material-ui/core/Button";
 import { AuthContext } from "../Context/AuthContext";
 import { DogContext } from "../Context/DogContext";
+import { serverURL } from "../config.js";
 import axios from "axios";
 import {
   BrowserRouter as Router,
@@ -82,7 +83,7 @@ function CardToDisplayTheDog() {
   };
 
   const favoriteRemove = (id) => {
-    fetch("http://localhost:5000/users/unfavorite", {
+    fetch(`${serverURL}/users/unfavorite`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",

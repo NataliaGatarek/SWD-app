@@ -11,6 +11,7 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import { AuthContext } from "../Context/AuthContext";
+import { serverURL } from "../config.js";
 import {
   BrowserRouter as Router,
   Switch,
@@ -55,10 +56,7 @@ function SignIn() {
   const handleOnSubmit = async (event) => {
     event.preventDefault();
     try {
-      const res = await axios.post(
-        "http://localhost:5000/users/login",
-        formData
-      );
+      const res = await axios.post(`${serverURL}/users/login`, formData);
       window.localStorage.setItem("token", res.data.token);
       setError(``);
       setLoading(true);

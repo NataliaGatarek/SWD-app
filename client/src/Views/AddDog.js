@@ -3,6 +3,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import "./views.css";
+import { serverURL } from "../config.js";
 import {
   BrowserRouter as Router,
   Switch,
@@ -81,7 +82,7 @@ function AddDog() {
     setFormDogData({ ...formDogData, [e.target.name]: e.target.value });
 
   const fetchData = () => {
-    fetch("http://localhost:5000/dogs/all", {
+    fetch(`${serverURL}/dogs/all`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

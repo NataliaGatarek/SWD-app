@@ -1,5 +1,6 @@
 import React, { createContext, useState, useEffect } from "react";
 import axios from "axios";
+import { serverURL } from "../config.js";
 
 const initAuthContext = {
   userObject: "",
@@ -26,10 +27,7 @@ export const AuthContextProvider = ({ children }) => {
         const config = {
           headers: { Authorization: `Bearer ${token}` },
         };
-        const res = await axios.get(
-          "http://localhost:5000/users/profile",
-          config
-        );
+        const res = await axios.get(`${serverURL}/users/profile`, config);
         setUserObject(res.data);
         setDisplayDogs(res.data.dogs);
         setFavoritedDogs(res.data.favorites);

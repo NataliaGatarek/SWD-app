@@ -9,6 +9,7 @@ import avatar from "../pictures/picture1.png";
 import { AuthContext } from "../Context/AuthContext";
 import { DogContext } from "../Context/DogContext";
 import "../Views/views.css";
+import { serverURL } from "../config.js";
 import {
   BrowserRouter as Router,
   Switch,
@@ -35,7 +36,7 @@ function Comment(props) {
   const { commentId } = props;
   console.log(props);
   const fetchDeleteComment = () => {
-    fetch(`http://localhost:5000/dogs/comments/${id}/${commentId}`, {
+    fetch(`${serverURL}/dogs/comments/${id}/${commentId}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
