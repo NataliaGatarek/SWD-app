@@ -12,7 +12,6 @@ import CardActions from "@material-ui/core/CardActions";
 import Button from "@material-ui/core/Button";
 import { AuthContext } from "../Context/AuthContext";
 import { DogContext } from "../Context/DogContext";
-const { serverURL } = require("../config.js");
 import axios from "axios";
 import {
   BrowserRouter as Router,
@@ -31,7 +30,7 @@ const useStyles = makeStyles({
     height: 240,
   },
 });
-
+const { serverURL } = require("../config.js");
 function CardToDisplayTheDog() {
   const classes = useStyles();
   const [details, setDetails] = useState(null);

@@ -7,7 +7,6 @@ import { AuthContext } from "../Context/AuthContext";
 import { DogContext } from "../Context/DogContext";
 import "../Views/views.css";
 import avatar from "../pictures/picture1.png";
-const { serverURL } = require("../config.js");
 import {
   BrowserRouter as Router,
   Switch,
@@ -25,6 +24,7 @@ const useStyles = makeStyles((theme) => ({
     },
   },
 }));
+const { serverURL } = require("../config.js");
 
 function Comment(props) {
   let { id } = useParams();

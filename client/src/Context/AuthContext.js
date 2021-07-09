@@ -1,7 +1,7 @@
 import React, { createContext, useState, useEffect } from "react";
 import axios from "axios";
-const { serverURL } = require("../config.js");
 
+const { serverURL } = require("../config.js");
 const initAuthContext = {
   userObject: "",
   loading: true, //true// when get the user

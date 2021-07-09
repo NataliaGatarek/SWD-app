@@ -17,7 +17,6 @@ import BackButton from "./BackButton.js";
 import { AuthContext } from "../Context/AuthContext";
 import axios from "axios";
 import "../Views/views.css";
-const { serverURL } = require("../config.js");
 
 import {
   BrowserRouter as Router,
@@ -66,6 +65,7 @@ const useStyles = makeStyles((theme) => ({
     },
   },
 }));
+const { serverURL } = require("../config.js");
 
 function NavBar(props) {
   const classes = useStyles();

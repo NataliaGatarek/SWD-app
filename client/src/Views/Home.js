@@ -11,7 +11,6 @@ import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import { DogContext } from "../Context/DogContext.js";
 import swd from "../pictures/swd.jpg";
 import "../Views/views.css";
-const { serverURL } = require("../config.js");
 
 const useStyles = makeStyles((theme) => ({
   icon: {
@@ -34,6 +33,7 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: "column",
   },
 }));
+const { serverURL } = require("../config.js");
 
 function Home() {
   const classes = useStyles();

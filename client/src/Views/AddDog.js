@@ -3,7 +3,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import "./views.css";
-const { serverURL } = require("../config.js");
+
 import {
   BrowserRouter as Router,
   Switch,
@@ -11,7 +11,7 @@ import {
   Link,
   useHistory,
 } from "react-router-dom";
-
+const { serverURL } = require("../config.js");
 const useStyles = makeStyles((theme) => ({
   root: {
     "& > *": {

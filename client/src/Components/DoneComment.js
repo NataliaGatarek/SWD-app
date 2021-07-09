@@ -9,7 +9,6 @@ import avatar from "../pictures/picture1.png";
 import { AuthContext } from "../Context/AuthContext";
 import { DogContext } from "../Context/DogContext";
 import "../Views/views.css";
-const { serverURL } = require("../config.js");
 import {
   BrowserRouter as Router,
   Switch,
@@ -18,6 +17,8 @@ import {
   useParams,
   useHistory,
 } from "react-router-dom";
+
+const { serverURL } = require("../config.js");
 const useStyles = makeStyles((theme) => ({
   margin: {
     margin: theme.spacing(1),
