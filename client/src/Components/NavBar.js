@@ -106,25 +106,6 @@ function NavBar(props) {
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
     >
-      {loading ? (
-        <MenuItem>
-          <IconButton aria-label="signin" color="inherit">
-            <Badge color="secondary">
-              <LockOpenIcon />
-            </Badge>
-          </IconButton>
-          <Link to="/SignIn">Sign In</Link>
-        </MenuItem>
-      ) : (
-        <MenuItem onClick={handleLogout}>
-          <IconButton aria-label="signin" color="inherit">
-            <Badge color="secondary">
-              <LockIcon />
-            </Badge>
-          </IconButton>
-          <p>Sign out</p>
-        </MenuItem>
-      )}
       <MenuItem>
         <IconButton aria-label="alldogs" color="inherit">
           <Badge color="secondary">
@@ -144,6 +125,25 @@ function NavBar(props) {
         </IconButton>
         <Link to="/Profile">Profile</Link>
       </MenuItem>
+      {loading ? (
+        <MenuItem>
+          <IconButton aria-label="signin" color="inherit">
+            <Badge color="secondary">
+              <LockOpenIcon />
+            </Badge>
+          </IconButton>
+          <Link to="/SignIn">Sign In</Link>
+        </MenuItem>
+      ) : (
+        <MenuItem onClick={handleLogout}>
+          <IconButton aria-label="signin" color="inherit">
+            <Badge color="secondary">
+              <LockIcon />
+            </Badge>
+          </IconButton>
+          <p>Sign out</p>
+        </MenuItem>
+      )}
     </Menu>
   );
   return (

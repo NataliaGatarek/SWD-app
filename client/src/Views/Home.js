@@ -80,7 +80,7 @@ function Home() {
                   color="textSecondary"
                   paragraph
                 >
-                  the social network of spanish waterdogs in Poland
+                  the social network of Spanish Waterdogs in Poland
                 </Typography>
                 <div className={classes.heroButtons}>
                   <Grid container spacing={2} justify="center">

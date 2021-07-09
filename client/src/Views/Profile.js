@@ -1,12 +1,12 @@
-import React, { useContext, useState, useEffect } from "react";
-import { makeStyles, useTheme } from "@material-ui/core/styles";
+import React, { useContext, useEffect } from "react";
+import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import PetsIcon from "@material-ui/icons/Pets";
-import Paper from "@material-ui/core/Paper";
 import { AuthContext } from "../Context/AuthContext";
 import DsiplayFav from "../Components/DisplayFav.js";
 import DisplayProfileYourDogs from "../Components/DisplayProfileYourDogs";
-import { DogContext } from "../Context/DogContext.js";
+import Container from "@material-ui/core/Container";
+import swd2 from "../pictures/swd2.jpg";
 import {
   BrowserRouter as Router,
   Switch,
@@ -25,20 +25,16 @@ const useStyles = makeStyles((theme) => ({
       minHeight: theme.spacing(25),
     },
   },
+  heroContent: {
+    backgroundColor: theme.palette.background.paper,
+    padding: theme.spacing(0, 0, 6),
+  },
 }));
 
 function Profile() {
   const classes = useStyles();
-  const {
-    userObject,
-    displayDogs,
-    favoritedDogs,
-    setFavoritedDogs,
-    loading,
-    setLoading,
-  } = useContext(AuthContext);
-  //const { loadingPage, setLoadingPage } = useContext(DogContext);
-  //console.log(displayDogs._id);
+  const { userObject, displayDogs, favoritedDogs, loading, setLoading } =
+    useContext(AuthContext);
 
   useEffect(() => {
     if (userObject) {
@@ -49,38 +45,52 @@ function Profile() {
     <div>
       {!loading ? (
         <div>
-          <h1 className="header-style">Welcome to your profile</h1>
-          <h2 className="header-style">
-            Add your dog{" "}
-            <Link to="/AddDog">
-              {" "}
-              <PetsIcon />{" "}
-            </Link>
-          </h2>
-          <div className={classes.root}>
-            <Paper elevation={12}>
+          <div className={classes.heroContent}>
+            <Container maxWidth="sm">
+              <img src={swd2} alt="swd" />
+              <Typography
+                component="h1"
+                variant="h4"
+                align="center"
+                color="textPrimary"
+                gutterBottom
+              >
+                Welcome {userObject.firstName}
+              </Typography>
+              <Typography
+                component="h1"
+                variant="h5"
+                align="center"
+                color="textPrimary"
+                gutterBottom
+              >
+                Add your dog{" "}
+                <Link to="/AddDog">
+                  {" "}
+                  <PetsIcon />{" "}
+                </Link>
+              </Typography>
               <Typography
                 variant="h5"
                 align="center"
                 color="textSecondary"
                 paragraph
               >
+                <hr></hr>
+                <strong>Your information:</strong>
                 <p>
-                  <strong>Your information:</strong>
-                </p>
-                <p>
+                  {" "}
                   {userObject.firstName} {userObject.lastName}
                 </p>
                 <p> {userObject.email}</p>
               </Typography>
-            </Paper>
-            <Paper elevation={12}>
               <Typography
                 variant="h5"
                 align="center"
                 color="textSecondary"
                 paragraph
               >
+                <hr></hr>
                 <strong>Your favorites:</strong>
                 <p>
                   you have currently {userObject.favorites.length} favorites
@@ -96,14 +106,13 @@ function Profile() {
                   })}
                 </div>
               </Typography>
-            </Paper>
-            <Paper elevation={12}>
               <Typography
                 variant="h5"
                 align="center"
                 color="textSecondary"
                 paragraph
               >
+                <hr></hr>
                 <strong>Your dogs:</strong>
                 <p>you added {userObject.dogs.length} dogs</p>
                 <div>
@@ -117,7 +126,7 @@ function Profile() {
                   })}
                 </div>
               </Typography>
-            </Paper>
+            </Container>
           </div>
         </div>
       ) : (

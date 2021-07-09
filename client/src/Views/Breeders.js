@@ -13,6 +13,14 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import swd2 from "../pictures/swd2.jpg";
+import be from "../pictures/bona.espero.jpg";
+import cm from "../pictures/cm.jpg";
+import cc from "../pictures/cc.jpg";
+import pf from "../pictures/pf.jpg";
+import pc from "../pictures/pc.jpg";
+import pdc from "../pictures/pdc.jpg";
+import rew from "../pictures/rew.jpg";
+import toddini from "../pictures/toddini.jpg";
 
 const useStyles = makeStyles((theme) => ({
   icon: {
@@ -35,7 +43,8 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: 'column',
   },
   cardMedia: {
-    paddingTop: '56.25%', // 16:9
+    paddingTop: '56.25%',
+   // 16:9
   },
   cardContent: {
     flexGrow: 1,
@@ -63,10 +72,8 @@ function Breeders() {
                         <Grid xs={12} sm={6} md={4}>
                 <Card>
                   <CardMedia
-                    className={classes.cardMedia}
-                    image="https://source.unsplash.com/random"
-                    title="Image title"
-                  />
+                  ><img src={be} alt="swd" style={{height:"250px", width:"100%"}} />
+                  </CardMedia>
                   <CardContent className={classes.cardContent}>
                     <Typography gutterBottom variant="h5" component="h2">
                                        <strong>Bona Espero FCI</strong><p>Czechowice-Dziedzice, woj. Śląskie
@@ -78,11 +85,9 @@ function Breeders() {
                   </CardContent>
                             </Card>
                              <Card>
-                  <CardMedia
-                    className={classes.cardMedia}
-                    image="https://source.unsplash.com/random"
-                    title="Image title"
-                  />
+                   <CardMedia
+                  ><img src={cm} alt="swd" style={{height:"250px", width:"100%"}} />
+                  </CardMedia>
                   <CardContent className={classes.cardContent}>
                     <Typography gutterBottom variant="h5" component="h2">
                     <strong>Canis Marinus FCI</strong>
@@ -96,11 +101,9 @@ will decide to book / buy a puppy.
                   </CardContent>
                             </Card>
                              <Card>
-                  <CardMedia
-                    className={classes.cardMedia}
-                    image="https://source.unsplash.com/random"
-                    title="Image title"
-                  />
+                   <CardMedia
+                  ><img src={cc} alt="swd" style={{height:"250px", width:"100%"}} />
+                  </CardMedia>
                   <CardContent className={classes.cardContent}>
                     <Typography gutterBottom variant="h5" component="h2">
                       <strong>Czekoladowa Costa Brava FCI</strong>
@@ -114,10 +117,8 @@ ZKWP Odział Rzeszów</p>
                             </Card>
                              <Card>
                   <CardMedia
-                    className={classes.cardMedia}
-                    image="https://source.unsplash.com/random"
-                    title="Image title"
-                  />
+                  ><img src={pf} alt="swd" style={{height:"250px", width:"100%"}} />
+                  </CardMedia>
                   <CardContent className={classes.cardContent}>
                     <Typography gutterBottom variant="h5" component="h2">
                      <strong>Pearls in Furs FCI</strong>
@@ -131,10 +132,8 @@ ZKWP Oddział Warszawa</p>
                             </Card>
                              <Card>
                   <CardMedia
-                    className={classes.cardMedia}
-                    image="https://source.unsplash.com/random"
-                    title="Image title"
-                  />
+                  ><img src={pc} alt="swd" style={{height:"250px", width:"100%"}} />
+                  </CardMedia>
                   <CardContent className={classes.cardContent}>
                     <Typography gutterBottom variant="h5" component="h2">
                      <strong>Perro de Campo FCI</strong> 
@@ -147,11 +146,9 @@ ZKWP Oddział Warszawa</p>
                   </CardContent>
                             </Card>
                              <Card>
-                  <CardMedia
-                    className={classes.cardMedia}
-                    image="https://source.unsplash.com/random"
-                    title="Image title"
-                  />
+                 <CardMedia
+                  ><img src={pdc} alt="swd" style={{height:"250px", width:"100%"}} />
+                  </CardMedia>
                   <CardContent className={classes.cardContent}>
                     <Typography gutterBottom variant="h5" component="h2">
                      <strong>Perroestrella FCI</strong> 
@@ -164,11 +161,9 @@ ZKWP Oddział Warszawa </p>
                   </CardContent>
                             </Card>
                              <Card>
-                  <CardMedia
-                    className={classes.cardMedia}
-                    image="https://source.unsplash.com/random"
-                    title="Image title"
-                  />
+                   <CardMedia
+                  ><img src={rew} alt="swd" style={{height:"250px", width:"100%"}} />
+                  </CardMedia>
                   <CardContent className={classes.cardContent}>
                     <Typography gutterBottom variant="h5" component="h2">
                  <strong>Rewelka FCI</strong>
@@ -182,10 +177,8 @@ ZKWP Oddział Bytom</p>
                             </Card>
                              <Card>
                   <CardMedia
-                    className={classes.cardMedia}
-                    image="https://source.unsplash.com/random"
-                    title="Image title"
-                  />
+                  ><img src={toddini} alt="swd" style={{height:"250px", width:"100%"}} />
+                  </CardMedia>
                   <CardContent className={classes.cardContent}>
                     <Typography gutterBottom variant="h5" component="h2">
                       <strong>Toddini FCI</strong>

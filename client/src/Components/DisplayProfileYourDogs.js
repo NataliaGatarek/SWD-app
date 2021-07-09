@@ -29,8 +29,8 @@ const useStyles = makeStyles((theme) => ({
     flex: "1 0 auto",
   },
   cover: {
-    width: 100,
-    height: 100,
+    width: 120,
+    height: 120,
   },
   controls: {
     display: "flex",
@@ -88,15 +88,14 @@ function DisplayProfileYourDogs(props) {
             {props.displayDogs.name}
           </Typography>
           <Typography variant="subtitle1" color="textSecondary">
-            {props.displayDogs.description} <hr></hr>
             Likes: {props.displayDogs.liked.length}
             <hr></hr>
-            <Button
+            {/*  <Button
               size="small"
-              color="primary" /* onClick={() => deleteDog()} */
+              color="primary" /* onClick={() => deleteDog()} 
             >
               Remove the Dog
-            </Button>
+            </Button> */}
           </Typography>
         </CardContent>
       </div>

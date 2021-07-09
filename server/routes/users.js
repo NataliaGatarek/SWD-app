@@ -169,7 +169,7 @@ router.put(
     try {
       const favDog = await dogsModel.updateOne(
         { _id: dogId },
-        { $addToSet: { liked: userId }, $inc: { likes: 1 } },
+        { $addToSet: { liked: userId } },
         { new: true, upsert: true }
       );
       const favUser = await User.updateOne(
@@ -194,7 +194,7 @@ router.put(
     try {
       const unfavDog = await dogsModel.updateOne(
         { _id: dogId },
-        { $pull: { liked: userId }, $inc: { likes: -1 } },
+        { $pull: { liked: userId } },
         { new: true, upsert: true }
       );
       const unfavUser = await User.updateOne(
