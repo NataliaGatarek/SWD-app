@@ -45,7 +45,7 @@ function CardToDisplayTheDog() {
     fetchDog();
   }, [toggle]);
   const fetchDog = () => {
-    fetch(`http://localhost:5000/dogs/${id}`)
+    fetch(`${serverURL}/dogs/${id}`)
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
@@ -56,7 +56,7 @@ function CardToDisplayTheDog() {
       });
   };
   const favoriteAdd = (id) => {
-    fetch("http://localhost:5000/users/favorite", {
+    fetch(`${serverURL}/users/favorite`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
