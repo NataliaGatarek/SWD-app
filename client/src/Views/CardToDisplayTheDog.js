@@ -12,7 +12,7 @@ import CardActions from "@material-ui/core/CardActions";
 import Button from "@material-ui/core/Button";
 import { AuthContext } from "../Context/AuthContext";
 import { DogContext } from "../Context/DogContext";
-import { serverURL } from "../config.js";
+const { serverURL } = require("../config.js");
 import axios from "axios";
 import {
   BrowserRouter as Router,

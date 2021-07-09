@@ -1,6 +1,6 @@
 import React, { createContext, useState, useEffect } from "react";
 import axios from "axios";
-import { serverURL } from "../config.js";
+const { serverURL } = require("../config.js");
 
 const initAuthContext = {
   userObject: "",

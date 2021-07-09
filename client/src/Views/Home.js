@@ -11,7 +11,7 @@ import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import { DogContext } from "../Context/DogContext.js";
 import swd from "../pictures/swd.jpg";
 import "../Views/views.css";
-import { serverURL } from "../config.js";
+const { serverURL } = require("../config.js");
 
 const useStyles = makeStyles((theme) => ({
   icon: {

@@ -17,6 +17,8 @@ import BackButton from "./BackButton.js";
 import { AuthContext } from "../Context/AuthContext";
 import axios from "axios";
 import "../Views/views.css";
+const { serverURL } = require("../config.js");
+
 import {
   BrowserRouter as Router,
   Switch,
@@ -93,7 +95,7 @@ function NavBar(props) {
     setLoading(true);
     window.localStorage.removeItem("token");
     history.push("/");
-    await axios.post("http://localhost:5000/users/logout", user);
+    await axios.post(`${serverURL}/users/logout`, user);
   };
 
   const renderMobileMenu = (

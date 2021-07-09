@@ -3,7 +3,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import "./views.css";
-import { serverURL } from "../config.js";
+const { serverURL } = require("../config.js");
 import {
   BrowserRouter as Router,
   Switch,

@@ -2,7 +2,7 @@ import React, { useEffect, useContext } from "react";
 import CardToDisplayDog from "../Components/CardToDisplayDog.js";
 import Input from "../Components/Input.js";
 import { DogContext } from "../Context/DogContext.js";
-import { serverURL } from "../config.js";
+const { serverURL } = require("../config.js");
 import "./views.css";
 
 function ListOfDogs() {

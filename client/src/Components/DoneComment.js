@@ -9,7 +9,7 @@ import avatar from "../pictures/picture1.png";
 import { AuthContext } from "../Context/AuthContext";
 import { DogContext } from "../Context/DogContext";
 import "../Views/views.css";
-import { serverURL } from "../config.js";
+const { serverURL } = require("../config.js");
 import {
   BrowserRouter as Router,
   Switch,

@@ -11,7 +11,7 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import { AuthContext } from "../Context/AuthContext";
-import { serverURL } from "../config.js";
+const { serverURL } = require("../config.js");
 import {
   BrowserRouter as Router,
   Switch,
