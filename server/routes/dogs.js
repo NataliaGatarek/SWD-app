@@ -161,6 +161,7 @@ router.delete(
       if (comment.userId.toString() !== req.user.id) {
         return res.status(401).json({ msg: "User not authorized" });
       }
+      //refering to the same object and need to convert object to a string
       dogsComment.comments = dogsComment.comments.filter(
         ({ id }) => id !== req.params.comment_id
       );
@@ -172,24 +173,37 @@ router.delete(
     }
   }
 );
-//delete dog
-/* router.delete(
-  "/deletedog",
-  //passport.authenticate("jwt", { session: false }),
-  async (req, res) => {
-    const { dogId, userId } = req.body;
-    try {
-      await dogsModel.deleteOne({ _id: dogId });
-      res.json({ msg: "Dog removed" });
 
-      await User.updateOne({ _id: userId }, { $pull: { favorites: dogId } });
+//delete dog
+router.delete(
+  "/delete",
+  passport.authenticate("jwt", { session: false }),
+  async (req, res) => {
+    const { dogId } = req.body;
+    const userId = req.user._id; ///this we get from the passport//
+    /* console.log(dogId);
+    dogsModel.deleteOne({ _id: dogId }),
+      function (err, result) {
+        if (err) {
+          console.log(err);
+          res.send(err);
+        } else {
+          if (result) {
+            res.send(result);
+          } else {
+            console.log("dog deleted");
+          }
+        }
+      }; */
+    try {
+      const deleteDog = await dogsModel.deleteOne({ _id: dogId });
+      console.log(deleteDog);
+      await User.updateOne({ _id: userId }, { $pull: { dogs: dogId } });
+      res.status(200).json({ msg: "dog deleted" });
     } catch (error) {
       console.error(error);
       res.status(500).json({ msg: "Server error" });
     }
-    console.log(req.body);
-    console.log(dogId);
-    console.log(userId);
   }
-); */
+);
 module.exports = router;

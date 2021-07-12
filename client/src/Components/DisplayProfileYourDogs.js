@@ -15,6 +15,8 @@ import {
   useParams,
   useHistory,
 } from "react-router-dom";
+
+const { serverURL } = require("../config.js");
 const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
@@ -42,13 +44,35 @@ const useStyles = makeStyles((theme) => ({
 function DisplayProfileYourDogs(props) {
   const classes = useStyles();
   const { userObject } = useContext(AuthContext);
-  let { id } = useParams();
+  //let { id } = useParams();
   console.log(`props`, props);
   console.log(props.displayDogs._id); //this is the id of the dog//
   let dogId = props.displayDogs._id;
   console.log(dogId);
 
-  /*  const deleteDog = async () => {
+  const deleteDog = (event) => {
+    event.preventDefault(event);
+
+    fetch(`${serverURL}/dogs/delete`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + localStorage.getItem("token"),
+      },
+      body: JSON.stringify({
+        dogId: props.displayDogs._id,
+      }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log("data", data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  /*const deleteDog = async () => {
     const body = {
       userId: userObject._id,
       dogId: props.displayDogs._id,
@@ -90,12 +114,9 @@ function DisplayProfileYourDogs(props) {
           <Typography variant="subtitle1" color="textSecondary">
             Likes: {props.displayDogs.liked.length}
             <hr></hr>
-            {/*  <Button
-              size="small"
-              color="primary" /* onClick={() => deleteDog()} 
-            >
+            <Button size="small" color="primary" onClick={deleteDog}>
               Remove the Dog
-            </Button> */}
+            </Button>
           </Typography>
         </CardContent>
       </div>
