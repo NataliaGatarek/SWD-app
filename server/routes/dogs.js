@@ -177,9 +177,7 @@ router.delete(
   "/deletedog",
   //passport.authenticate("jwt", { session: false }),
   async (req, res) => {
-    //const { dogId } = req.params.id;
     const { dogId, userId } = req.body;
-    //dog: req.dog.id;
     try {
       await dogsModel.deleteOne({ _id: dogId });
       res.json({ msg: "Dog removed" });
