@@ -6,14 +6,8 @@ import "./views.css";
 
 const { serverURL } = require("../config.js");
 function ListOfDogs() {
-  const {
-    searchBaner,
-    setSearchBaner,
-    dogs,
-    setDogs,
-    loadingPage,
-    setLoadingPage,
-  } = useContext(DogContext);
+  const { searchBaner, dogs, setDogs, loadingPage, setLoadingPage } =
+    useContext(DogContext);
 
   useEffect(() => {
     const fetchApi = () => {

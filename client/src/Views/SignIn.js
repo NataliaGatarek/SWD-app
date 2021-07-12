@@ -11,13 +11,7 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import { AuthContext } from "../Context/AuthContext";
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Link,
-  useHistory,
-} from "react-router-dom";
+import { BrowserRouter as Router, Link, useHistory } from "react-router-dom";
 
 const { serverURL } = require("../config.js");
 const useStyles = makeStyles((theme) => ({

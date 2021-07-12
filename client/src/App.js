@@ -11,6 +11,7 @@ import { DogContextProvider } from "./Context/DogContext.js";
 import { AuthContextProvider } from "./Context/AuthContext.js";
 import ProfilePrivateRoute from "./PrivateRoutes/ProfilePrivateRoute.js";
 import Breeders from "./Views/Breeders.js";
+import Removed from "./Views/Removed.js";
 
 function App() {
   return (
@@ -38,6 +39,9 @@ function App() {
             </Route>
             <Route exact path="/Breeders">
               <Breeders />
+            </Route>
+            <Route exact path="/Removed">
+              <Removed />
             </Route>
             <ProfilePrivateRoute
               children={<CardToDisplayTheDog />}

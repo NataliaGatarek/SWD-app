@@ -7,13 +7,7 @@ import DsiplayFav from "../Components/DisplayFav.js";
 import DisplayProfileYourDogs from "../Components/DisplayProfileYourDogs";
 import Container from "@material-ui/core/Container";
 import swd2 from "../pictures/swd2.jpg";
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Link,
-  useHistory,
-} from "react-router-dom";
+import { BrowserRouter as Router, Link } from "react-router-dom";
 const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
@@ -41,6 +35,7 @@ function Profile() {
       setLoading(true);
     }
   }, []);
+
   return (
     <div>
       {!loading ? (

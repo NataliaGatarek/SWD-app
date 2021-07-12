@@ -122,7 +122,6 @@ function AddDog() {
 
   const handleOnSubmit = (event) => {
     event.preventDefault();
-    //fetchData();
   };
   return (
     <div>

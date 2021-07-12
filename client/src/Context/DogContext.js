@@ -5,7 +5,6 @@ const initDogContext = {
   dogs: [],
   loadingPage: true,
   comments: [],
-  likedDogs: [],
 };
 export const DogContext = createContext(initDogContext);
 export const DogContextProvider = ({ children }) => {
@@ -13,7 +12,6 @@ export const DogContextProvider = ({ children }) => {
   const [dogs, setDogs] = useState(initDogContext.dogs);
   const [loadingPage, setLoadingPage] = useState(initDogContext.loadingPage);
   const [comments, setComments] = useState(initDogContext.comments);
-  const [likedDogs, setLikedDogs] = useState(initDogContext.likedDogs);
 
   return (
     <DogContext.Provider
@@ -26,8 +24,6 @@ export const DogContextProvider = ({ children }) => {
         setLoadingPage,
         comments,
         setComments,
-        likedDogs,
-        setLikedDogs,
       }}
     >
       {children}

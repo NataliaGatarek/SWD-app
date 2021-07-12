@@ -12,7 +12,6 @@ import CardActions from "@material-ui/core/CardActions";
 import Button from "@material-ui/core/Button";
 import { AuthContext } from "../Context/AuthContext";
 import { DogContext } from "../Context/DogContext";
-import axios from "axios";
 import {
   BrowserRouter as Router,
   Switch,
@@ -36,10 +35,8 @@ function CardToDisplayTheDog() {
   const [details, setDetails] = useState(null);
   const [error, setError] = useState(null);
   let { id } = useParams();
-  const { userObject, favoritedDogs, setFavoritedDogs } =
-    useContext(AuthContext);
-  const { comments, setComments, likedDogs, setLikedDogs } =
-    useContext(DogContext);
+  const { userObject } = useContext(AuthContext);
+  const { comments, setComments } = useContext(DogContext);
   const [toggle, setToggle] = useState(true);
   useEffect(() => {
     fetchDog();
@@ -51,8 +48,6 @@ function CardToDisplayTheDog() {
         console.log(data);
         setDetails(data);
         setComments(data.comments);
-        //setLikedDogs(data.liked); //created this one in the dogs contexts, did not help//
-        //setFavoritedDogs(data.favorites); //should be data. what? favorites are part of the users model, why if I change it to liked is giving null?//
       });
   };
   const favoriteAdd = (id) => {
@@ -72,8 +67,6 @@ function CardToDisplayTheDog() {
         console.log("data", data);
         console.log("added fav");
         setToggle(!toggle);
-        //setDetails(details.liked.push(userObject));
-        //setLikedDogs(data.liked);
         setError(``);
       })
       .catch((error) => {

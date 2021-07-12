@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useContext } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
@@ -7,14 +7,7 @@ import { AuthContext } from "../Context/AuthContext";
 import { DogContext } from "../Context/DogContext";
 import "../Views/views.css";
 import avatar from "../pictures/picture1.png";
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Link,
-  useParams,
-  useHistory,
-} from "react-router-dom";
+import { BrowserRouter as Router, useParams } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   root: {

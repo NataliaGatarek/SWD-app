@@ -9,14 +9,7 @@ import avatar from "../pictures/picture1.png";
 import { AuthContext } from "../Context/AuthContext";
 import { DogContext } from "../Context/DogContext";
 import "../Views/views.css";
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Link,
-  useParams,
-  useHistory,
-} from "react-router-dom";
+import { BrowserRouter as Router, useParams } from "react-router-dom";
 
 const { serverURL } = require("../config.js");
 const useStyles = makeStyles((theme) => ({
