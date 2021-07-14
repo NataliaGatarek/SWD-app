@@ -1,5 +1,5 @@
 # SWD-app
-The social networking MERN application to connect owners of the spanish water dogs. You can register, add or delete your dog/dogs, view profiles of other dogs, comment on them, remove your comments, mark the dog as a favorite or remove from favorites. On your profile dashbord you can see your information, dogs and favorites. 
+The social networking MERN application to connect owners of the spanish water dogs. You can register, add or delete your dog/dogs, view profiles of other dogs, leave a comments remove your comments, mark the dog as a favorite or remove from favorites. On your profile dashbord you can see your information, dogs and favorites. 
 <p> MERN: MongoDB, Express, React, Node.js; Context, Cloudinary.</p>
   
 <p> Views: Home; All dogs; Dog's Detail with possibility to mark as favorite/unfavorite and possibility to leave a comment (or deleting the comment).
