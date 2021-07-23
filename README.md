@@ -1,4 +1,5 @@
 # SWD-app
+<p>Spanish Waterdog App</p>
 The social networking MERN application created to connect owners of the spanish water dogs. You can register, add or delete your dog/dogs, view profiles of other dogs, leave a comments remove your comments, mark the dog as a favorite or remove from favorites. On your profile dashbord you can see your information, dogs and favorites. 
 <p> MERN: MongoDB, Express, React, Node.js; Context, Cloudinary.</p>
   
